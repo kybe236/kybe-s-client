@@ -20,11 +20,13 @@ public class Module {
 	private String name;
 	private boolean toggled;
 	private ArrayList<Setting> settings;
+	private CategoryEnum catagory;
 
-	public Module(String name) {
+	public Module(String name, CategoryEnum catagory) {
 		this.name = name;
 		this.toggled = false;
 		this.settings = new ArrayList<>();
+		this.catagory = catagory;
 	}
 
 	public String getName() {
@@ -47,8 +49,13 @@ public class Module {
 		return settings;
 	}
 
+	public CategoryEnum getCategory() {
+		return catagory;
+	}
+
 	public JsonObject serialize() {
 		JsonObject obj = new JsonObject();
+		obj.addProperty("catagory", this.getCategory().name());
 		obj.addProperty("name", this.getName());
 
 		if (!this.getSettings().isEmpty()) {

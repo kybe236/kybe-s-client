@@ -3,6 +3,7 @@ package de.kybe.gui.components;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import org.lwjgl.glfw.GLFW;
 
 public class BooleanSetting extends Setting{
 	private boolean toggled = false;
@@ -21,6 +22,13 @@ public class BooleanSetting extends Setting{
 
 	public void setToggled(boolean toggled) {
 		this.toggled = toggled;
+	}
+
+	@Override
+	public void handleKeyPress(int key) {
+		if (key == GLFW.GLFW_KEY_ENTER) {
+			toggle();
+		}
 	}
 
 	@Override

@@ -32,6 +32,8 @@ public abstract class Setting {
 		return shouldSerialize;
 	}
 
+	public void handleKeyPress(int key) {}
+
 	public abstract JsonElement serializeValue();
 
 	public JsonElement serialize() {
