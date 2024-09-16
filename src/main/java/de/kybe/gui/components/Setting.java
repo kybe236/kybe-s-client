@@ -10,14 +10,17 @@
 
 package de.kybe.gui.components;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 /*
  * Base Settings class (Used for all settings)
  */
-public class Setting {
+public abstract class Setting {
 	private String name;
 	private boolean shouldSerialize = true;
 
-	public Setting(String name, float value, float min, float max) {
+	public Setting(String name) {
 		this.name = name;
 	}
 
@@ -29,11 +32,26 @@ public class Setting {
 		return shouldSerialize;
 	}
 
-	public void serialize() {
+	public abstract JsonElement serializeValue();
 
+	public JsonElement serialize() {
+		JsonObject obj = new JsonObject();
+		obj.addProperty("name", name);
+		obj.add("value", this.serializeValue());
+		return obj;
 	}
 
-	public void deserialize() {
-		// Deserialize the setting
+	public boolean deserialize(JsonElement jsonElement) {
+		if (!jsonElement.isJsonObject() || jsonElement.isJsonNull()){
+			return false;
+		}
+
+		final JsonObject obj = jsonElement.getAsJsonObject();
+
+		boolean consumed = obj.has("value") && this.deserializeValue(obj.get("value"));
+
+		return consumed;
 	}
+
+	public abstract boolean deserializeValue(JsonElement jsonElement);
 }

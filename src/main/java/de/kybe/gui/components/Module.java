@@ -10,6 +10,9 @@
 
 package de.kybe.gui.components;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +47,19 @@ public class Module {
 		return settings;
 	}
 
-	public void serialize() {
+	public JsonObject serialize() {
+		JsonObject obj = new JsonObject();
+		obj.addProperty("name", this.getName());
+
+		if (!this.getSettings().isEmpty()) {
+			JsonArray settings = new JsonArray();
+			for (Setting setting : this.getSettings()) {
+				if (setting.shouldSerialize()) {
+					settings.add(setting.serialize());
+				}
+			}
+			obj.add("settings", settings);
+		}
+		return obj;
 	}
 }

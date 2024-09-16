@@ -10,6 +10,10 @@
 
 package de.kybe.gui.components;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import jdk.security.jarsigner.JarSigner;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +38,18 @@ public class Catagory {
 		return modules;
 	}
 
-	public void serialize() {
+	public JsonObject serialize() {
+		JsonObject obj = new JsonObject();
+		obj.addProperty("name", name);
 
+		if (!this.getModules().isEmpty()) {
+			JsonArray modules = new JsonArray();
+			for (Module module : this.getModules()) {
+				modules.add(module.serialize());
+			}
+			obj.add("modules", modules);
+		}
+		return obj;
 	}
 
 	public void deserialize() {

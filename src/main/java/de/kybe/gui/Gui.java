@@ -10,6 +10,10 @@
 
 package de.kybe.gui;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import de.kybe.Kybe;
+import de.kybe.gui.components.BooleanSetting;
 import de.kybe.gui.components.Catagory;
 import de.kybe.gui.components.Module;
 import de.kybe.gui.components.Setting;
@@ -19,7 +23,15 @@ import net.minecraft.network.chat.Component;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import static de.kybe.constants.Globals.mc;
 
 public class Gui extends Screen {
 	public static final int CATEGORY_START_X = 20;
@@ -56,6 +68,7 @@ public class Gui extends Screen {
 
 	public Gui() {
 		super(Component.literal("Kybe Client"));
+
 		categories = loadCategories();
 	}
 
@@ -63,16 +76,15 @@ public class Gui extends Screen {
 		Catagory combat = new Catagory("Combat");
 		Module killAura = new Module("KillAura");
 		Module autoClicker = new Module("AutoClicker");
-		Setting range = new Setting("Range", 3, 1, 6);
-		killAura.addSetting(range);
+		killAura.addSetting(new BooleanSetting("Range"));
+		killAura.addSetting(new BooleanSetting("Speed"));
 		combat.addModule(killAura);
 		combat.addModule(autoClicker);
 
-		Catagory movement = new Catagory("Movement");
-		Module speed = new Module("Speed");
-		movement.addModule(speed);
-
-		return List.of(combat, movement);
+		Catagory fun = new Catagory("Fun");
+		Module chatSpammer = new Module("ChatSpammer");
+		fun.addModule(chatSpammer);
+		return List.of(combat, fun);
 	}
 
 	@Override
@@ -124,6 +136,38 @@ public class Gui extends Screen {
 
 			int textYPosition = yPosition + (SETTING_HEIGHT / 2) - (this.font.lineHeight / 2);
 			guiGraphics.drawCenteredString(this.font, setting.getName(), SETTING_START_X + SETTING_WIDTH / 2, textYPosition, Color.WHITE.getRGB());
+		}
+	}
+
+	/*
+	 * Save the settings
+	 */
+	@Override
+	public void onClose() {
+		super.onClose();
+		saveSettings();
+	}
+
+	public void saveSettings() {
+		try {
+			JsonArray obj = new JsonArray();
+			for (Catagory category : categories) {
+				obj.add(category.serialize());
+			}
+			//save to an file
+			File settingsFile = new File(mc.gameDirectory, "settings.json");
+
+			String json = obj.toString();
+
+			Kybe.LOGGER.info("Saving settings to: " + settingsFile.getAbsolutePath());
+			Kybe.LOGGER.info(json);
+
+			try (FileWriter writer = new FileWriter(settingsFile)) {
+				writer.write(json);
+			}
+
+		} catch (Exception e) {
+			Kybe.LOGGER.error("Failed to save settings", e);
 		}
 	}
 
