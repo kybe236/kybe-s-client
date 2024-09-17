@@ -1,11 +1,10 @@
-package de.kybe.gui.components;
+package de.kybe.gui.components.settings;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.lwjgl.glfw.GLFW;
 
-public class BooleanSetting extends Setting{
+public class BooleanSetting extends Setting {
 	private boolean toggled = false;
 
 	public BooleanSetting(String name) {
@@ -25,10 +24,12 @@ public class BooleanSetting extends Setting{
 	}
 
 	@Override
-	public void handleKeyPress(int key) {
+	public boolean handleKeyPress(int key) {
 		if (key == GLFW.GLFW_KEY_ENTER) {
 			toggle();
+			return true;
 		}
+		return false;
 	}
 
 	@Override
@@ -37,12 +38,11 @@ public class BooleanSetting extends Setting{
 	}
 
 	@Override
-	public boolean deserializeValue(JsonElement jsonElement) {
-		if (!jsonElement.isJsonObject() || jsonElement.getAsJsonPrimitive().isBoolean()) {
-			return false;
+	public void deserializeValue(JsonElement jsonElement) {
+		if (!jsonElement.getAsJsonPrimitive().isBoolean()) {
+			return;
 		}
 
 		this.setToggled(jsonElement.getAsBoolean());
-		return true;
 	}
 }

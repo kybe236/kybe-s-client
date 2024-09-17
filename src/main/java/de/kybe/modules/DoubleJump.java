@@ -1,9 +1,9 @@
 package de.kybe.modules;
 
 
-import de.kybe.gui.components.BooleanSetting;
 import de.kybe.gui.components.CategoryEnum;
-import de.kybe.gui.components.Module;
+import de.kybe.gui.components.modules.Module;
+import de.kybe.gui.components.settings.BooleanSetting;
 
 import static de.kybe.constants.Globals.mc;
 

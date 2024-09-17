@@ -8,65 +8,51 @@
  * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.kybe.gui.components;
+package de.kybe.gui.components.settings;
 
-import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
-import java.util.List;
+/*
+ * Base Settings class (Used for all settings)
+ */
+public abstract class Setting {
+	private final String name;
+	private final boolean shouldSerialize = true;
 
-public class Module {
-	private String name;
-	private boolean toggled;
-	private ArrayList<Setting> settings;
-	private CategoryEnum catagory;
-
-	public Module(String name, CategoryEnum catagory) {
+	public Setting(String name) {
 		this.name = name;
-		this.toggled = false;
-		this.settings = new ArrayList<>();
-		this.catagory = catagory;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void tooogle() {
-		toggled = !toggled;
+	public boolean shouldSerialize() {
+		return shouldSerialize;
 	}
 
-	public boolean isToggled() {
-		return toggled;
+	/*
+	 * Returns true if the key was handled
+	 */
+	public boolean handleKeyPress(int key) {
+		return false;
 	}
 
-	public void addSetting(Setting setting) {
-		settings.add(setting);
-	}
+	public abstract JsonElement serializeValue();
 
-	public List<Setting> getSettings() {
-		return settings;
-	}
-
-	public CategoryEnum getCategory() {
-		return catagory;
-	}
-
-	public JsonObject serialize() {
+	public JsonElement serialize() {
 		JsonObject obj = new JsonObject();
-		obj.addProperty("catagory", this.getCategory().name());
-		obj.addProperty("name", this.getName());
-
-		if (!this.getSettings().isEmpty()) {
-			JsonArray settings = new JsonArray();
-			for (Setting setting : this.getSettings()) {
-				if (setting.shouldSerialize()) {
-					settings.add(setting.serialize());
-				}
-			}
-			obj.add("settings", settings);
-		}
+		obj.addProperty("name", name);
+		obj.add("value", this.serializeValue());
 		return obj;
 	}
+
+	public void deserialize(JsonObject obj) {
+		if (obj.has("value")) {
+			this.deserializeValue(obj.get("value"));
+		}
+	}
+
+	public abstract void deserializeValue(JsonElement jsonElement);
 }

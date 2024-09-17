@@ -10,19 +10,11 @@
 
 package de.kybe;
 
-import com.google.common.eventbus.Subscribe;
 import de.kybe.modules.DoubleJump;
 import net.fabricmc.api.ModInitializer;
-
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
-import net.minecraft.world.InteractionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.OutputStream;
-
-import static de.kybe.constants.Globals.mc;
 
 public class Kybe implements ModInitializer {
 	public static final String MOD_ID = "kybe";

@@ -11,10 +11,15 @@
 package de.kybe.gui;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import de.kybe.Kybe;
 import de.kybe.gui.components.CategoryEnum;
-import de.kybe.gui.components.Module;
-import de.kybe.gui.components.Setting;
+import de.kybe.gui.components.modules.Module;
+import de.kybe.gui.components.modules.ToggleableModule;
+import de.kybe.gui.components.settings.BooleanSetting;
+import de.kybe.gui.components.settings.Setting;
 import de.kybe.modules.DoubleJump;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -24,6 +29,7 @@ import org.lwjgl.glfw.GLFW;
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,37 +37,31 @@ import java.util.Objects;
 import static de.kybe.constants.Globals.mc;
 
 public class Gui extends Screen {
-	public static final int CATEGORY_START_X = 20;
-	public static final int CATEGORY_START_Y = 50;
-	public static final int CATEGORY_SPACING = 20;
+	public static final int CATEGORY_START_X = 0;
+	public static final int CATEGORY_START_Y = 0;
+	public static final int CATEGORY_SPACING = 15;
 	public static final int CATEGORY_WIDTH = 100;
 	public static final int CATEGORY_HEIGHT = 15;
 
-	public static final int MODULE_START_X = 140;
-	public static final int MODULE_START_Y = 50;
-	public static final int MODULE_SPACING = 20;
+	public static final int MODULE_START_X = 100;
+	public static final int MODULE_START_Y = 0;
+	public static final int MODULE_SPACING = 15;
 	public static final int MODULE_WIDTH = 100;
 	public static final int MODULE_HEIGHT = 15;
 
-	public static final int SETTING_START_X = 260;
-	public static final int SETTING_START_Y = 50;
-	public static final int SETTING_SPACING = 20;
+	public static final int SETTING_START_X = 200;
+	public static final int SETTING_START_Y = 0;
+	public static final int SETTING_SPACING = 15;
 	public static final int SETTING_WIDTH = 100;
 	public static final int SETTING_HEIGHT = 15;
 
 	private static final float FONT_SCALE = 0.75f;
 
-	private List<Module> modules;
+	private final List<Module> modules;
 	private int selectedCategoryIndex = 0;
 	private int selectedModuleIndex = 0;
 	private int selectedSettingIndex = 0;
 	private Selection selection = Selection.CATEGORY;
-
-	enum Selection {
-		CATEGORY,
-		MODULE,
-		SETTING
-	}
 
 	public Gui() {
 		super(Component.literal("Kybe Client"));
@@ -73,6 +73,8 @@ public class Gui extends Screen {
 		ArrayList<Module> modules = new ArrayList<>();
 
 		modules.add(DoubleJump.load());
+
+		loadSettings();
 
 		return modules;
 	}
@@ -104,14 +106,18 @@ public class Gui extends Screen {
 
 	private void drawModules(GuiGraphics guiGraphics) {
 		CategoryEnum selectedCategory = CategoryEnum.values()[selectedCategoryIndex];
-		List<Module> categoryModules = modules.stream()
-				.filter(module -> module.getCategory() == selectedCategory)
-				.toList();
+		List<Module> categoryModules = getModulesForCategory(selectedCategory);
+
 		for (int i = 0; i < categoryModules.size(); i++) {
 			Module module = categoryModules.get(i);
 			int yPosition = MODULE_START_Y + i * MODULE_SPACING;
 
 			int color = (i == selectedModuleIndex && selection == Selection.MODULE) ? Color.BLUE.getRGB() : Color.GRAY.getRGB();
+			if (module instanceof ToggleableModule toggleableModule) {
+				if (toggleableModule.isToggled()) {
+					color = Color.GREEN.getRGB();
+				}
+			}
 			guiGraphics.fill(MODULE_START_X, yPosition, MODULE_START_X + MODULE_WIDTH, yPosition + MODULE_HEIGHT, color);
 
 			int textYPosition = yPosition + (MODULE_HEIGHT / 2) - (this.font.lineHeight / 2);
@@ -121,9 +127,7 @@ public class Gui extends Screen {
 
 	private void drawSettings(GuiGraphics guiGraphics) {
 		CategoryEnum selectedCategory = CategoryEnum.values()[selectedCategoryIndex];
-		List<Module> categoryModules = modules.stream()
-				.filter(module -> module.getCategory() == selectedCategory)
-				.toList();
+		List<Module> categoryModules = getModulesForCategory(selectedCategory);
 
 		Module selectedModule = categoryModules.get(selectedModuleIndex);
 		List<Setting> settings = selectedModule.getSettings();
@@ -133,8 +137,10 @@ public class Gui extends Screen {
 			int yPosition = SETTING_START_Y + i * SETTING_SPACING;
 
 			int color = (i == selectedSettingIndex && selection == Selection.SETTING) ? Color.BLUE.getRGB() : Color.GRAY.getRGB();
+			if (setting instanceof BooleanSetting booleanSetting) {
+				color = booleanSetting.isToggled() ? Color.GREEN.getRGB() : color;
+			}
 			guiGraphics.fill(SETTING_START_X, yPosition, SETTING_START_X + SETTING_WIDTH, yPosition + SETTING_HEIGHT, color);
-
 			int textYPosition = yPosition + (SETTING_HEIGHT / 2) - (this.font.lineHeight / 2);
 			guiGraphics.drawCenteredString(this.font, setting.getName(), SETTING_START_X + SETTING_WIDTH / 2, textYPosition, Color.WHITE.getRGB());
 		}
@@ -175,12 +181,74 @@ public class Gui extends Screen {
 		}
 	}
 
+	/*
+	 * Save the settings
+	 */
+
+
+	public void loadSettings() {
+		try {
+			File settingsFile = new File(mc.gameDirectory, "settings.json");
+
+			JsonArray jsonModules = JsonParser.parseReader(Files.newBufferedReader(settingsFile.toPath())).getAsJsonArray();
+
+			for (JsonElement obj : jsonModules.asList()) {
+				if (!obj.isJsonObject()) {
+					continue;
+				}
+
+				JsonObject moduleObj = obj.getAsJsonObject();
+				for (Module module : modules) {
+					if (moduleObj.get("name").getAsString().equals(module.getName())) {
+						module.deserialize(moduleObj);
+					}
+				}
+			}
+		} catch (Exception e) {
+			Kybe.LOGGER.error("Failed to load settings", e);
+		}
+	}
 
 	/*
 	 * Handle key presses
 	 */
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+		switch (selection) {
+			case Selection.SETTING -> {
+				/*
+				 * Handle keypress inside selected setting
+				 */
+				List<Module> selectedCategoryModules = getModulesForCategory(CategoryEnum.values()[selectedCategoryIndex]);
+				List<Setting> moduleSettings = selectedCategoryModules.get(selectedModuleIndex).getSettings();
+				if (!moduleSettings.isEmpty()) {
+					/*
+					 * If the setting handled the keypress, return true
+					 * So integer settings can increment/decrement without moving the selection
+					 */
+					if (moduleSettings.get(selectedSettingIndex).handleKeyPress(keyCode)) {
+						return true;
+					}
+				}
+			}
+			case Selection.MODULE -> {
+				/*
+				 * Handle keypress inside selected module
+				 */
+				List<Module> selectedCategoryModules = getModulesForCategory(CategoryEnum.values()[selectedCategoryIndex]);
+				if (!selectedCategoryModules.isEmpty()) {
+					/*
+					 * Return true if the module handled the keypress
+					 *
+					 *
+					 * TODO: maybe remove bollean value for handleKeyPress on an Module
+					 */
+					if(selectedCategoryModules.get(selectedModuleIndex).handleKeyPress(keyCode)) {
+						return true;
+					}
+				}
+			}
+		}
 		switch (keyCode) {
 			case GLFW.GLFW_KEY_UP -> {
 				moveSelectionUp();
@@ -197,13 +265,6 @@ public class Gui extends Screen {
 			case GLFW.GLFW_KEY_LEFT -> {
 				moveSelectionLeft();
 				return true;
-			}
-		}
-		if (Objects.requireNonNull(selection) == Selection.SETTING) {
-			List<Module> selectedCategoryModules = getModulesForCategory(CategoryEnum.values()[selectedCategoryIndex]);
-			List<Setting> moduleSettings = selectedCategoryModules.get(selectedModuleIndex).getSettings();
-			if (!moduleSettings.isEmpty()) {
-				moduleSettings.get(selectedSettingIndex).handleKeyPress(keyCode);
 			}
 		}
 		return super.keyPressed(keyCode, scanCode, modifiers);
@@ -309,6 +370,12 @@ public class Gui extends Screen {
 		return modules.stream()
 				.filter(module -> module.getCategory() == category)
 				.toList();
+	}
+
+	enum Selection {
+		CATEGORY,
+		MODULE,
+		SETTING
 	}
 
 }
