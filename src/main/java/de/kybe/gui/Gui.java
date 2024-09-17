@@ -67,14 +67,13 @@ public class Gui extends Screen {
 		super(Component.literal("Kybe Client"));
 
 		modules = loadCategories();
+		loadSettings();
 	}
 
 	private List<Module> loadCategories() {
 		ArrayList<Module> modules = new ArrayList<>();
 
 		modules.add(DoubleJump.load());
-
-		loadSettings();
 
 		return modules;
 	}
@@ -114,9 +113,7 @@ public class Gui extends Screen {
 
 			int color = (i == selectedModuleIndex && selection == Selection.MODULE) ? Color.BLUE.getRGB() : Color.GRAY.getRGB();
 			if (module instanceof ToggleableModule toggleableModule) {
-				if (toggleableModule.isToggled()) {
-					color = Color.GREEN.getRGB();
-				}
+				color = toggleableModule.isToggled() ? Color.GREEN.getRGB() : color;
 			}
 			guiGraphics.fill(MODULE_START_X, yPosition, MODULE_START_X + MODULE_WIDTH, yPosition + MODULE_HEIGHT, color);
 
@@ -198,6 +195,7 @@ public class Gui extends Screen {
 				}
 
 				JsonObject moduleObj = obj.getAsJsonObject();
+				if (modules == null) return;
 				for (Module module : modules) {
 					if (moduleObj.get("name").getAsString().equals(module.getName())) {
 						module.deserialize(moduleObj);
@@ -226,7 +224,8 @@ public class Gui extends Screen {
 					 * If the setting handled the keypress, return true
 					 * So integer settings can increment/decrement without moving the selection
 					 */
-					if (moduleSettings.get(selectedSettingIndex).handleKeyPress(keyCode)) {
+					Setting setting = moduleSettings.get(selectedSettingIndex);
+					if (setting.handleKeyPress(keyCode)) {
 						return true;
 					}
 				}
@@ -243,8 +242,15 @@ public class Gui extends Screen {
 					 *
 					 * TODO: maybe remove bollean value for handleKeyPress on an Module
 					 */
-					if(selectedCategoryModules.get(selectedModuleIndex).handleKeyPress(keyCode)) {
-						return true;
+					Module module = selectedCategoryModules.get(selectedModuleIndex);
+					if (module instanceof ToggleableModule toggleableModule) {
+						if (toggleableModule.handleKeyPress(keyCode)) {
+							return true;
+						}
+					} else {
+						if (module.handleKeyPress(keyCode)) {
+							return true;
+						}
 					}
 				}
 			}
