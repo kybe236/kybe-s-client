@@ -3,16 +3,15 @@ package de.kybe.gui.components.modules;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import de.kybe.Kybe;
 import de.kybe.gui.components.CategoryEnum;
 import de.kybe.gui.components.settings.Setting;
 import org.lwjgl.glfw.GLFW;
 
-public class ToggleableModule extends Module{
+public class ToggleableModule extends Module {
 	private boolean toggled = false;
 
-	public ToggleableModule(String name, CategoryEnum catagory) {
-		super(name, catagory);
+	public ToggleableModule(String name, CategoryEnum category) {
+		super(name, category);
 	}
 
 	public void toggle() {
@@ -23,6 +22,7 @@ public class ToggleableModule extends Module{
 		return toggled;
 	}
 
+	@SuppressWarnings("unused")
 	public void setToggled(boolean toggled) {
 		this.toggled = toggled;
 	}
@@ -39,16 +39,15 @@ public class ToggleableModule extends Module{
 	@Override
 	public JsonObject serialize() {
 		JsonObject obj = new JsonObject();
-		obj.addProperty("catagory", this.getCategory().name());
+		obj.addProperty("category", this.getCategory().name());
 		obj.addProperty("name", this.getName());
-		obj.addProperty("toogled", this.isToggled());
+		obj.addProperty("toggled", this.isToggled());
 
+		//noinspection DuplicatedCode
 		if (!this.getSettings().isEmpty()) {
 			JsonArray settings = new JsonArray();
 			for (Setting setting : this.getSettings()) {
-				if (setting.shouldSerialize()) {
-					settings.add(setting.serialize());
-				}
+				settings.add(setting.serialize());
 			}
 			obj.add("settings", settings);
 		}
@@ -57,10 +56,12 @@ public class ToggleableModule extends Module{
 
 	@Override
 	public void deserialize(JsonObject obj) {
-		if (!obj.get("catagory").getAsString().equals(this.getCategory().name())) return;
+		if (!obj.get("category").getAsString().equals(this.getCategory().name())) return;
 		if (!obj.has("name") || !obj.get("name").getAsString().equals(this.getName())) return;
-		if (!obj.has("toogled")) return;
+		if (!obj.has("toggled")) return;
 
+
+		//noinspection DuplicatedCode
 		if (obj.has("settings")) {
 			JsonArray settings = obj.getAsJsonArray("settings");
 			for (Setting setting : this.getSettings()) {

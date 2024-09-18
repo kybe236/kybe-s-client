@@ -6,7 +6,7 @@ import net.minecraft.client.gui.GuiGraphics;
 
 import java.awt.*;
 
-public class BooleanSettingRenderer extends SettingRenderer{
+public class BooleanSettingRenderer extends SettingRenderer {
 	BooleanSetting setting;
 
 	public BooleanSettingRenderer(BooleanSetting setting) {

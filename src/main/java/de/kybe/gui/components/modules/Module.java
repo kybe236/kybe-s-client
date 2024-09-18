@@ -22,18 +22,19 @@ import java.util.List;
 public class Module {
 	private final String name;
 	private final ArrayList<Setting> settings;
-	private final CategoryEnum catagory;
+	private final CategoryEnum category;
 
-	public Module(String name, CategoryEnum catagory) {
+	public Module(String name, CategoryEnum category) {
 		this.name = name;
 		this.settings = new ArrayList<>();
-		this.catagory = catagory;
+		this.category = category;
 	}
 
 	public String getName() {
 		return name;
 	}
 
+	@SuppressWarnings("unused")
 	public void addSetting(Setting setting) {
 		settings.add(setting);
 	}
@@ -43,7 +44,7 @@ public class Module {
 	}
 
 	public CategoryEnum getCategory() {
-		return catagory;
+		return category;
 	}
 
 	/*
@@ -55,15 +56,13 @@ public class Module {
 
 	public JsonObject serialize() {
 		JsonObject obj = new JsonObject();
-		obj.addProperty("catagory", this.getCategory().name());
+		obj.addProperty("category", this.getCategory().name());
 		obj.addProperty("name", this.getName());
 
 		if (!this.getSettings().isEmpty()) {
 			JsonArray settings = new JsonArray();
 			for (Setting setting : this.getSettings()) {
-				if (setting.shouldSerialize()) {
-					settings.add(setting.serialize());
-				}
+				settings.add(setting.serialize());
 			}
 			obj.add("settings", settings);
 		}
@@ -71,7 +70,7 @@ public class Module {
 	}
 
 	public void deserialize(JsonObject obj) {
-		if (!obj.get("catagory").getAsString().equals(this.catagory.name())) return;
+		if (!obj.get("category").getAsString().equals(this.category.name())) return;
 		if (!obj.has("name") || !obj.get("name").getAsString().equals(this.getName())) return;
 
 		if (obj.has("settings")) {

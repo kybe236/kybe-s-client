@@ -18,18 +18,13 @@ import com.google.gson.JsonObject;
  */
 public abstract class Setting {
 	private final String name;
-	private final boolean shouldSerialize = true;
 
-	public Setting(String name) {
+	protected Setting(String name) {
 		this.name = name;
 	}
 
 	public String getName() {
 		return name;
-	}
-
-	public boolean shouldSerialize() {
-		return shouldSerialize;
 	}
 
 	/*

@@ -11,6 +11,9 @@ public abstract class SettingRenderer {
 	public static final int SETTING_HEIGHT = 15;
 
 	Setting setting;
+
+
+	@SuppressWarnings("unused")
 	public SettingRenderer(Setting setting) {
 		this.setting = setting;
 	}

@@ -1,6 +1,5 @@
 package de.kybe.gui.components.renderers.modules;
 
-import de.kybe.Kybe;
 import de.kybe.gui.components.modules.ToggleableModule;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -10,6 +9,7 @@ import java.awt.*;
 public class ToggleableModuleRenderer extends ModuleRenderer {
 
 	ToggleableModule module;
+
 	public ToggleableModuleRenderer(ToggleableModule module) {
 		this.module = module;
 	}

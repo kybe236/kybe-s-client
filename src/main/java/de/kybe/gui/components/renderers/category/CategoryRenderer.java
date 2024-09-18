@@ -1,10 +1,10 @@
-package de.kybe.gui.components.renderers.catagory;
+package de.kybe.gui.components.renderers.category;
 
 import de.kybe.gui.components.CategoryEnum;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class CategoryRenderer {
 	public static final int CATEGORY_START_X = 0;
@@ -12,6 +12,7 @@ public class CategoryRenderer {
 	public static final int CATEGORY_HEIGHT = 15;
 
 	CategoryEnum category;
+
 	public CategoryRenderer(CategoryEnum category) {
 		this.category = category;
 	}

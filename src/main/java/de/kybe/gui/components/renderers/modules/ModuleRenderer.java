@@ -4,7 +4,7 @@ import de.kybe.gui.components.modules.Module;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class ModuleRenderer {
 	public static final int MODULE_START_X = 100;

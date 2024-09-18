@@ -4,16 +4,12 @@ import com.mojang.blaze3d.platform.InputConstants;
 import de.kybe.handlers.KeyPress;
 import net.minecraft.client.KeyboardHandler;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(KeyboardHandler.class)
 public abstract class KeyboardHandlerMixin {
-
-	@Shadow public abstract void keyPress(long l, int i, int j, int k, int m);
-
 	@Inject(at = @At("HEAD"), method = "keyPress")
 	private void keyPress(long l, int i, int j, int k, int m, CallbackInfo ci) {
 		switch (k) {

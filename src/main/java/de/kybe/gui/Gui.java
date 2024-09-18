@@ -18,18 +18,19 @@ import de.kybe.Kybe;
 import de.kybe.gui.components.CategoryEnum;
 import de.kybe.gui.components.modules.Module;
 import de.kybe.gui.components.modules.ToggleableModule;
-import de.kybe.gui.components.renderers.catagory.CategoryRenderer;
+import de.kybe.gui.components.renderers.category.CategoryRenderer;
 import de.kybe.gui.components.renderers.modules.ModuleRenderer;
 import de.kybe.gui.components.renderers.modules.ToggleableModuleRenderer;
 import de.kybe.gui.components.renderers.settings.BooleanSettingRenderer;
+import de.kybe.gui.components.renderers.settings.NumberSettingRenderer;
 import de.kybe.gui.components.settings.BooleanSetting;
+import de.kybe.gui.components.settings.NumberSetting;
 import de.kybe.gui.components.settings.Setting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.lwjgl.glfw.GLFW;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Files;
@@ -39,7 +40,13 @@ import java.util.List;
 import static de.kybe.constants.Globals.mc;
 
 public class Gui extends Screen {
+	public static final int CATEGORY_START_Y = 0;
+	public static final int CATEGORY_SPACING = 15;
+	public static final int MODULE_START_Y = 0;
+	public static final int MODULE_SPACING = 15;
 	private static final ArrayList<Module> modules = new ArrayList<>();
+	private static final int SETTING_START_Y = 0;
+	private static final int SETTING_SPACING = 15;
 	private int selectedCategoryIndex = 0;
 	private int selectedModuleIndex = 0;
 	private int selectedSettingIndex = 0;
@@ -54,6 +61,7 @@ public class Gui extends Screen {
 		modules.add(module);
 	}
 
+	@SuppressWarnings("unused")
 	public static List<Module> getModules() {
 		return modules;
 	}
@@ -69,8 +77,6 @@ public class Gui extends Screen {
 		}
 	}
 
-	public static final int CATEGORY_START_Y = 0;
-	public static final int CATEGORY_SPACING = 15;
 	private void drawCategories(GuiGraphics guiGraphics) {
 		CategoryEnum[] categories = CategoryEnum.values();
 		for (int i = 0; i < categories.length; i++) {
@@ -81,8 +87,6 @@ public class Gui extends Screen {
 		}
 	}
 
-	public static final int MODULE_START_Y = 0;
-	public static final int MODULE_SPACING = 15;
 	private void drawModules(GuiGraphics guiGraphics) {
 		CategoryEnum selectedCategory = CategoryEnum.values()[selectedCategoryIndex];
 		List<Module> categoryModules = getModulesForCategory(selectedCategory);
@@ -99,21 +103,21 @@ public class Gui extends Screen {
 		}
 	}
 
-	private static final int SETTING_START_Y = 0;
-	private static final int SETTING_SPACING = 15;
 	private void drawSettings(GuiGraphics guiGraphics) {
 		CategoryEnum selectedCategory = CategoryEnum.values()[selectedCategoryIndex];
 		List<Module> categoryModules = getModulesForCategory(selectedCategory);
 
+		if (categoryModules.isEmpty()) return;
 		Module selectedModule = categoryModules.get(selectedModuleIndex);
 		List<Setting> settings = selectedModule.getSettings();
 
 		for (int i = 0; i < settings.size(); i++) {
 			Setting setting = settings.get(i);
 			int yPosition = SETTING_START_Y + i * SETTING_SPACING;
-
-			if (setting instanceof BooleanSetting booleanSetting) {
-				new BooleanSettingRenderer(booleanSetting).render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING , this.font);
+			if (setting instanceof NumberSetting<?> numberSetting) {
+				new NumberSettingRenderer(numberSetting).render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font);
+			} else if (setting instanceof BooleanSetting booleanSetting) {
+				new BooleanSettingRenderer(booleanSetting).render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font);
 			}
 		}
 	}
@@ -124,7 +128,24 @@ public class Gui extends Screen {
 	@Override
 	public void onClose() {
 		super.onClose();
+		resetNumberSettingEditMode();
 		saveSettings();
+	}
+
+
+	public void resetNumberSettingEditMode() {
+		CategoryEnum selectedCategory = CategoryEnum.values()[selectedCategoryIndex];
+		List<Module> categoryModules = getModulesForCategory(selectedCategory);
+
+		if (categoryModules.isEmpty()) return;
+		Module selectedModule = categoryModules.get(selectedModuleIndex);
+		List<Setting> settings = selectedModule.getSettings();
+
+		for (Setting setting : settings) {
+			if (setting instanceof NumberSetting<?> numberSetting) {
+				numberSetting.setEditMode(false);
+			}
+		}
 	}
 
 	public void saveSettings() {
@@ -141,7 +162,7 @@ public class Gui extends Screen {
 
 			String json = jsonModules.toString();
 
-			Kybe.LOGGER.info("Saving settings to: " + settingsFile.getAbsolutePath());
+			// TODO maybe remove this
 			Kybe.LOGGER.info(json);
 
 			try (FileWriter writer = new FileWriter(settingsFile)) {
@@ -152,10 +173,6 @@ public class Gui extends Screen {
 			Kybe.LOGGER.error("Failed to save settings", e);
 		}
 	}
-
-	/*
-	 * Save the settings
-	 */
 
 
 	public void loadSettings() {
@@ -170,7 +187,6 @@ public class Gui extends Screen {
 				}
 
 				JsonObject moduleObj = obj.getAsJsonObject();
-				if (modules == null) return;
 				for (Module module : modules) {
 					if (moduleObj.get("name").getAsString().equals(module.getName())) {
 						module.deserialize(moduleObj);
@@ -215,7 +231,7 @@ public class Gui extends Screen {
 					 * Return true if the module handled the keypress
 					 *
 					 *
-					 * TODO: maybe remove bollean value for handleKeyPress on an Module
+					 * TODO: maybe remove boolean value for handleKeyPress on an Module
 					 */
 					Module module = selectedCategoryModules.get(selectedModuleIndex);
 					if (module instanceof ToggleableModule toggleableModule) {
