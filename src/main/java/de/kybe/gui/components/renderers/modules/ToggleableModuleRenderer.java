@@ -1,7 +1,7 @@
 package de.kybe.gui.components.renderers.modules;
 
 
-import de.kybe.gui.components.modules.ToggleableModule;
+import de.kybe.baseModules.ToggleableModule;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 

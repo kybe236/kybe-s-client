@@ -1,6 +1,6 @@
 package de.kybe.gui.components.renderers.settings;
 
-import de.kybe.gui.components.settings.NumberSetting;
+import de.kybe.settings.NumberSetting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 

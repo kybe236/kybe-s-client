@@ -1,10 +1,10 @@
-package de.kybe.gui.components.modules;
+package de.kybe.baseModules;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.kybe.gui.components.CategoryEnum;
-import de.kybe.gui.components.settings.Setting;
+import de.kybe.settings.Setting;
 import org.lwjgl.glfw.GLFW;
 
 public class ToggleableModule extends Module {
