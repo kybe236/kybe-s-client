@@ -1,6 +1,6 @@
 package de.kybe.handlers;
 
-import de.kybe.modules.Gui;
+import de.kybe.modules.misc.Gui;
 
 public class KeyPress {
 	public static void onKeyPress(int key) {

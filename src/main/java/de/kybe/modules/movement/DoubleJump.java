@@ -1,4 +1,4 @@
-package de.kybe.modules;
+package de.kybe.modules.movement;
 
 import de.kybe.gui.Gui;
 import de.kybe.gui.components.CategoryEnum;

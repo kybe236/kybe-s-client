@@ -1,7 +1,7 @@
 package de.kybe.mixin;
 
 import de.kybe.gui.components.settings.NumberSetting;
-import de.kybe.modules.CrystalSpin;
+import de.kybe.modules.render.CrystalSpin;
 import net.minecraft.client.renderer.entity.EndCrystalRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

@@ -1,7 +1,6 @@
-package de.kybe.modules;
+package de.kybe.modules.misc;
 
 import static de.kybe.constants.Globals.mc;
-
 
 public class Gui {
 	private static final String openKombo = "kybe";

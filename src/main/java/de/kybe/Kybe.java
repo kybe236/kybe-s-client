@@ -10,8 +10,8 @@
 
 package de.kybe;
 
-import de.kybe.modules.CrystalSpin;
-import de.kybe.modules.DoubleJump;
+import de.kybe.modules.render.CrystalSpin;
+import de.kybe.modules.movement.DoubleJump;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import org.slf4j.Logger;
