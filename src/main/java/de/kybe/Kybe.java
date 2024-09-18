@@ -10,6 +10,7 @@
 
 package de.kybe;
 
+import de.kybe.modules.CrystalSpin;
 import de.kybe.modules.DoubleJump;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -23,6 +24,7 @@ public class Kybe implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		new DoubleJump();
+		new CrystalSpin();
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			DoubleJump.onTick();
 		});

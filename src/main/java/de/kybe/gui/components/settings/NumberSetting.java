@@ -6,7 +6,6 @@ import com.google.gson.JsonPrimitive;
 import org.lwjgl.glfw.GLFW;
 
 
-
 public class NumberSetting<T extends Number> extends Setting {
 	private final T min;
 	private final T max;

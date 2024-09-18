@@ -1,21 +1,16 @@
 package de.kybe.gui.components.renderers.modules;
 
+
 import de.kybe.gui.components.modules.ToggleableModule;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
 import java.awt.*;
 
-public class ToggleableModuleRenderer extends ModuleRenderer {
+import static de.kybe.gui.components.renderers.modules.ModuleRenderer.*;
 
-	ToggleableModule module;
-
-	public ToggleableModuleRenderer(ToggleableModule module) {
-		this.module = module;
-	}
-
-	@Override
-	public void render(GuiGraphics guiGraphics, int yPosition, boolean selected, Font font) {
+public class ToggleableModuleRenderer {
+	public static void render(GuiGraphics guiGraphics, int yPosition, boolean selected, Font font, ToggleableModule module) {
 		int color = (selected) ? Color.BLUE.getRGB() : Color.GRAY.getRGB();
 		color = module.isToggled() ? Color.GREEN.getRGB() : color;
 

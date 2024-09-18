@@ -3,7 +3,8 @@
 	"package": "de.kybe.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-      "KeyboardHandlerMixin"
+      	"KeyboardHandlerMixin",
+		"EndCrystalRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

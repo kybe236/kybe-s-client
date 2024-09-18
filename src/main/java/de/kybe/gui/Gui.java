@@ -96,9 +96,9 @@ public class Gui extends Screen {
 			int yPosition = MODULE_START_Y + i * MODULE_SPACING;
 
 			if (module instanceof ToggleableModule toggleableModule) {
-				new ToggleableModuleRenderer(toggleableModule).render(guiGraphics, yPosition, i == selectedModuleIndex && selection == Selection.MODULE, this.font);
+				ToggleableModuleRenderer.render(guiGraphics, yPosition, i == selectedModuleIndex && selection == Selection.MODULE, this.font, toggleableModule);
 			} else if (module instanceof Module md) {
-				new ModuleRenderer(md).render(guiGraphics, yPosition, i == selectedModuleIndex && selection == Selection.MODULE, this.font);
+				ModuleRenderer.render(guiGraphics, yPosition, i == selectedModuleIndex && selection == Selection.MODULE, this.font, md);
 			}
 		}
 	}
@@ -115,9 +115,9 @@ public class Gui extends Screen {
 			Setting setting = settings.get(i);
 			int yPosition = SETTING_START_Y + i * SETTING_SPACING;
 			if (setting instanceof NumberSetting<?> numberSetting) {
-				new NumberSettingRenderer(numberSetting).render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font);
+				NumberSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, numberSetting);
 			} else if (setting instanceof BooleanSetting booleanSetting) {
-				new BooleanSettingRenderer(booleanSetting).render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font);
+				BooleanSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, booleanSetting);
 			}
 		}
 	}
