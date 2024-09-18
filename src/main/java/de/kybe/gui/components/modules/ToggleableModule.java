@@ -3,6 +3,7 @@ package de.kybe.gui.components.modules;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import de.kybe.Kybe;
 import de.kybe.gui.components.CategoryEnum;
 import de.kybe.gui.components.settings.Setting;
 import org.lwjgl.glfw.GLFW;

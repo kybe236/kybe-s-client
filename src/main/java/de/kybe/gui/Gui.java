@@ -18,9 +18,12 @@ import de.kybe.Kybe;
 import de.kybe.gui.components.CategoryEnum;
 import de.kybe.gui.components.modules.Module;
 import de.kybe.gui.components.modules.ToggleableModule;
+import de.kybe.gui.components.renderers.catagory.CategoryRenderer;
+import de.kybe.gui.components.renderers.modules.ModuleRenderer;
+import de.kybe.gui.components.renderers.modules.ToggleableModuleRenderer;
+import de.kybe.gui.components.renderers.settings.BooleanSettingRenderer;
 import de.kybe.gui.components.settings.BooleanSetting;
 import de.kybe.gui.components.settings.Setting;
-import de.kybe.modules.DoubleJump;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -32,32 +35,11 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static de.kybe.constants.Globals.mc;
 
 public class Gui extends Screen {
-	public static final int CATEGORY_START_X = 0;
-	public static final int CATEGORY_START_Y = 0;
-	public static final int CATEGORY_SPACING = 15;
-	public static final int CATEGORY_WIDTH = 100;
-	public static final int CATEGORY_HEIGHT = 15;
-
-	public static final int MODULE_START_X = 100;
-	public static final int MODULE_START_Y = 0;
-	public static final int MODULE_SPACING = 15;
-	public static final int MODULE_WIDTH = 100;
-	public static final int MODULE_HEIGHT = 15;
-
-	public static final int SETTING_START_X = 200;
-	public static final int SETTING_START_Y = 0;
-	public static final int SETTING_SPACING = 15;
-	public static final int SETTING_WIDTH = 100;
-	public static final int SETTING_HEIGHT = 15;
-
-	private static final float FONT_SCALE = 0.75f;
-
-	private final List<Module> modules;
+	private static final ArrayList<Module> modules = new ArrayList<>();
 	private int selectedCategoryIndex = 0;
 	private int selectedModuleIndex = 0;
 	private int selectedSettingIndex = 0;
@@ -65,16 +47,14 @@ public class Gui extends Screen {
 
 	public Gui() {
 		super(Component.literal("Kybe Client"));
-
-		modules = loadCategories();
 		loadSettings();
 	}
 
-	private List<Module> loadCategories() {
-		ArrayList<Module> modules = new ArrayList<>();
+	public static void addModule(Module module) {
+		modules.add(module);
+	}
 
-		modules.add(DoubleJump.load());
-
+	public static List<Module> getModules() {
 		return modules;
 	}
 
@@ -89,20 +69,20 @@ public class Gui extends Screen {
 		}
 	}
 
+	public static final int CATEGORY_START_Y = 0;
+	public static final int CATEGORY_SPACING = 15;
 	private void drawCategories(GuiGraphics guiGraphics) {
 		CategoryEnum[] categories = CategoryEnum.values();
 		for (int i = 0; i < categories.length; i++) {
 			CategoryEnum category = categories[i];
 			int yPosition = CATEGORY_START_Y + i * CATEGORY_SPACING;
 
-			int color = (i == selectedCategoryIndex && selection == Selection.CATEGORY) ? Color.BLUE.getRGB() : Color.GRAY.getRGB();
-			guiGraphics.fill(CATEGORY_START_X, yPosition, CATEGORY_START_X + CATEGORY_WIDTH, yPosition + CATEGORY_HEIGHT, color);
-
-			int textYPosition = yPosition + (CATEGORY_HEIGHT / 2) - (this.font.lineHeight / 2);
-			guiGraphics.drawCenteredString(this.font, category.name(), CATEGORY_START_X + CATEGORY_WIDTH / 2, textYPosition, Color.WHITE.getRGB());
+			new CategoryRenderer(category).render(guiGraphics, yPosition, i == selectedCategoryIndex && selection == Selection.CATEGORY, this.font);
 		}
 	}
 
+	public static final int MODULE_START_Y = 0;
+	public static final int MODULE_SPACING = 15;
 	private void drawModules(GuiGraphics guiGraphics) {
 		CategoryEnum selectedCategory = CategoryEnum.values()[selectedCategoryIndex];
 		List<Module> categoryModules = getModulesForCategory(selectedCategory);
@@ -111,17 +91,16 @@ public class Gui extends Screen {
 			Module module = categoryModules.get(i);
 			int yPosition = MODULE_START_Y + i * MODULE_SPACING;
 
-			int color = (i == selectedModuleIndex && selection == Selection.MODULE) ? Color.BLUE.getRGB() : Color.GRAY.getRGB();
 			if (module instanceof ToggleableModule toggleableModule) {
-				color = toggleableModule.isToggled() ? Color.GREEN.getRGB() : color;
+				new ToggleableModuleRenderer(toggleableModule).render(guiGraphics, yPosition, i == selectedModuleIndex && selection == Selection.MODULE, this.font);
+			} else if (module instanceof Module md) {
+				new ModuleRenderer(md).render(guiGraphics, yPosition, i == selectedModuleIndex && selection == Selection.MODULE, this.font);
 			}
-			guiGraphics.fill(MODULE_START_X, yPosition, MODULE_START_X + MODULE_WIDTH, yPosition + MODULE_HEIGHT, color);
-
-			int textYPosition = yPosition + (MODULE_HEIGHT / 2) - (this.font.lineHeight / 2);
-			guiGraphics.drawCenteredString(this.font, module.getName(), MODULE_START_X + MODULE_WIDTH / 2, textYPosition, Color.WHITE.getRGB());
 		}
 	}
 
+	private static final int SETTING_START_Y = 0;
+	private static final int SETTING_SPACING = 15;
 	private void drawSettings(GuiGraphics guiGraphics) {
 		CategoryEnum selectedCategory = CategoryEnum.values()[selectedCategoryIndex];
 		List<Module> categoryModules = getModulesForCategory(selectedCategory);
@@ -133,13 +112,9 @@ public class Gui extends Screen {
 			Setting setting = settings.get(i);
 			int yPosition = SETTING_START_Y + i * SETTING_SPACING;
 
-			int color = (i == selectedSettingIndex && selection == Selection.SETTING) ? Color.BLUE.getRGB() : Color.GRAY.getRGB();
 			if (setting instanceof BooleanSetting booleanSetting) {
-				color = booleanSetting.isToggled() ? Color.GREEN.getRGB() : color;
+				new BooleanSettingRenderer(booleanSetting).render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING , this.font);
 			}
-			guiGraphics.fill(SETTING_START_X, yPosition, SETTING_START_X + SETTING_WIDTH, yPosition + SETTING_HEIGHT, color);
-			int textYPosition = yPosition + (SETTING_HEIGHT / 2) - (this.font.lineHeight / 2);
-			guiGraphics.drawCenteredString(this.font, setting.getName(), SETTING_START_X + SETTING_WIDTH / 2, textYPosition, Color.WHITE.getRGB());
 		}
 	}
 

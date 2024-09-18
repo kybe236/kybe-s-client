@@ -11,10 +11,8 @@
 package de.kybe;
 
 import de.kybe.modules.DoubleJump;
-import de.kybe.modules.Gui;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.util.profiling.jfr.event.PacketEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +22,7 @@ public class Kybe implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		new DoubleJump();
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			DoubleJump.onTick();
 		});

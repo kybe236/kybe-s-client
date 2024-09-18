@@ -1,7 +1,6 @@
 package de.kybe.mixin;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import de.kybe.Kybe;
 import de.kybe.handlers.KeyPress;
 import net.minecraft.client.KeyboardHandler;
 import org.spongepowered.asm.mixin.Mixin;
