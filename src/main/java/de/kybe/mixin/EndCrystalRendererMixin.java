@@ -15,7 +15,7 @@ public abstract class EndCrystalRendererMixin {
 	public float modifyRotation(float f) {
 		if (CrystalSpin.crystalSpin.isToggled()) {
 			//noinspection unchecked
-			return f * ((NumberSetting<Float>) CrystalSpin.crystalSpin.getSettings().get(0)).getValue();
+			return f * ((NumberSetting<Float>) CrystalSpin.crystalSpin.getSettings().getFirst()).getValue();
 		}
 		return f;
 	}

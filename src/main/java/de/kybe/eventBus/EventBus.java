@@ -11,17 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventBus {
-	public static<T extends BaseEvent> void broadcast(T event) {
+	public static<T extends BaseEvent> void broadcast(T event, Execution execution) {
 		String packetName = "de.kybe.modules";
 		try {
 			List<Class<?>> classes = getClasses(packetName);
 
 			for (Class<?> clazz : classes) {
 				Method[] methods = clazz.getDeclaredMethods();
-
 				for (Method method : methods) {
 					if (method.isAnnotationPresent(Subscribe.class)) {
+						if (Execution.ALL != method.getAnnotation(Subscribe.class).execution()) {
+							if (execution != method.getAnnotation(Subscribe.class).execution()) continue;
+						}
 						Class<?>[] paramTypes = method.getParameterTypes();
+
 						if (paramTypes.length == 1 && paramTypes[0].isAssignableFrom(event.getClass()) && Modifier.isStatic(method.getModifiers())) {
 							method.invoke(null, event);
 						}

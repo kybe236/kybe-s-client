@@ -13,7 +13,6 @@ package de.kybe;
 import de.kybe.modules.render.CrystalSpin;
 import de.kybe.modules.movement.DoubleJump;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Minecraft;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +21,7 @@ public class Kybe implements ModInitializer {
 	public static final String MOD_ID = "kybe";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+	@SuppressWarnings("unused")
 	private static void onEndTick(Minecraft client) {
 		DoubleJump.onTick();
 	}
@@ -31,7 +31,6 @@ public class Kybe implements ModInitializer {
 	public void onInitialize() {
 		new DoubleJump();
 		new CrystalSpin();
-		ClientTickEvents.END_CLIENT_TICK.register(Kybe::onEndTick);
 	}
 
 

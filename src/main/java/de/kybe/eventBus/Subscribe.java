@@ -8,6 +8,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Subscribe {
-	@SuppressWarnings("unused") int priority() default 1;
 	Execution execution() default Execution.PRE;
 }
