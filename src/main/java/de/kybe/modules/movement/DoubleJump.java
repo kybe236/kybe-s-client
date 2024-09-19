@@ -1,6 +1,8 @@
 package de.kybe.modules.movement;
 
+import de.kybe.Kybe;
 import de.kybe.eventBus.Subscribe;
+import de.kybe.eventBus.events.EventTick;
 import de.kybe.gui.Gui;
 import de.kybe.gui.CategoryEnum;
 import de.kybe.baseModules.ToggleableModule;
@@ -15,9 +17,10 @@ public class DoubleJump {
 	}
 
 	@Subscribe
-	public static void onTick() {
+	public static void onTick(EventTick ignore) {
+		Kybe.LOGGER.info("DoubleJump.onTick");
 		if (mc.player != null && !mc.player.onGround() && mc.options.keyJump.isDown() && doubleJump.isToggled()) {
-			mc.player.setJumping(true);
+			mc.player.jumpFromGround();
 		}
 	}
 }
