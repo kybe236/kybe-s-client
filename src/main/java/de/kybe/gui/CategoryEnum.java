@@ -1,4 +1,4 @@
-package de.kybe.gui.components;
+package de.kybe.gui;
 
 public enum CategoryEnum {
 	MOVEMENT,

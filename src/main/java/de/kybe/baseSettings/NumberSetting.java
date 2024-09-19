@@ -1,4 +1,4 @@
-package de.kybe.settings;
+package de.kybe.baseSettings;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

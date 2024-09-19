@@ -1,7 +1,7 @@
 package de.kybe.modules.movement;
 
 import de.kybe.gui.Gui;
-import de.kybe.gui.components.CategoryEnum;
+import de.kybe.gui.CategoryEnum;
 import de.kybe.baseModules.ToggleableModule;
 
 import static de.kybe.constants.Globals.mc;

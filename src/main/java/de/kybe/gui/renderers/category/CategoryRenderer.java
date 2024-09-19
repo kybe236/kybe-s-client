@@ -1,6 +1,6 @@
-package de.kybe.gui.components.renderers.category;
+package de.kybe.gui.renderers.category;
 
-import de.kybe.gui.components.CategoryEnum;
+import de.kybe.gui.CategoryEnum;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 

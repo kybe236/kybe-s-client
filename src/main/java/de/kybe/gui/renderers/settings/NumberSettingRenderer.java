@@ -1,6 +1,6 @@
-package de.kybe.gui.components.renderers.settings;
+package de.kybe.gui.renderers.settings;
 
-import de.kybe.settings.NumberSetting;
+import de.kybe.baseSettings.NumberSetting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
@@ -12,7 +12,7 @@ public class NumberSettingRenderer {
 	public static final int SETTING_HEIGHT = 15;
 
 
-	public static void render(GuiGraphics guiGraphics, int yPosition, boolean selected, Font font, NumberSetting setting) {
+	public static void render(GuiGraphics guiGraphics, int yPosition, boolean selected, Font font, NumberSetting<?> setting) {
 		int color = selected ? Color.BLUE.getRGB() : Color.GRAY.getRGB();
 		color = setting.isInEditMode() ? Color.CYAN.getRGB() : color;
 		guiGraphics.fill(SETTING_START_X, yPosition, SETTING_START_X + SETTING_WIDTH, yPosition + SETTING_HEIGHT, color);

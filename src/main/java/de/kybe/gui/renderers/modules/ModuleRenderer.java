@@ -1,4 +1,4 @@
-package de.kybe.gui.components.renderers.modules;
+package de.kybe.gui.renderers.modules;
 
 import de.kybe.baseModules.Module;
 import net.minecraft.client.gui.Font;

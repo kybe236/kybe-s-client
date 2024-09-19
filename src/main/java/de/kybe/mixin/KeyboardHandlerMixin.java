@@ -1,6 +1,9 @@
 package de.kybe.mixin;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import de.kybe.eventBus.EventBus;
+import de.kybe.eventBus.events.BaseEvent;
+import de.kybe.eventBus.events.KeyboardEvent;
 import de.kybe.handlers.KeyPress;
 import net.minecraft.client.KeyboardHandler;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,11 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class KeyboardHandlerMixin {
 	@Inject(at = @At("HEAD"), method = "keyPress")
 	private void keyPress(long l, int i, int j, int k, int m, CallbackInfo ci) {
-		switch (k) {
-			case 0 -> KeyPress.onKeyPress(i);
-			case 1 -> KeyPress.onKeyRelease(i);
-			case 2 -> KeyPress.onKeyHold(i);
-		}
+		EventBus.broadcast(new BaseEvent());
+		EventBus.broadcast(new KeyboardEvent());
 
 		if (k == 0) {
 			String character = InputConstants.getKey(i, j).getDisplayName().getString().toLowerCase();

@@ -1,4 +1,4 @@
-package de.kybe.gui.components.renderers.modules;
+package de.kybe.gui.renderers.modules;
 
 
 import de.kybe.baseModules.ToggleableModule;
@@ -7,11 +7,12 @@ import net.minecraft.client.gui.GuiGraphics;
 
 import java.awt.*;
 
-import static de.kybe.gui.components.renderers.modules.ModuleRenderer.*;
+import static de.kybe.gui.renderers.modules.ModuleRenderer.*;
 
 public class ToggleableModuleRenderer {
 	public static void render(GuiGraphics guiGraphics, int yPosition, boolean selected, Font font, ToggleableModule module) {
 		int color = (selected) ? Color.BLUE.getRGB() : Color.GRAY.getRGB();
+		//noinspection DuplicatedCode
 		color = module.isToggled() ? Color.GREEN.getRGB() : color;
 
 		guiGraphics.fill(MODULE_START_X, yPosition, MODULE_START_X + MODULE_WIDTH, yPosition + MODULE_HEIGHT, color);
