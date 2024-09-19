@@ -18,7 +18,6 @@ public class DoubleJump {
 
 	@Subscribe
 	public static void onTick(EventTick ignore) {
-		Kybe.LOGGER.info("DoubleJump.onTick");
 		if (mc.player != null && !mc.player.onGround() && mc.options.keyJump.isDown() && doubleJump.isToggled()) {
 			mc.player.jumpFromGround();
 		}
