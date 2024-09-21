@@ -9,10 +9,10 @@ public class CrystalSpin {
 	public static ToggleableModule crystalSpin = new ToggleableModule("CrystalSpin", CategoryEnum.RENDER);
 
 	public CrystalSpin() {
-		crystalSpin.addSetting(new NumberSetting<>("SidewaysSpeed", 1f, -20f, 20f, 0.5f));
-		crystalSpin.addSetting(new NumberSetting<>("f", 1f, -20f, 20f, 0.5f));
-		crystalSpin.addSetting(new NumberSetting<>("g", 1f, -20f, 20f, 0.5f));
-		crystalSpin.addSetting(new NumberSetting<>("h", 1f, -20f, 20f, 0.5f));
+		crystalSpin.addSetting(new NumberSetting<>("SidewaysSpeed", 1f, -20f, 20f, 0.1f));
+		crystalSpin.addSetting(new NumberSetting<>("f", 1f, -20f, 20f, 0.1f));
+		crystalSpin.addSetting(new NumberSetting<>("g", 1f, -20f, 20f, 0.1f));
+		crystalSpin.addSetting(new NumberSetting<>("h", 1f, -20f, 20f, 0.1f));
 
 		Gui.addModule(crystalSpin);
 	}
