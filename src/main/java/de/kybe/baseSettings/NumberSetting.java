@@ -58,6 +58,12 @@ public class NumberSetting<T extends Number> extends Setting {
 
 	@Override
 	public boolean handleKeyPress(int key) {
+		if (key == GLFW.GLFW_KEY_DOWN && isInEditMode()) {
+			return true;
+		}
+		if (key == GLFW.GLFW_KEY_UP && isInEditMode()) {
+			return true;
+		}
 		if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_KP_ENTER) {
 			toggleEditMode();
 			return true;

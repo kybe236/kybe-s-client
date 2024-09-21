@@ -17,6 +17,10 @@ public class EnumSetting<T extends Enum<?>> extends Setting {
 		selected = editMode;
 	}
 
+	public boolean isInEditMode() {
+		return selected;
+	}
+
 	public T getValue() {
 		return enumValue;
 	}
@@ -47,6 +51,13 @@ public class EnumSetting<T extends Enum<?>> extends Setting {
 
 	@Override
 	public boolean handleKeyPress(int key) {
+		if (key == GLFW.GLFW_KEY_DOWN && isInEditMode()) {
+			return true;
+		}
+		if (key == GLFW.GLFW_KEY_UP && isInEditMode()) {
+			return true;
+		}
+
 		if (key == GLFW.GLFW_KEY_ENTER) {
 			selected = !selected;
 			return true;

@@ -10,6 +10,10 @@ public class CrystalSpin {
 
 	public CrystalSpin() {
 		crystalSpin.addSetting(new NumberSetting<>("SidewaysSpeed", 5f, 0.1f, 50f, 0.5f));
+		crystalSpin.addSetting(new NumberSetting<>("f", 5f, 0.1f, 50f, 0.5f));
+		crystalSpin.addSetting(new NumberSetting<>("g", 5f, 0.1f, 50f, 0.5f));
+		crystalSpin.addSetting(new NumberSetting<>("h", 5f, 0.1f, 50f, 0.5f));
+
 		Gui.addModule(crystalSpin);
 	}
 }

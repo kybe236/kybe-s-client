@@ -10,16 +10,19 @@
 
 package de.kybe;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import de.kybe.modules.Test;
 import de.kybe.modules.render.CrystalSpin;
 import de.kybe.modules.movement.DoubleJump;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.client.KeyMapping;
+import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 public class Kybe implements ModInitializer {
 	public static final String MOD_ID = "kybe";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static KeyMapping keyMapping = new KeyMapping("key.kybe.open", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "category.kybe");
 
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	@Override
@@ -28,6 +31,4 @@ public class Kybe implements ModInitializer {
 		new CrystalSpin();
 		new Test();
 	}
-
-
 }

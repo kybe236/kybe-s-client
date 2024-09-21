@@ -27,6 +27,16 @@ public class ToggleableModule extends Module {
 		this.toggled = toggled;
 	}
 
+	public Setting get(String name) {
+		for (Setting setting : this.getSettings()) {
+			if (setting.getName().equals(name)) {
+				return setting;
+			}
+		}
+
+		return null;
+	}
+
 	@Override
 	public boolean handleKeyPress(int key) {
 		if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_KP_ENTER) {

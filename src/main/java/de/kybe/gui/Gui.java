@@ -55,6 +55,7 @@ public class Gui extends Screen {
 
 	public Gui() {
 		super(Component.literal("Kybe Client"));
+		loadSettings();
 	}
 
 	public static void addModule(Module module) {
@@ -68,7 +69,6 @@ public class Gui extends Screen {
 
 	@Override
 	protected void init() {
-		loadSettings();
 		super.init();
 	}
 

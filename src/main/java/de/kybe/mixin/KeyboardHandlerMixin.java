@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import de.kybe.eventBus.EventBus;
 import de.kybe.eventBus.Execution;
 import de.kybe.eventBus.events.KeyboardEvent.KeyboardEvent;
+import de.kybe.eventBus.events.KeyboardEvent.RawKeyboardEvent;
 import de.kybe.eventBus.events.typeCharEvent.TypeCharEvent;
 import net.minecraft.client.KeyboardHandler;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,6 +18,12 @@ public abstract class KeyboardHandlerMixin {
 	private void keyPressStart(long l, int i, int j, int k, int m, CallbackInfo ci) {
 		if (i == 2) {
 			return;
+		}
+
+		RawKeyboardEvent rke = new RawKeyboardEvent(l, i, j, k, m, k == 0 ? RawKeyboardEvent.Type.PRESS : RawKeyboardEvent.Type.RELEASE);
+		EventBus.broadcast(rke, Execution.PRE);
+		if (rke.isCancel()) {
+			ci.cancel();
 		}
 
 		KeyboardEvent kpe = new KeyboardEvent(i, k == 0 ? KeyboardEvent.Type.PRESS : KeyboardEvent.Type.RELEASE);
