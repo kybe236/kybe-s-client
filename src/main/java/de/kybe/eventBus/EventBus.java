@@ -2,6 +2,10 @@ package de.kybe.eventBus;
 
 import de.kybe.Kybe;
 import de.kybe.eventBus.events.BaseEvent;
+import de.kybe.modules.Test;
+import de.kybe.modules.misc.Gui;
+import de.kybe.modules.movement.DoubleJump;
+import de.kybe.modules.render.CrystalSpin;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -14,7 +18,11 @@ public class EventBus {
 	public static<T extends BaseEvent> void broadcast(T event, Execution execution) {
 		String packetName = "de.kybe.modules";
 		try {
-			List<Class<?>> classes = getClasses(packetName);
+			List<Class<?>> classes = new ArrayList<>();
+			classes.add(Gui.class);
+			classes.add(Test.class);
+			classes.add(DoubleJump.class);
+			classes.add(CrystalSpin.class);
 
 			for (Class<?> clazz : classes) {
 				Method[] methods = clazz.getDeclaredMethods();
