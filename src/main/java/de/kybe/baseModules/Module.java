@@ -13,6 +13,7 @@ package de.kybe.baseModules;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import de.kybe.Kybe;
 import de.kybe.gui.CategoryEnum;
 import de.kybe.baseSettings.Setting;
 
@@ -72,7 +73,7 @@ public class Module {
 	public void deserialize(JsonObject obj) {
 		if (!obj.get("category").getAsString().equals(this.category.name())) return;
 		if (!obj.has("name") || !obj.get("name").getAsString().equals(this.getName())) return;
-
+		
 		//noinspection DuplicatedCode
 		if (obj.has("settings")) {
 			JsonArray settings = obj.getAsJsonArray("settings");

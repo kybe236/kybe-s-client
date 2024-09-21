@@ -12,21 +12,20 @@ package de.kybe.gui;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import de.kybe.Kybe;
 import de.kybe.baseModules.Module;
 import de.kybe.baseModules.ToggleableModule;
+import de.kybe.baseSettings.BooleanSetting;
 import de.kybe.baseSettings.EnumSetting;
+import de.kybe.baseSettings.NumberSetting;
+import de.kybe.baseSettings.Setting;
 import de.kybe.gui.renderers.category.CategoryRenderer;
 import de.kybe.gui.renderers.modules.ModuleRenderer;
 import de.kybe.gui.renderers.modules.ToggleableModuleRenderer;
 import de.kybe.gui.renderers.settings.BooleanSettingRenderer;
 import de.kybe.gui.renderers.settings.EnumSettingRenderer;
 import de.kybe.gui.renderers.settings.NumberSettingRenderer;
-import de.kybe.baseSettings.BooleanSetting;
-import de.kybe.baseSettings.NumberSetting;
-import de.kybe.baseSettings.Setting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -37,6 +36,7 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static de.kybe.constants.Globals.mc;
 
@@ -193,16 +193,17 @@ public class Gui extends Screen {
 			File settingsFile = new File(mc.gameDirectory, "settings.json");
 
 			JsonArray jsonModules = JsonParser.parseReader(Files.newBufferedReader(settingsFile.toPath())).getAsJsonArray();
+			List<JsonElement> jsonModulesList = jsonModules.asList();
 
-			for (JsonElement obj : jsonModules.asList()) {
+			for (JsonElement obj : jsonModulesList) {
 				if (!obj.isJsonObject()) {
 					continue;
 				}
 
-				JsonObject moduleObj = obj.getAsJsonObject();
 				for (Module module : modules) {
-					if (moduleObj.get("name").getAsString().equals(module.getName())) {
-						module.deserialize(moduleObj);
+					if (Objects.equals(module.getName(), obj.getAsJsonObject().get("name").getAsString())) {
+						Kybe.LOGGER.info("Deserializing " + module.getName());
+						module.deserialize(obj.getAsJsonObject());
 					}
 				}
 			}

@@ -3,6 +3,8 @@ package de.kybe.baseModules;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import de.kybe.Kybe;
+import de.kybe.eventBus.events.KeyboardEvent.KeyboardEvent;
 import de.kybe.gui.CategoryEnum;
 import de.kybe.baseSettings.Setting;
 import org.lwjgl.glfw.GLFW;
@@ -70,6 +72,7 @@ public class ToggleableModule extends Module {
 		if (!obj.has("name") || !obj.get("name").getAsString().equals(this.getName())) return;
 		if (!obj.has("toggled")) return;
 
+		this.setToggled(obj.get("toggled").getAsBoolean());
 
 		//noinspection DuplicatedCode
 		if (obj.has("settings")) {
@@ -79,6 +82,7 @@ public class ToggleableModule extends Module {
 					if (settingObj.isJsonObject()) {
 						JsonObject settingJson = settingObj.getAsJsonObject();
 						if (settingJson.has("name") && settingJson.get("name").getAsString().equals(setting.getName())) {
+							Kybe.LOGGER.info("Deserializing setting: " + setting.getName());
 							setting.deserialize(settingJson);
 						}
 					}

@@ -1,7 +1,6 @@
 package de.kybe.baseSettings;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.lwjgl.glfw.GLFW;
 
@@ -177,23 +176,18 @@ public class NumberSetting<T extends Number> extends Setting {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void deserializeValue(JsonElement jsonElement) {
-		if (jsonElement.isJsonObject()) {
-			JsonObject obj = jsonElement.getAsJsonObject();
-			if (obj.has("value")) {
-				if (this.getValue() instanceof Double) {
-					this.setValue((T) Double.valueOf(obj.get("value").getAsString()));
-				} else if (this.getValue() instanceof Float) {
-					this.setValue((T) Float.valueOf(obj.get("value").getAsString()));
-				} else if (this.getValue() instanceof Long) {
-					this.setValue((T) Long.valueOf(obj.get("value").getAsString()));
-				} else if (this.getValue() instanceof Integer) {
-					this.setValue((T) Integer.valueOf(obj.get("value").getAsString()));
-				} else if (this.getValue() instanceof Short) {
-					this.setValue((T) Short.valueOf(obj.get("value").getAsString()));
-				} else if (this.getValue() instanceof Byte) {
-					this.setValue((T) Byte.valueOf(obj.get("value").getAsString()));
-				}
-			}
+		if (this.getValue() instanceof Double) {
+			this.setValue((T) Double.valueOf(jsonElement.getAsDouble()));
+		} else if (this.getValue() instanceof Float) {
+			this.setValue((T) Float.valueOf(jsonElement.getAsFloat()));
+		} else if (this.getValue() instanceof Long) {
+			this.setValue((T) Long.valueOf(jsonElement.getAsLong()));
+		} else if (this.getValue() instanceof Integer) {
+			this.setValue((T) Integer.valueOf(jsonElement.getAsInt()));
+		} else if (this.getValue() instanceof Short) {
+			this.setValue((T) Short.valueOf(jsonElement.getAsShort()));
+		} else if (this.getValue() instanceof Byte) {
+			this.setValue((T) Byte.valueOf(jsonElement.getAsByte()));
 		}
 	}
 }
