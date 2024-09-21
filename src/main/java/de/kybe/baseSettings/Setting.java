@@ -12,7 +12,6 @@ package de.kybe.baseSettings;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import de.kybe.Kybe;
 
 /*
  * Base Settings class (Used for all settings)
@@ -46,7 +45,6 @@ public abstract class Setting {
 
 	public void deserialize(JsonObject obj) {
 		if (obj.has("value")) {
-			Kybe.LOGGER.info("Deserializing " + obj.get("value").toString());
 			this.deserializeValue(obj.get("value"));
 		}
 	}

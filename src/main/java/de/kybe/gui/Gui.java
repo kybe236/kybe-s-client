@@ -202,7 +202,6 @@ public class Gui extends Screen {
 
 				for (Module module : modules) {
 					if (Objects.equals(module.getName(), obj.getAsJsonObject().get("name").getAsString())) {
-						Kybe.LOGGER.info("Deserializing " + module.getName());
 						module.deserialize(obj.getAsJsonObject());
 					}
 				}
