@@ -15,6 +15,7 @@ public class DoubleJump {
 		Gui.addModule(doubleJump);
 	}
 
+	@SuppressWarnings("unused")
 	@Subscribe
 	public static void onTick(EventTick ignore) {
 		if (mc.player != null && !mc.player.onGround() && mc.options.keyJump.isDown() && doubleJump.isToggled()) {

@@ -27,9 +27,9 @@ public class EnumSetting<T extends Enum<?>> extends Setting {
 
 	public void next() {
 		if (enumValue == null) {
-			enumValue = (T) enumValue.getDeclaringClass().getEnumConstants()[0];
 			return;
 		}
+		@SuppressWarnings("unchecked")
 		T[] values = (T[]) enumValue.getDeclaringClass().getEnumConstants();
 		int index = (enumValue.ordinal() + 1) % values.length;
 		enumValue = values[index];
@@ -39,6 +39,7 @@ public class EnumSetting<T extends Enum<?>> extends Setting {
 		if (enumValue == null) {
 			return;
 		}
+		@SuppressWarnings("unchecked")
 		T[] values = (T[]) enumValue.getDeclaringClass().getEnumConstants();
 		int index = (enumValue.ordinal() - 1 + values.length) % values.length;
 		enumValue = values[index];
@@ -81,8 +82,10 @@ public class EnumSetting<T extends Enum<?>> extends Setting {
 		}
 
 		try {
+			//noinspection unchecked
 			enumValue = (T) Enum.valueOf(enumValue.getClass(), enumName);
 		} catch (IllegalArgumentException e) {
+			//noinspection CallToPrintStackTrace
 			e.printStackTrace();
 		}
 	}

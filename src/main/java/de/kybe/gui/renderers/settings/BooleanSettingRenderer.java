@@ -6,8 +6,6 @@ import net.minecraft.client.gui.GuiGraphics;
 
 import java.awt.*;
 
-import static de.kybe.gui.renderers.modules.ModuleRenderer.MODULE_START_X;
-import static de.kybe.gui.renderers.modules.ModuleRenderer.MODULE_WIDTH;
 import static de.kybe.gui.renderers.settings.NumberSettingRenderer.*;
 
 public class BooleanSettingRenderer {
