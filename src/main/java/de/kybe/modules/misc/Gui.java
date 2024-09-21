@@ -14,7 +14,7 @@ public class Gui {
 
 	@Subscribe
 	public static void onCharTyped(TypeCharEvent event) {
-		if (event.getType() != KeyboardEvent.Type.RELEASE) {
+		if (event.getType() != KeyboardEvent.Type.RELEASE || mc.screen != null) {
 			return;
 		}
 
