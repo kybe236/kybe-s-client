@@ -10,6 +10,7 @@
 
 package de.kybe;
 
+import de.kybe.modules.Test;
 import de.kybe.modules.render.CrystalSpin;
 import de.kybe.modules.movement.DoubleJump;
 import net.fabricmc.api.ModInitializer;
@@ -25,6 +26,7 @@ public class Kybe implements ModInitializer {
 	public void onInitialize() {
 		new DoubleJump();
 		new CrystalSpin();
+		new Test();
 	}
 
 

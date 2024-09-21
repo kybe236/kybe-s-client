@@ -17,10 +17,12 @@ import com.google.gson.JsonParser;
 import de.kybe.Kybe;
 import de.kybe.baseModules.Module;
 import de.kybe.baseModules.ToggleableModule;
+import de.kybe.baseSettings.EnumSetting;
 import de.kybe.gui.renderers.category.CategoryRenderer;
 import de.kybe.gui.renderers.modules.ModuleRenderer;
 import de.kybe.gui.renderers.modules.ToggleableModuleRenderer;
 import de.kybe.gui.renderers.settings.BooleanSettingRenderer;
+import de.kybe.gui.renderers.settings.EnumSettingRenderer;
 import de.kybe.gui.renderers.settings.NumberSettingRenderer;
 import de.kybe.baseSettings.BooleanSetting;
 import de.kybe.baseSettings.NumberSetting;
@@ -118,10 +120,15 @@ public class Gui extends Screen {
 		for (int i = 0; i < settings.size(); i++) {
 			Setting setting = settings.get(i);
 			int yPosition = SETTING_START_Y + i * SETTING_SPACING;
-			if (setting instanceof NumberSetting<?> numberSetting) {
-				NumberSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, numberSetting);
-			} else if (setting instanceof BooleanSetting booleanSetting) {
-				BooleanSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, booleanSetting);
+			switch (setting) {
+				case NumberSetting<?> numberSetting ->
+						NumberSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, numberSetting);
+				case BooleanSetting booleanSetting ->
+						BooleanSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, booleanSetting);
+				case EnumSetting<?> enumSetting ->
+						EnumSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, enumSetting);
+				case null, default ->
+						guiGraphics.drawString(this.font, "NO RENDERER FOUND", 200, yPosition, 0xFFFFFFFF);
 			}
 		}
 	}
@@ -132,12 +139,12 @@ public class Gui extends Screen {
 	@Override
 	public void onClose() {
 		super.onClose();
-		resetNumberSettingEditMode();
+		resetEditMode();
 		saveSettings();
 	}
 
 
-	public void resetNumberSettingEditMode() {
+	public void resetEditMode() {
 		CategoryEnum selectedCategory = CategoryEnum.values()[selectedCategoryIndex];
 		List<Module> categoryModules = getModulesForCategory(selectedCategory);
 
@@ -148,6 +155,8 @@ public class Gui extends Screen {
 		for (Setting setting : settings) {
 			if (setting instanceof NumberSetting<?> numberSetting) {
 				numberSetting.setEditMode(false);
+			} else if (setting instanceof EnumSetting<?> enumSetting) {
+				enumSetting.setEditMode(false);
 			}
 		}
 	}

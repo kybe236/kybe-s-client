@@ -6,6 +6,9 @@ import net.minecraft.client.gui.GuiGraphics;
 
 import java.awt.*;
 
+import static de.kybe.gui.renderers.modules.ModuleRenderer.MODULE_START_X;
+import static de.kybe.gui.renderers.modules.ModuleRenderer.MODULE_WIDTH;
+
 public class NumberSettingRenderer {
 	public static final int SETTING_START_X = 200;
 	public static final int SETTING_WIDTH = 150;
@@ -18,6 +21,6 @@ public class NumberSettingRenderer {
 		guiGraphics.fill(SETTING_START_X, yPosition, SETTING_START_X + SETTING_WIDTH, yPosition + SETTING_HEIGHT, color);
 
 		int textYPosition = yPosition + (SETTING_HEIGHT / 2) - (font.lineHeight / 2);
-		guiGraphics.drawString(font, setting.getName() + ": " + setting.getValue(), SETTING_START_X + 5, textYPosition, Color.WHITE.getRGB());
+		guiGraphics.drawCenteredString(font, setting.getName() + ": " + setting.getValue(), SETTING_START_X + SETTING_WIDTH / 2, textYPosition, Color.WHITE.getRGB());
 	}
 }

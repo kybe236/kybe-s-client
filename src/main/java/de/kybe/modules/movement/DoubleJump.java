@@ -1,6 +1,5 @@
 package de.kybe.modules.movement;
 
-import de.kybe.Kybe;
 import de.kybe.eventBus.Subscribe;
 import de.kybe.eventBus.events.EventTick;
 import de.kybe.gui.Gui;
