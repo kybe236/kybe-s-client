@@ -37,8 +37,6 @@ public class Gui {
 			input = input.substring(1);
 		}
 
-		Kybe.LOGGER.info(input);
-
 		if (input.equals(openCombo)) {
 			event.setCancel(true);
 			mc.setScreen(new de.kybe.gui.Gui());
