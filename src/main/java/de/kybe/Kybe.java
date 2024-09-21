@@ -11,18 +11,25 @@
 package de.kybe;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import de.kybe.mixin.IKeyMapping;
+import de.kybe.mixin.IOptions;
 import de.kybe.modules.Test;
+import de.kybe.modules.misc.Gui;
 import de.kybe.modules.render.CrystalSpin;
 import de.kybe.modules.movement.DoubleJump;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.Options;
+import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 public class Kybe implements ModInitializer {
 	public static final String MOD_ID = "kybe";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static KeyMapping keyMapping = new KeyMapping("key.kybe.open", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "category.kybe");
+	public static KeyMapping keyMapping;
 
 	@SuppressWarnings("InstantiationOfUtilityClass")
 	@Override
@@ -30,5 +37,16 @@ public class Kybe implements ModInitializer {
 		new DoubleJump();
 		new CrystalSpin();
 		new Test();
+		new Gui();
+	}
+
+	public static void afterConfigInit() {
+		keyMapping =  new KeyMapping("key.kybe.open", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "category.kybe");
+		Kybe.LOGGER.info("Kybe has been initialized");
+
+		Options config = Minecraft.getInstance().options;
+
+		((IOptions) config).setKeyMappings(ArrayUtils.add(config.keyMappings, keyMapping));
+		((IKeyMapping) keyMapping).getCategorySortOrder().put("category.kybe", ((IKeyMapping) keyMapping).getCategorySortOrder().size() + 1);
 	}
 }

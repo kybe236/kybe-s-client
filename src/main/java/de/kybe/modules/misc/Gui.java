@@ -22,14 +22,12 @@ public class Gui {
 	public Gui() {
 		combo.setToggled(true);
 		module.addSetting(combo);
+		de.kybe.gui.Gui.addModule(module);
 	}
 
 	@Subscribe
 	public static void onCharTyped(TypeCharEvent event) {
-		if (combo.isToggled()) {
-			return;
-		}
-		if (event.getType() != KeyboardEvent.Type.RELEASE || mc.screen != null) {
+		if (event.getType() == KeyboardEvent.Type.RELEASE || !combo.isToggled()) {
 			return;
 		}
 
@@ -38,6 +36,8 @@ public class Gui {
 		if (input.length() > openCombo.length()) {
 			input = input.substring(1);
 		}
+
+		Kybe.LOGGER.info(input);
 
 		if (input.equals(openCombo)) {
 			event.setCancel(true);
@@ -48,7 +48,7 @@ public class Gui {
 
 	@Subscribe
 	public static void onRawKeyboard(RawKeyboardEvent event) {
-		if (keyMapping.matches(event.getI(), event.getJ())) {
+		if (keyMapping.matches(event.getI(), event.getJ()) && mc.screen == null) {
 			event.setCancel(true);
 			mc.setScreen(new de.kybe.gui.Gui());
 		}

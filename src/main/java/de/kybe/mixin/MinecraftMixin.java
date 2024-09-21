@@ -1,5 +1,6 @@
 package de.kybe.mixin;
 
+import de.kybe.Kybe;
 import de.kybe.eventBus.EventBus;
 import de.kybe.eventBus.Execution;
 import de.kybe.eventBus.events.EventTick;
@@ -27,5 +28,13 @@ public abstract class MinecraftMixin {
 	public void oneEndTick(CallbackInfo ci) {
 		EventTick event = new EventTick();
 		EventBus.broadcast(event, Execution.POST);
+	}
+
+	@Inject(
+			method = "<init>",
+			at = @At("TAIL")
+	)
+	public void onInit(CallbackInfo ci) {
+		Kybe.afterConfigInit();
 	}
 }
