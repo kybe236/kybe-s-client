@@ -1,8 +1,8 @@
 package de.kybe.modules.misc;
 
-import de.kybe.Kybe;
 import de.kybe.baseModules.Module;
 import de.kybe.baseSettings.BooleanSetting;
+import de.kybe.eventBus.EventBus;
 import de.kybe.eventBus.Subscribe;
 import de.kybe.eventBus.events.KeyboardEvent.KeyboardEvent;
 import de.kybe.eventBus.events.KeyboardEvent.RawKeyboardEvent;
@@ -22,7 +22,9 @@ public class Gui {
 	public Gui() {
 		combo.setToggled(true);
 		module.addSetting(combo);
+
 		de.kybe.gui.Gui.addModule(module);
+		EventBus.register(this);
 	}
 
 	@Subscribe

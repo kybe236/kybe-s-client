@@ -3,20 +3,36 @@ package de.kybe.baseModules;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import de.kybe.Kybe;
+import de.kybe.eventBus.EventBus;
+import de.kybe.eventBus.Subscribe;
+import de.kybe.eventBus.events.KeyboardEvent.KeyboardEvent;
 import de.kybe.gui.CategoryEnum;
 import de.kybe.baseSettings.Setting;
 import org.lwjgl.glfw.GLFW;
 
 public class ToggleableModule extends Module {
 	private boolean toggled = false;
+	int keybind;
 
 	public ToggleableModule(String name, CategoryEnum category) {
 		super(name, category);
+		EventBus.register(this);
+	}
+
+	public void setKeybind(int keybind) {
+		Kybe.LOGGER.info("Set keybind to {} for: {}", keybind, getName());
+		this.keybind = keybind;
+	}
+
+	public int getKeybind() {
+		return this.keybind;
 	}
 
 	public void toggle() {
-		toggled = !toggled;
+		this.toggled = !this.toggled;
 	}
+
 
 	public boolean isToggled() {
 		return toggled;
@@ -37,6 +53,15 @@ public class ToggleableModule extends Module {
 		return null;
 	}
 
+	@SuppressWarnings("unused")
+	@Subscribe
+	public void onKeyPress(KeyboardEvent event) {
+		KeyboardEvent.Type type = event.getType();
+		if (type == KeyboardEvent.Type.PRESS && event.getKey() == keybind) {
+			toggle();
+		}
+	}
+
 	@Override
 	public boolean handleKeyPress(int key) {
 		if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_KP_ENTER) {
@@ -52,6 +77,7 @@ public class ToggleableModule extends Module {
 		obj.addProperty("category", this.getCategory().name());
 		obj.addProperty("name", this.getName());
 		obj.addProperty("toggled", this.isToggled());
+		obj.addProperty("keybind", this.getKeybind());
 
 		//noinspection DuplicatedCode
 		if (!this.getSettings().isEmpty()) {
@@ -66,11 +92,25 @@ public class ToggleableModule extends Module {
 
 	@Override
 	public void deserialize(JsonObject obj) {
-		if (!obj.get("category").getAsString().equals(this.getCategory().name())) return;
-		if (!obj.has("name") || !obj.get("name").getAsString().equals(this.getName())) return;
-		if (!obj.has("toggled")) return;
+		if (!obj.get("category").getAsString().equals(this.getCategory().name())) {
+			Kybe.LOGGER.warn("Category mismatch in deserialization for " + this.getName());
+			return;
+		}
+		if (!obj.has("name") || !obj.get("name").getAsString().equals(this.getName())) {
+			Kybe.LOGGER.warn("Name mismatch in deserialization for " + this.getName());
+			return;
+		}
+		if (!obj.has("toggled")) {
+			Kybe.LOGGER.warn("Toggled not defined in deserialization for " + this.getName());
+			return;
+		}
+		if (!obj.has("keybind")) {
+			Kybe.LOGGER.warn("Keybind not defined in deserialization for " + this.getName());
+			return;
+		}
 
 		this.setToggled(obj.get("toggled").getAsBoolean());
+		this.keybind = obj.get("keybind").getAsInt();
 
 		//noinspection DuplicatedCode
 		if (obj.has("settings")) {

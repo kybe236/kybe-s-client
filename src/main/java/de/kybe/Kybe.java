@@ -31,10 +31,11 @@ public class Kybe implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static KeyMapping keyMapping;
 
-	@SuppressWarnings("InstantiationOfUtilityClass")
 	@Override
 	public void onInitialize() {
+		//noinspection InstantiationOfUtilityClass
 		new DoubleJump();
+		//noinspection InstantiationOfUtilityClass
 		new CrystalSpin();
 		new Test();
 		new Gui();
@@ -42,7 +43,6 @@ public class Kybe implements ModInitializer {
 
 	public static void afterConfigInit() {
 		keyMapping =  new KeyMapping("key.kybe.open", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "category.kybe");
-		Kybe.LOGGER.info("Kybe has been initialized");
 
 		Options config = Minecraft.getInstance().options;
 

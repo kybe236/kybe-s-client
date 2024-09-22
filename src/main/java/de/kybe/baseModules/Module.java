@@ -13,7 +13,6 @@ package de.kybe.baseModules;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import de.kybe.Kybe;
 import de.kybe.gui.CategoryEnum;
 import de.kybe.baseSettings.Setting;
 
@@ -38,6 +37,7 @@ public class Module {
 	@SuppressWarnings("unused")
 	public void addSetting(Setting setting) {
 		settings.add(setting);
+		setting.setParent(this);
 	}
 
 	public List<Setting> getSettings() {

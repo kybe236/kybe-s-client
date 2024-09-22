@@ -28,6 +28,9 @@ public abstract class KeyboardHandlerMixin {
 
 		KeyboardEvent kpe = new KeyboardEvent(i, k == 0 ? KeyboardEvent.Type.PRESS : KeyboardEvent.Type.RELEASE);
 		EventBus.broadcast(kpe, Execution.PRE);
+		if (kpe.isCancel()) {
+			ci.cancel();
+		}
 
 		String character = InputConstants.getKey(i, j).getDisplayName().getString().toLowerCase();
 		if (character.length() == 1) {

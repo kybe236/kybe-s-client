@@ -16,13 +16,11 @@ import com.google.gson.JsonParser;
 import de.kybe.Kybe;
 import de.kybe.baseModules.Module;
 import de.kybe.baseModules.ToggleableModule;
-import de.kybe.baseSettings.BooleanSetting;
-import de.kybe.baseSettings.EnumSetting;
-import de.kybe.baseSettings.NumberSetting;
-import de.kybe.baseSettings.Setting;
+import de.kybe.baseSettings.*;
 import de.kybe.gui.renderers.category.CategoryRenderer;
 import de.kybe.gui.renderers.modules.ModuleRenderer;
 import de.kybe.gui.renderers.modules.ToggleableModuleRenderer;
+import de.kybe.gui.renderers.settings.BindSettingRenderer;
 import de.kybe.gui.renderers.settings.BooleanSettingRenderer;
 import de.kybe.gui.renderers.settings.EnumSettingRenderer;
 import de.kybe.gui.renderers.settings.NumberSettingRenderer;
@@ -127,6 +125,8 @@ public class Gui extends Screen {
 						BooleanSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, booleanSetting);
 				case EnumSetting<?> enumSetting ->
 						EnumSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, enumSetting);
+				case BindSetting bindSetting ->
+					BindSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, bindSetting);
 				case null, default ->
 						guiGraphics.drawString(this.font, "NO RENDERER FOUND", 200, yPosition, 0xFFFFFFFF);
 			}

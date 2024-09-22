@@ -12,12 +12,14 @@ package de.kybe.baseSettings;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import de.kybe.baseModules.Module;
 
 /*
  * Base Settings class (Used for all settings)
  */
 public abstract class Setting {
 	private final String name;
+	private Module parent;
 
 	protected Setting(String name) {
 		this.name = name;
@@ -25,6 +27,14 @@ public abstract class Setting {
 
 	public String getName() {
 		return name;
+	}
+
+	public void setParent(Module module) {
+		this.parent = module;
+	}
+
+	public Module getParent() {
+		return parent;
 	}
 
 	/*

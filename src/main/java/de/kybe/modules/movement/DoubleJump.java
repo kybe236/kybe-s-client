@@ -1,5 +1,6 @@
 package de.kybe.modules.movement;
 
+import de.kybe.eventBus.EventBus;
 import de.kybe.eventBus.Subscribe;
 import de.kybe.eventBus.events.EventTick;
 import de.kybe.gui.Gui;
@@ -13,6 +14,7 @@ public class DoubleJump {
 
 	public DoubleJump() {
 		Gui.addModule(doubleJump);
+		EventBus.register(this);
 	}
 
 	@SuppressWarnings("unused")
