@@ -15,9 +15,9 @@ import static de.kybe.constants.Globals.mc;
 @SuppressWarnings("unused")
 public class Gui {
 	private static final String openCombo = "kybe";
+	static BooleanSetting combo = new BooleanSetting("Open Combo");
 	private static String input = "";
 	public Module module = new Module("Gui", CategoryEnum.MISC);
-	static BooleanSetting combo = new BooleanSetting("Open Combo");
 
 	public Gui() {
 		combo.setToggled(true);

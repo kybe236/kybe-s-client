@@ -2,8 +2,6 @@ package de.kybe.eventBus.events.KeyboardEvent;
 
 import de.kybe.eventBus.events.BaseEvent;
 
-import java.util.ArrayList;
-
 public class RawKeyboardEvent extends BaseEvent {
 	boolean cancel = false;
 	Type type;

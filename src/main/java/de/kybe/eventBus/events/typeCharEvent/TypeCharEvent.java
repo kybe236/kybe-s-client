@@ -5,8 +5,8 @@ import de.kybe.eventBus.events.KeyboardEvent.KeyboardEvent;
 
 public class TypeCharEvent extends BaseEvent {
 	private final char key;
-	private boolean cancel = false;
 	private final KeyboardEvent.Type type;
+	private boolean cancel = false;
 
 	public TypeCharEvent(char key, KeyboardEvent.Type type) {
 		this.key = key;

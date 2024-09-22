@@ -10,58 +10,54 @@ import java.util.List;
 
 public class CommandManager {
 
-    private static List<Command> commands = new ArrayList<>();
+	private static final List<Command> commands = new ArrayList<>();
 
-    public static void addCommand(Command command) {
-        commands.add(command);
-    }
+	public static void addCommand(Command command) {
+		commands.add(command);
+	}
 
-    public static List<Command> getCommands() {
-        return commands;
-    }
+	public static List<Command> getCommands() {
+		return commands;
+	}
 
-    public static boolean executeCommand(String input) {
-        if (input == null || input.isEmpty()) {
-            return false;
-        }
+	public static void executeCommand(String input) {
+		if (input == null || input.isEmpty()) {
+			return;
+		}
 
-        String rawCommand = input.substring(1);
-        String[] split = rawCommand.split(" ");
+		String rawCommand = input.substring(1);
+		String[] split = rawCommand.split(" ");
 
-        if (split.length == 0) return false;
+		if (split.length == 0) return;
 
-        String cmdName = split[0];
+		String cmdName = split[0];
 
-        // Check for matching module name first -> toggle if found
-        Module module = Gui.getModules().stream()
-                .filter(mdl -> mdl.getName().equalsIgnoreCase(cmdName))
-                .findFirst()
-                .orElse(null);
+		// Check for matching module name first -> toggle if found
+		Module module = Gui.getModuleByName(cmdName);
 
-        if(module != null && split.length == 1) {
-            if(module instanceof ToggleableModule toggleableModule) {
-                toggleableModule.toggle();
-                Gui.saveSettings();
-                ChatUtils.FAT_clientMessage("Toggled: " + module.getName() + " | " + ((ToggleableModule) module).isToggled());
-                return false;
-            }
-        }
+		if (module != null && split.length == 1) {
+			if (module instanceof ToggleableModule toggleableModule) {
+				toggleableModule.toggle();
+				Gui.saveSettings();
+				ChatUtils.FAT_clientMessage("Toggled: " + module.getName() + " | " + toggleableModule.isToggled());
+				return;
+			}
+		}
 
-        Command command = commands.stream()
-                .filter(cmd -> cmd.getAllNames().contains(cmdName))
-                .findFirst()
-                .orElse(null);
+		Command command = commands.stream()
+				.filter(cmd -> cmd.getAllNamesAndAliases().contains(cmdName))
+				.findFirst()
+				.orElse(null);
 
-        if (command == null) {
-            ChatUtils.clientWarningMessage("Command with name " + cmdName + " does not exist.");
-            return false;
-        }
+		if (command == null) {
+			ChatUtils.clientWarningMessage("Command with name " + cmdName + " does not exist.");
+			return;
+		}
 
-        String[] args = new String[split.length - 1];
-        System.arraycopy(split, 1, args, 0, split.length - 1);
+		String[] args = new String[split.length - 1];
+		System.arraycopy(split, 1, args, 0, split.length - 1);
 
-        command.execute(cmdName, args);
-        return true;
-    }
+		command.execute(cmdName, args);
+	}
 }
 

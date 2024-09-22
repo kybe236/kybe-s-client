@@ -72,6 +72,32 @@ public class Gui extends Screen {
 				.orElse(null);
 	}
 
+	public static void saveSettings() {
+		try {
+			JsonArray jsonModules = new JsonArray();
+
+			// Loop through each module and serialize it
+			for (Module module : modules) {
+				jsonModules.add(module.serialize());
+			}
+
+			// Save to a file
+			File settingsFile = new File(mc.gameDirectory, "settings.json");
+
+			String json = jsonModules.toString();
+
+			// TODO maybe remove this
+			Kybe.LOGGER.info(json);
+
+			try (FileWriter writer = new FileWriter(settingsFile)) {
+				writer.write(json);
+			}
+
+		} catch (Exception e) {
+			Kybe.LOGGER.error("Failed to save settings", e);
+		}
+	}
+
 	@Override
 	protected void init() {
 		super.init();
@@ -133,7 +159,7 @@ public class Gui extends Screen {
 				case EnumSetting<?> enumSetting ->
 						EnumSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, enumSetting);
 				case BindSetting bindSetting ->
-					BindSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, bindSetting);
+						BindSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, bindSetting);
 				case null, default ->
 						guiGraphics.drawString(this.font, "NO RENDERER FOUND", 200, yPosition, 0xFFFFFFFF);
 			}
@@ -149,7 +175,6 @@ public class Gui extends Screen {
 		resetEditMode();
 		saveSettings();
 	}
-
 
 	public void resetEditMode() {
 		CategoryEnum selectedCategory = CategoryEnum.values()[selectedCategoryIndex];
@@ -167,33 +192,6 @@ public class Gui extends Screen {
 			}
 		}
 	}
-
-	public static void saveSettings() {
-		try {
-			JsonArray jsonModules = new JsonArray();
-
-			// Loop through each module and serialize it
-			for (Module module : modules) {
-				jsonModules.add(module.serialize());
-			}
-
-			// Save to a file
-			File settingsFile = new File(mc.gameDirectory, "settings.json");
-
-			String json = jsonModules.toString();
-
-			// TODO maybe remove this
-			Kybe.LOGGER.info(json);
-
-			try (FileWriter writer = new FileWriter(settingsFile)) {
-				writer.write(json);
-			}
-
-		} catch (Exception e) {
-			Kybe.LOGGER.error("Failed to save settings", e);
-		}
-	}
-
 
 	public void loadSettings() {
 		try {

@@ -9,8 +9,9 @@ import java.util.Map;
 @Mixin(KeyMapping.class)
 public interface IKeyMapping {
 	@Accessor("CATEGORY_SORT_ORDER")
-	void setCategorySortOrder(Map<String, Integer> categorySortOrder);
-
-	@Accessor("CATEGORY_SORT_ORDER")
 	Map<String, Integer> getCategorySortOrder();
+
+	@SuppressWarnings("unused")
+	@Accessor("CATEGORY_SORT_ORDER")
+	void setCategorySortOrder(Map<String, Integer> categorySortOrder);
 }

@@ -17,8 +17,8 @@ import de.kybe.mixin.IKeyMapping;
 import de.kybe.mixin.IOptions;
 import de.kybe.modules.Test;
 import de.kybe.modules.misc.Gui;
-import de.kybe.modules.render.CrystalSpin;
 import de.kybe.modules.movement.DoubleJump;
+import de.kybe.modules.render.CrystalSpin;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -31,8 +31,17 @@ import org.slf4j.LoggerFactory;
 public class Kybe implements ModInitializer {
 	public static final String MOD_ID = "kybe";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static KeyMapping keyMapping;
 	public static final String PREFIX = "?";
+	public static KeyMapping keyMapping;
+
+	public static void afterConfigInit() {
+		keyMapping = new KeyMapping("key.kybe.open", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "category.kybe");
+
+		Options config = Minecraft.getInstance().options;
+
+		((IOptions) config).setKeyMappings(ArrayUtils.add(config.keyMappings, keyMapping));
+		((IKeyMapping) keyMapping).getCategorySortOrder().put("category.kybe", ((IKeyMapping) keyMapping).getCategorySortOrder().size() + 1);
+	}
 
 	@Override
 	public void onInitialize() {
@@ -49,14 +58,5 @@ public class Kybe implements ModInitializer {
 		CommandManager.addCommand(new Set());
 		CommandManager.addCommand(new Modules());
 		CommandManager.addCommand(new Toggle());
-	}
-
-	public static void afterConfigInit() {
-		keyMapping =  new KeyMapping("key.kybe.open", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "category.kybe");
-
-		Options config = Minecraft.getInstance().options;
-
-		((IOptions) config).setKeyMappings(ArrayUtils.add(config.keyMappings, keyMapping));
-		((IKeyMapping) keyMapping).getCategorySortOrder().put("category.kybe", ((IKeyMapping) keyMapping).getCategorySortOrder().size() + 1);
 	}
 }

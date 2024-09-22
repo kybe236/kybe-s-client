@@ -29,12 +29,12 @@ public abstract class Setting {
 		return name;
 	}
 
-	public void setParent(Module module) {
-		this.parent = module;
-	}
-
 	public Module getParent() {
 		return parent;
+	}
+
+	public void setParent(Module module) {
+		this.parent = module;
 	}
 
 	/*

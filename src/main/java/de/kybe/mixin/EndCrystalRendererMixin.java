@@ -24,7 +24,7 @@ public abstract class EndCrystalRendererMixin {
 
 	@SuppressWarnings("unchecked")
 	@ModifyArgs(method = "render(Lnet/minecraft/world/entity/boss/enderdragon/EndCrystal;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
-			at = @At(value = "INVOKE",target = "Lcom/mojang/blaze3d/vertex/PoseStack;scale(FFF)V", ordinal = 0))
+			at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;scale(FFF)V", ordinal = 0))
 	public void modifyBaseScale(Args args) {
 		if (CrystalSpin.crystalSpin.isToggled()) {
 			args.set(0, (Float) args.get(0) * ((NumberSetting<Float>) CrystalSpin.crystalSpin.get("base")).getValue());
@@ -35,7 +35,7 @@ public abstract class EndCrystalRendererMixin {
 
 	@SuppressWarnings("unchecked")
 	@ModifyArgs(method = "render(Lnet/minecraft/world/entity/boss/enderdragon/EndCrystal;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
-			at = @At(value = "INVOKE",target = "Lcom/mojang/blaze3d/vertex/PoseStack;scale(FFF)V", ordinal = 1))
+			at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;scale(FFF)V", ordinal = 1))
 	public void modifyGlassScale(Args args) {
 		if (CrystalSpin.crystalSpin.isToggled()) {
 			args.set(0, (Float) args.get(0) * ((NumberSetting<Float>) CrystalSpin.crystalSpin.get("glassF")).getValue());
@@ -46,7 +46,7 @@ public abstract class EndCrystalRendererMixin {
 
 	@SuppressWarnings("unchecked")
 	@ModifyArgs(method = "render(Lnet/minecraft/world/entity/boss/enderdragon/EndCrystal;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
-			at = @At(value = "INVOKE",target = "Lcom/mojang/blaze3d/vertex/PoseStack;scale(FFF)V", ordinal = 2))
+			at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;scale(FFF)V", ordinal = 2))
 	public void modifyCubeScale(Args args) {
 		if (CrystalSpin.crystalSpin.isToggled()) {
 			args.set(0, (Float) args.get(0) * ((NumberSetting<Float>) CrystalSpin.crystalSpin.get("cubeF")).getValue());

@@ -1,11 +1,11 @@
 package de.kybe.modules.movement;
 
+import de.kybe.baseModules.ToggleableModule;
 import de.kybe.eventBus.EventBus;
 import de.kybe.eventBus.Subscribe;
 import de.kybe.eventBus.events.EventTick;
-import de.kybe.gui.Gui;
 import de.kybe.gui.CategoryEnum;
-import de.kybe.baseModules.ToggleableModule;
+import de.kybe.gui.Gui;
 
 import static de.kybe.constants.Globals.mc;
 

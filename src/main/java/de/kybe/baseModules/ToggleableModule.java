@@ -4,29 +4,29 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.kybe.Kybe;
+import de.kybe.baseSettings.Setting;
 import de.kybe.eventBus.EventBus;
 import de.kybe.eventBus.Subscribe;
 import de.kybe.eventBus.events.KeyboardEvent.KeyboardEvent;
 import de.kybe.gui.CategoryEnum;
-import de.kybe.baseSettings.Setting;
 import org.lwjgl.glfw.GLFW;
 
 public class ToggleableModule extends Module {
-	private boolean toggled = false;
 	int keybind;
+	private boolean toggled = false;
 
 	public ToggleableModule(String name, CategoryEnum category) {
 		super(name, category);
 		EventBus.register(this);
 	}
 
+	public int getKeybind() {
+		return this.keybind;
+	}
+
 	public void setKeybind(int keybind) {
 		Kybe.LOGGER.info("Set keybind to {} for: {}", keybind, getName());
 		this.keybind = keybind;
-	}
-
-	public int getKeybind() {
-		return this.keybind;
 	}
 
 	public void toggle() {

@@ -1,11 +1,11 @@
 package de.kybe.modules.render;
 
-import de.kybe.baseSettings.BindSetting;
-import de.kybe.eventBus.EventBus;
-import de.kybe.gui.Gui;
-import de.kybe.gui.CategoryEnum;
 import de.kybe.baseModules.ToggleableModule;
+import de.kybe.baseSettings.BindSetting;
 import de.kybe.baseSettings.NumberSetting;
+import de.kybe.eventBus.EventBus;
+import de.kybe.gui.CategoryEnum;
+import de.kybe.gui.Gui;
 
 public class CrystalSpin {
 	public static ToggleableModule crystalSpin = new ToggleableModule("CrystalSpin", CategoryEnum.RENDER);

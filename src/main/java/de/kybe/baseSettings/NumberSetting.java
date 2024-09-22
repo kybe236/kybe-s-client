@@ -194,21 +194,20 @@ public class NumberSetting<T extends Number> extends Setting {
 		return new JsonPrimitive(value.toString());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void deserializeValue(JsonElement jsonElement) {
 		if (this.getValue() instanceof Double) {
-			this.setValue((T) Double.valueOf(jsonElement.getAsDouble()));
+			this.setValue(jsonElement.getAsDouble());
 		} else if (this.getValue() instanceof Float) {
-			this.setValue((T) Float.valueOf(jsonElement.getAsFloat()));
+			this.setValue(jsonElement.getAsFloat());
 		} else if (this.getValue() instanceof Long) {
-			this.setValue((T) Long.valueOf(jsonElement.getAsLong()));
+			this.setValue(jsonElement.getAsLong());
 		} else if (this.getValue() instanceof Integer) {
-			this.setValue((T) Integer.valueOf(jsonElement.getAsInt()));
+			this.setValue(jsonElement.getAsInt());
 		} else if (this.getValue() instanceof Short) {
-			this.setValue((T) Short.valueOf(jsonElement.getAsShort()));
+			this.setValue(jsonElement.getAsShort());
 		} else if (this.getValue() instanceof Byte) {
-			this.setValue((T) Byte.valueOf(jsonElement.getAsByte()));
+			this.setValue(jsonElement.getAsByte());
 		}
 	}
 }

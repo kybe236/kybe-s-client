@@ -15,12 +15,12 @@ public class BindSetting extends Setting {
 		super(name);
 	}
 
-	public void setInEditMode(boolean inEditMode) {
-		this.inEditMode = inEditMode;
-	}
-
 	public boolean isInEditMode() {
 		return inEditMode;
+	}
+
+	public void setInEditMode(boolean inEditMode) {
+		this.inEditMode = inEditMode;
 	}
 
 	public int getValue() {

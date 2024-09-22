@@ -7,32 +7,33 @@ import java.util.stream.Stream;
 
 public abstract class Command {
 
-    public String name;
-    public String description;
-    public String[] aliases;
+	private final String name;
+	private final String description;
+	private final String[] aliases;
 
-    public Command(String name, String description, String... aliases) {
-        this.name = name;
-        this.description = description;
-        this.aliases = aliases;
-    }
+	public Command(String name, String description, String... aliases) {
+		this.name = name;
+		this.description = description;
+		this.aliases = aliases;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String[] getAliases() {
-        return aliases;
-    }
+	@SuppressWarnings("unused")
+	public String[] getAliases() {
+		return aliases;
+	}
 
-    public List<String> getAllNames() {
-        return Stream.concat(Stream.of(name), Arrays.stream(aliases))
-                .collect(Collectors.toList());
-    }
+	public List<String> getAllNamesAndAliases() {
+		return Stream.concat(Stream.of(name), Arrays.stream(aliases))
+				.collect(Collectors.toList());
+	}
 
-    public abstract void execute(String name, String[] args);
+	public abstract void execute(String name, String[] args);
 }

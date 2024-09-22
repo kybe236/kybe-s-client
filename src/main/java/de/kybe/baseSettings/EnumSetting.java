@@ -25,6 +25,11 @@ public class EnumSetting<T extends Enum<?>> extends Setting {
 		return enumValue;
 	}
 
+	@SuppressWarnings("unchecked")
+	public void setValue(Enum<?> newValue) {
+		enumValue = (T) newValue;
+	}
+
 	public boolean isSelected() {
 		return selected;
 	}
@@ -35,11 +40,6 @@ public class EnumSetting<T extends Enum<?>> extends Setting {
 			return (T[]) new Enum<?>[0];
 		}
 		return (T[]) enumValue.getDeclaringClass().getEnumConstants();
-	}
-
-	@SuppressWarnings("unchecked")
-	public void setValue(Enum<?> newValue) {
-		enumValue = (T) newValue;
 	}
 
 	public void next() {
