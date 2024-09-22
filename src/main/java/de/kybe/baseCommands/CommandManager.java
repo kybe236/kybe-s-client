@@ -1,5 +1,8 @@
 package de.kybe.baseCommands;
 
+import de.kybe.baseModules.Module;
+import de.kybe.baseModules.ToggleableModule;
+import de.kybe.gui.Gui;
 import de.kybe.utils.ChatUtils;
 
 import java.util.ArrayList;
@@ -28,6 +31,21 @@ public class CommandManager {
         if (split.length == 0) return false;
 
         String cmdName = split[0];
+
+        // Check for matching module name first -> toggle if found
+        Module module = Gui.getModules().stream()
+                .filter(mdl -> mdl.getName().equalsIgnoreCase(cmdName))
+                .findFirst()
+                .orElse(null);
+
+        if(module != null && split.length == 1) {
+            if(module instanceof ToggleableModule toggleableModule) {
+                toggleableModule.toggle();
+                Gui.saveSettings();
+                ChatUtils.FAT_clientMessage("Toggled: " + module.getName() + " | " + ((ToggleableModule) module).isToggled());
+                return false;
+            }
+        }
 
         Command command = commands.stream()
                 .filter(cmd -> cmd.getAllNames().contains(cmdName))
