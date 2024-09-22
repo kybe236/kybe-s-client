@@ -44,6 +44,13 @@ public class Module {
 		return settings;
 	}
 
+	public Setting getSettingByName(String settingName) {
+		return settings.stream()
+				.filter(setting -> setting.getName().equalsIgnoreCase(settingName))
+				.findFirst()
+				.orElse(null);
+	}
+
 	public CategoryEnum getCategory() {
 		return category;
 	}
