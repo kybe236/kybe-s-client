@@ -29,6 +29,19 @@ public class EnumSetting<T extends Enum<?>> extends Setting {
 		return selected;
 	}
 
+	@SuppressWarnings("unchecked")
+	public T[] getAllModes() {
+		if (enumValue == null) {
+			return (T[]) new Enum<?>[0];
+		}
+		return (T[]) enumValue.getDeclaringClass().getEnumConstants();
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setValue(Enum<?> newValue) {
+		enumValue = (T) newValue;
+	}
+
 	public void next() {
 		if (enumValue == null) {
 			return;

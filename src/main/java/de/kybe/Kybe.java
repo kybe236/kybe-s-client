@@ -11,6 +11,8 @@
 package de.kybe;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import de.kybe.baseCommands.CommandManager;
+import de.kybe.commands.*;
 import de.kybe.mixin.IKeyMapping;
 import de.kybe.mixin.IOptions;
 import de.kybe.modules.Test;
@@ -30,6 +32,7 @@ public class Kybe implements ModInitializer {
 	public static final String MOD_ID = "kybe";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static KeyMapping keyMapping;
+	public static final String PREFIX = "?";
 
 	@Override
 	public void onInitialize() {
@@ -39,6 +42,13 @@ public class Kybe implements ModInitializer {
 		new CrystalSpin();
 		new Test();
 		new Gui();
+
+		CommandManager.addCommand(new Say());
+		CommandManager.addCommand(new de.kybe.commands.Test());
+		CommandManager.addCommand(new Help());
+		CommandManager.addCommand(new Set());
+		CommandManager.addCommand(new Modules());
+		CommandManager.addCommand(new Toggle());
 	}
 
 	public static void afterConfigInit() {

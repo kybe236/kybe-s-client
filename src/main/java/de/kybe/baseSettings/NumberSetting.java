@@ -24,8 +24,29 @@ public class NumberSetting<T extends Number> extends Setting {
 		return value;
 	}
 
-	public void setValue(T value) {
-		this.value = value;
+	@SuppressWarnings("unchecked")
+	public void setValue(Number value) {
+		if (value instanceof Double && this.value instanceof Float) {
+			// Convert Double to Float
+			this.value = (T) Float.valueOf(value.floatValue());
+		} else if (value instanceof Float && this.value instanceof Double) {
+			// Convert Float to Double
+			this.value = (T) Double.valueOf(value.doubleValue());
+		} else if (this.value instanceof Integer && value instanceof Integer) {
+			this.value = (T) Integer.valueOf(value.intValue());
+		} else if (this.value instanceof Long && value instanceof Long) {
+			this.value = (T) Long.valueOf(value.longValue());
+		} else if (this.value instanceof Short && value instanceof Short) {
+			this.value = (T) Short.valueOf(value.shortValue());
+		} else if (this.value instanceof Byte && value instanceof Byte) {
+			this.value = (T) Byte.valueOf(value.byteValue());
+		} else if (this.value instanceof Double && value instanceof Double) {
+			this.value = (T) Double.valueOf(value.doubleValue());
+		} else if (this.value instanceof Float && value instanceof Float) {
+			this.value = (T) Float.valueOf(value.floatValue());
+		} else {
+			throw new IllegalArgumentException("Incompatible type: " + value.getClass().getSimpleName());
+		}
 	}
 
 	@SuppressWarnings("unused")

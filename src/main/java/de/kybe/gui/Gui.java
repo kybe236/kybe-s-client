@@ -65,6 +65,13 @@ public class Gui extends Screen {
 		return modules;
 	}
 
+	public static Module getModuleByName(String moduleName) {
+		return modules.stream()
+				.filter(module -> module.getName().equalsIgnoreCase(moduleName))
+				.findFirst()
+				.orElse(null);
+	}
+
 	@Override
 	protected void init() {
 		super.init();
@@ -161,7 +168,7 @@ public class Gui extends Screen {
 		}
 	}
 
-	public void saveSettings() {
+	public static void saveSettings() {
 		try {
 			JsonArray jsonModules = new JsonArray();
 
