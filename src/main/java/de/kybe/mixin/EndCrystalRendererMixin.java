@@ -26,10 +26,9 @@ public abstract class EndCrystalRendererMixin {
 			at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;scale(FFF)V"))
 	public void modifyScale(Args args) {
 		if (CrystalSpin.crystalSpin.isToggled()) {
-			//noinspection unchecked
-			args.set(0, ((NumberSetting<Float>) CrystalSpin.crystalSpin.get("f")).getValue());
-			args.set(1, ((NumberSetting<Float>) CrystalSpin.crystalSpin.get("g")).getValue());
-			args.set(2, ((NumberSetting<Float>) CrystalSpin.crystalSpin.get("h")).getValue());
+			args.set(0, (Float) args.get(0) * ((NumberSetting<Float>) CrystalSpin.crystalSpin.get("f")).getValue());
+			args.set(1, (Float) args.get(1) * ((NumberSetting<Float>) CrystalSpin.crystalSpin.get("g")).getValue());
+			args.set(2, (Float) args.get(2) * ((NumberSetting<Float>) CrystalSpin.crystalSpin.get("h")).getValue());
 		}
 	}
 }
