@@ -30,6 +30,7 @@ public class Toggle extends Command {
         } else {
             if(module instanceof ToggleableModule toggleableModule) {
                 toggleableModule.toggle();
+                Gui.saveSettings();
                 ChatUtils.FAT_clientMessage("Toggled: " + module.getName() + " | " + ((ToggleableModule) module).isToggled());
             }
         }
