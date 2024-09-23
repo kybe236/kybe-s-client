@@ -1,12 +1,11 @@
 package de.kybe.eventBus.events.typeCharEvent;
 
-import de.kybe.eventBus.events.BaseEvent;
+import de.kybe.eventBus.events.Cancelable;
 import de.kybe.eventBus.events.KeyboardEvent.KeyboardEvent;
 
-public class TypeCharEvent extends BaseEvent {
+public class TypeCharEvent extends Cancelable {
 	private final char key;
 	private final KeyboardEvent.Type type;
-	private boolean cancel = false;
 
 	public TypeCharEvent(char key, KeyboardEvent.Type type) {
 		this.key = key;
@@ -15,14 +14,6 @@ public class TypeCharEvent extends BaseEvent {
 
 	public char getKey() {
 		return key;
-	}
-
-	public boolean isCancel() {
-		return cancel;
-	}
-
-	public void setCancel(boolean cancel) {
-		this.cancel = cancel;
 	}
 
 	public KeyboardEvent.Type getType() {

@@ -13,7 +13,11 @@ import static de.kybe.constants.Globals.mc;
 @Mixin(ChatScreen.class)
 public abstract class ChatScreenMixin {
 
-	@Inject(at = @At("HEAD"), method = "handleChatInput", cancellable = true)
+	@Inject(
+			method = "handleChatInput",
+			at = @At("HEAD"),
+			cancellable = true
+	)
 	private void onSendChatMessage(String s, boolean b, CallbackInfo ci) {
 		if (s.startsWith(Kybe.PREFIX) && s.length() > 1) {
 			mc.gui.getChat().addRecentChat(s);

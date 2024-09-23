@@ -1,16 +1,17 @@
 {
-	"required": true,
-	"package": "de.kybe.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"client": [
-		"EndCrystalRendererMixin",
-		"IKeyMapping",
-		"IOptions",
-		"KeyboardHandlerMixin",
-		"MinecraftMixin",
-		"ChatScreenMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "de.kybe.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ChatComponentMixin",
+    "ChatScreenMixin",
+    "EndCrystalRendererMixin",
+    "IKeyMapping",
+    "IOptions",
+    "KeyboardHandlerMixin",
+    "MinecraftMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }

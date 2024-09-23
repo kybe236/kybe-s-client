@@ -1,9 +1,8 @@
 package de.kybe.eventBus.events.KeyboardEvent;
 
-import de.kybe.eventBus.events.BaseEvent;
+import de.kybe.eventBus.events.Cancelable;
 
-public class RawKeyboardEvent extends BaseEvent {
-	boolean cancel = false;
+public class RawKeyboardEvent extends Cancelable {
 	Type type;
 	long l;
 	int i, j, k, m;
@@ -45,16 +44,6 @@ public class RawKeyboardEvent extends BaseEvent {
 	@SuppressWarnings("unused")
 	public Type getType() {
 		return type;
-	}
-
-	@SuppressWarnings("unused")
-	public boolean isCancel() {
-		return cancel;
-	}
-
-	@SuppressWarnings("unused")
-	public void setCancel(boolean cancel) {
-		this.cancel = cancel;
 	}
 
 	public enum Type {
