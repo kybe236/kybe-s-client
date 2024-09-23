@@ -1,11 +1,7 @@
 package de.kybe.mixin;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import de.kybe.eventBus.EventBus;
-import de.kybe.eventBus.Execution;
-import de.kybe.eventBus.events.KeyboardEvent.KeyboardEvent;
-import de.kybe.eventBus.events.KeyboardEvent.RawKeyboardEvent;
-import de.kybe.eventBus.events.typeCharEvent.TypeCharEvent;
+import de.kybe.client.core.event.EventBus;
 import net.minecraft.client.KeyboardHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
