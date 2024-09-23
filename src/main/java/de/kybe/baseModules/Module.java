@@ -84,16 +84,16 @@ public class Module {
 		//noinspection DuplicatedCode
 		if (obj.has("settings")) {
 			JsonArray settings = obj.getAsJsonArray("settings");
-			for (Setting setting : this.getSettings()) {
-				for (JsonElement settingObj : settings.asList()) {
-					if (settingObj.isJsonObject()) {
-						JsonObject settingJson = settingObj.getAsJsonObject();
-						if (settingJson.has("name") && settingJson.get("name").getAsString().equals(setting.getName())) {
-							setting.deserialize(settingJson);
-						}
+			for (JsonElement settingObj : settings.asList()) {
+				if (settingObj.isJsonObject()) {
+					JsonObject settingJson = settingObj.getAsJsonObject();
+					Setting setting = this.getSettingByName(settingJson.get("name").getAsString());
+					if (settingJson.has("name") && settingJson.get("name").getAsString().equals(setting.getName())) {
+						setting.deserialize(settingJson);
 					}
 				}
 			}
 		}
+
 	}
 }
