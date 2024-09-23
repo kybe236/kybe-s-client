@@ -3,7 +3,7 @@ package de.kybe.client.impl.commands;
 import de.kybe.Kybe;
 import de.kybe.client.core.command.Command;
 import de.kybe.client.core.command.CommandManager;
-import de.kybe.utils.ChatUtils;
+import de.kybe.client.core.util.ChatUtils;
 
 import java.util.Comparator;
 import java.util.List;

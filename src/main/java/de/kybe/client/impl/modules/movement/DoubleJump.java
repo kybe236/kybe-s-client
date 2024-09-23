@@ -1,5 +1,8 @@
 package de.kybe.client.impl.modules.movement;
 
+import de.kybe.client.core.event.Subscribe;
+import de.kybe.client.core.event.events.EventTick;
+import de.kybe.client.core.gui.gui.Gui;
 import de.kybe.client.core.module.ModuleCategory;
 import de.kybe.client.core.module.ToggleableModule;
 import de.kybe.client.core.event.EventBus;

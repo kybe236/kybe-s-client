@@ -5,7 +5,7 @@ import de.kybe.client.core.command.Command;
 import de.kybe.client.core.module.Module;
 import de.kybe.client.core.module.ToggleableModule;
 import de.kybe.client.core.gui.gui.Gui;
-import de.kybe.utils.ChatUtils;
+import de.kybe.client.core.util.ChatUtils;
 
 public class Toggle extends Command {
 

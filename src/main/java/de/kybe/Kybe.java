@@ -12,6 +12,11 @@ package de.kybe;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import de.kybe.client.core.command.CommandManager;
+import de.kybe.client.core.gui.gui.Gui;
+import de.kybe.client.impl.commands.*;
+import de.kybe.client.impl.modules.misc.ClickGUI;
+import de.kybe.client.impl.modules.movement.DoubleJump;
+import de.kybe.client.impl.modules.render.CrystalSpin;
 import de.kybe.mixin.IKeyMapping;
 import de.kybe.mixin.IOptions;
 import net.fabricmc.api.ModInitializer;

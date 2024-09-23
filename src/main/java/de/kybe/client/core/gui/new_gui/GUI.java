@@ -5,7 +5,8 @@ import de.kybe.client.core.gui.new_gui.colors.Colors;
 import de.kybe.client.core.gui.new_gui.enums.AvailableScreens;
 import de.kybe.client.core.gui.new_gui.screens.MainWindow;
 import de.kybe.client.core.gui.gui.Gui;
-import de.kybe.utils.renders.render2d.Rect;
+
+import de.kybe.client.core.util.renders.render2d.Rect;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -13,7 +14,8 @@ import net.minecraft.network.chat.Component;
 import java.awt.*;
 import java.util.Arrays;
 
-import static de.kybe.constants.Globals.mc;
+import static de.kybe.Kybe.mc;
+
 
 public class GUI extends Screen {
 

@@ -1,23 +1,25 @@
 package de.kybe.client.impl.modules.misc;
 
 import de.kybe.client.core.module.Module;
+import de.kybe.client.core.module.ModuleCategory;
 import de.kybe.client.impl.settings.BooleanSetting;
 import de.kybe.client.core.event.EventBus;
 import de.kybe.client.core.event.Subscribe;
 import de.kybe.client.core.event.events.KeyboardEvent.KeyboardEvent;
 import de.kybe.client.core.event.events.KeyboardEvent.RawKeyboardEvent;
 import de.kybe.client.core.event.events.typeCharEvent.TypeCharEvent;
-import de.kybe.client.core.gui.gui.CategoryEnum;
+
 
 import static de.kybe.Kybe.keyMapping;
-import static de.kybe.constants.Globals.mc;
+import static de.kybe.Kybe.mc;
+
 
 @SuppressWarnings("unused")
 public class Gui {
 	private static final String openCombo = "kybe";
 	static BooleanSetting combo = new BooleanSetting("Open Combo");
 	private static String input = "";
-	public Module module = new Module("Gui", CategoryEnum.MISC);
+	public Module module = new Module("Gui", ModuleCategory.CLIENT);
 
 	public Gui() {
 		combo.setToggled(true);

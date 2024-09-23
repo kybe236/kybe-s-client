@@ -8,7 +8,7 @@ import de.kybe.client.impl.settings.EnumSetting;
 import de.kybe.client.impl.settings.NumberSetting;
 import de.kybe.client.core.setting.Setting;
 import de.kybe.client.core.gui.gui.Gui;
-import de.kybe.utils.ChatUtils;
+import de.kybe.client.core.util.ChatUtils;
 
 import java.util.Arrays;
 

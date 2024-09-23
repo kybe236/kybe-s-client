@@ -1,6 +1,10 @@
 package de.kybe.client.impl.modules.misc;
 
 import de.kybe.Kybe;
+import de.kybe.client.core.event.Subscribe;
+import de.kybe.client.core.event.events.KeyboardEvent.RawKeyboardEvent;
+import de.kybe.client.core.gui.new_gui.GUI;
+import de.kybe.client.core.gui.gui.Gui;
 import de.kybe.client.core.module.Module;
 import de.kybe.client.core.event.EventBus;
 import de.kybe.client.core.module.ModuleCategory;
