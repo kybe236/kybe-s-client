@@ -12,14 +12,9 @@ public class CrystalSpin {
 
 	public CrystalSpin() {
 		crystalSpin.addSetting(new NumberSetting<>("SidewaysSpeed", 1f, -20f, 20f, 0.1f));
-		crystalSpin.addSetting(new NumberSetting<>("base", 1f, -20f, 20f, 0.1f));
-		crystalSpin.addSetting(new NumberSetting<>("glassF", 1f, -20f, 20f, 0.1f));
-		crystalSpin.addSetting(new NumberSetting<>("glassG", 1f, -20f, 20f, 0.1f));
-		crystalSpin.addSetting(new NumberSetting<>("glassH", 1f, -20f, 20f, 0.1f));
-		crystalSpin.addSetting(new NumberSetting<>("cubeF", 1f, -20f, 20f, 0.1f));
-		crystalSpin.addSetting(new NumberSetting<>("cubeG", 1f, -20f, 20f, 0.1f));
-		crystalSpin.addSetting(new NumberSetting<>("cubeH", 1f, -20f, 20f, 0.1f));
-		crystalSpin.addSetting(new BindSetting("Bind"));
+		crystalSpin.addSetting(new NumberSetting<>("scaleX", 1f, -20f, 20f, 0.1f));
+		crystalSpin.addSetting(new NumberSetting<>("scaleY", 1f, -20f, 20f, 0.1f));
+		crystalSpin.addSetting(new NumberSetting<>("scaleZ", 1f, -20f, 20f, 0.1f));
 
 		EventBus.register(this);
 		Gui.addModule(crystalSpin);
