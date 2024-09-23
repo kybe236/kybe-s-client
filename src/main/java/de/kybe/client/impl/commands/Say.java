@@ -2,9 +2,9 @@ package de.kybe.client.impl.commands;
 
 import de.kybe.Kybe;
 import de.kybe.client.core.command.Command;
-import de.kybe.utils.ChatUtils;
+import de.kybe.client.core.util.ChatUtils;
 
-import static de.kybe.constants.Globals.mc;
+import static de.kybe.Kybe.mc;
 
 public class Say extends Command {
 

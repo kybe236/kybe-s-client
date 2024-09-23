@@ -1,6 +1,7 @@
 package de.kybe.client.core.event;
 
 import de.kybe.Kybe;
+import de.kybe.client.core.event.events.BaseEvent;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

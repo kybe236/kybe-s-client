@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.kybe.Kybe;
+import de.kybe.client.core.event.events.KeyboardEvent.KeyboardEvent;
 import de.kybe.client.core.setting.Setting;
 import de.kybe.client.core.event.EventBus;
 import org.lwjgl.glfw.GLFW;

@@ -1,7 +1,7 @@
 package de.kybe.client.impl.commands;
 
 import de.kybe.client.core.command.Command;
-import de.kybe.utils.ChatUtils;
+import de.kybe.client.core.util.ChatUtils;
 
 public class Test extends Command {
 

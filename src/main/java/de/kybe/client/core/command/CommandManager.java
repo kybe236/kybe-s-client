@@ -1,6 +1,9 @@
 package de.kybe.client.core.command;
 
+import de.kybe.client.core.gui.gui.Gui;
 import de.kybe.client.core.module.Module;
+import de.kybe.client.core.module.ToggleableModule;
+import de.kybe.client.core.util.ChatUtils;
 
 import java.util.ArrayList;
 import java.util.List;

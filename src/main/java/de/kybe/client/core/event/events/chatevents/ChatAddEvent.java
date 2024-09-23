@@ -1,5 +1,6 @@
 package de.kybe.client.core.event.events.chatevents;
 
+import de.kybe.client.core.event.events.Cancelable;
 import net.minecraft.client.GuiMessageTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MessageSignature;

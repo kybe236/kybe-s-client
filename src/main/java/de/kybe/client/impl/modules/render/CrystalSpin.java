@@ -4,6 +4,7 @@ import de.kybe.client.core.module.ModuleCategory;
 import de.kybe.client.core.module.ToggleableModule;
 import de.kybe.client.impl.settings.NumberSetting;
 import de.kybe.client.core.event.EventBus;
+import de.kybe.client.core.gui.gui.Gui;
 
 public class CrystalSpin {
 	public static ToggleableModule crystalSpin = new ToggleableModule("CrystalSpin", ModuleCategory.RENDER);

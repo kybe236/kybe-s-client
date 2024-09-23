@@ -2,6 +2,8 @@ package de.kybe.mixin;
 
 import de.kybe.Kybe;
 import de.kybe.client.core.event.EventBus;
+import de.kybe.client.core.event.Execution;
+import de.kybe.client.core.event.events.EventTick;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

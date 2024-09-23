@@ -1,6 +1,8 @@
 package de.kybe.mixin;
 
 import de.kybe.client.core.event.EventBus;
+import de.kybe.client.core.event.Execution;
+import de.kybe.client.core.event.events.chatevents.ChatAddEvent;
 import net.minecraft.client.GuiMessageTag;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.network.chat.Component;

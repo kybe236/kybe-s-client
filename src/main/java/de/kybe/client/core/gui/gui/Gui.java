@@ -18,6 +18,10 @@ import de.kybe.Kybe;
 import de.kybe.client.core.gui.gui.renderers.category.CategoryRenderer;
 import de.kybe.client.core.gui.gui.renderers.modules.ModuleRenderer;
 import de.kybe.client.core.gui.gui.renderers.modules.ToggleableModuleRenderer;
+import de.kybe.client.core.gui.gui.renderers.settings.BindSettingRenderer;
+import de.kybe.client.core.gui.gui.renderers.settings.BooleanSettingRenderer;
+import de.kybe.client.core.gui.gui.renderers.settings.EnumSettingRenderer;
+import de.kybe.client.core.gui.gui.renderers.settings.NumberSettingRenderer;
 import de.kybe.client.core.module.Module;
 import de.kybe.client.core.module.ModuleCategory;
 import de.kybe.client.core.module.ToggleableModule;
@@ -156,7 +160,7 @@ public class Gui extends Screen {
 			int yPosition = SETTING_START_Y + i * SETTING_SPACING;
 			switch (setting) {
 				case NumberSetting<?> numberSetting ->
-						NumberSettingttingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, numberSetting);
+						NumberSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, numberSetting);
 				case BooleanSetting booleanSetting ->
 						BooleanSettingRenderer.render(guiGraphics, yPosition, i == selectedSettingIndex && selection == Selection.SETTING, this.font, booleanSetting);
 				case EnumSetting<?> enumSetting ->

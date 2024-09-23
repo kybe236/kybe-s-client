@@ -1,6 +1,9 @@
 package de.kybe.client.core.event.events.typeCharEvent;
 
 
+import de.kybe.client.core.event.events.Cancelable;
+import de.kybe.client.core.event.events.KeyboardEvent.KeyboardEvent;
+
 public class TypeCharEvent extends Cancelable {
 	private final char key;
 	private final KeyboardEvent.Type type;
