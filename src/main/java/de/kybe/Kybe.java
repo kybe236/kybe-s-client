@@ -11,15 +11,9 @@
 package de.kybe;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import de.kybe.baseCommands.CommandManager;
-import de.kybe.commands.*;
+import de.kybe.client.core.command.CommandManager;
 import de.kybe.mixin.IKeyMapping;
 import de.kybe.mixin.IOptions;
-import de.kybe.modules.Test;
-import de.kybe.modules.misc.ClickGUI;
-import de.kybe.modules.misc.Gui;
-import de.kybe.modules.movement.DoubleJump;
-import de.kybe.modules.render.CrystalSpin;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -36,6 +30,8 @@ public class Kybe implements ModInitializer {
 	public static final String PREFIX = "?";
 	public static final String CLIENT_NAME = "Kybe";
 	public static final String CLIENT_VERSION = "0.0.1";
+
+	public static Minecraft mc;
 
 	public static KeyMapping keyMapping;
 	public static KeyMapping ClickGUIKey;
@@ -55,19 +51,18 @@ public class Kybe implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		mc = Minecraft.getInstance();
+
 		new DoubleJump();
 		new CrystalSpin();
-		new Test();
 		new Gui();
 		new ClickGUI();
 
 		CommandManager.addCommand(new Say());
-		CommandManager.addCommand(new de.kybe.commands.Test());
+		CommandManager.addCommand(new de.kybe.client.impl.commands.Test());
 		CommandManager.addCommand(new Help());
 		CommandManager.addCommand(new Set());
 		CommandManager.addCommand(new Modules());
 		CommandManager.addCommand(new Toggle());
-
-		//Configmanager.load(); not yet implemented
 	}
 }

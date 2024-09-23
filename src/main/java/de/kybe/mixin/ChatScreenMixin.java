@@ -1,14 +1,12 @@
 package de.kybe.mixin;
 
 import de.kybe.Kybe;
-import de.kybe.baseCommands.CommandManager;
+
 import net.minecraft.client.gui.screens.ChatScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import static de.kybe.constants.Globals.mc;
 
 @Mixin(ChatScreen.class)
 public abstract class ChatScreenMixin {
