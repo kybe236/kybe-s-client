@@ -3,15 +3,16 @@
 	"id": "kybe",
 	"version": "${version}",
 	"name": "kybe",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "An client made by kybe236 also mopplkotze for command system and later gui",
 	"authors": [
-		"kybe236"
+		"kybe236",
+		"mopplkotze"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/kybe236/kybe-s-client",
+		"sources": "https://github.com/kybe236/kybe-s-client"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/kybe/icon.png",
 	"environment": "*",
 	"entrypoints": {
