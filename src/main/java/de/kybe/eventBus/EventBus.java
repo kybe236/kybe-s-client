@@ -17,7 +17,6 @@ public class EventBus {
 		Class<?> clazz = module.getClass();
 
 		moduleInstances.computeIfAbsent(clazz, k -> new ArrayList<>()).add(module);
-		Kybe.LOGGER.info("Registered module: {}", clazz.getSimpleName());
 	}
 
 	public static <T extends BaseEvent> void broadcast(T event, Execution execution) {
