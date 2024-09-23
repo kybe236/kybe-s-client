@@ -193,7 +193,7 @@ public class Gui extends Screen {
 		}
 	}
 
-	public void loadSettings() {
+	public static void loadSettings() {
 		try {
 			File settingsFile = new File(mc.gameDirectory, "settings.json");
 
