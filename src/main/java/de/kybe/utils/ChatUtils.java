@@ -28,7 +28,7 @@ public final class ChatUtils {
 
 	public static void FAT_clientMessage(String message) {
 		sendMessage(Component.literal("")
-				.append(createLabel(Kybe.MOD_ID, MAIN_COLOR))
+				.append(createLabel(Kybe.CLIENT_NAME, MAIN_COLOR))
 				.append(Component.literal(" " + message).withStyle(ChatFormatting.BOLD)));
 	}
 
