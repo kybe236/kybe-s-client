@@ -108,13 +108,13 @@ public class NumberSetting<T extends Number> extends Setting {
 				value = (T) Double.valueOf(max.doubleValue());
 				return;
 			}
-			value = (T) Double.valueOf(value.doubleValue() + increment.doubleValue());
+			value = (T) Double.valueOf(Math.round((value.doubleValue() + increment.doubleValue()) * 100.0) / 100.0);
 		} else if (value instanceof Float) {
 			if (value.floatValue() + increment.floatValue() > max.floatValue()) {
 				value = (T) Float.valueOf(max.floatValue());
 				return;
 			}
-			value = (T) Float.valueOf(value.floatValue() + increment.floatValue());
+			value = (T) Float.valueOf((float) (Math.round((value.floatValue() + increment.floatValue()) * 100.0) / 100.0));
 		} else if (value instanceof Long) {
 			if (value.longValue() + increment.longValue() > max.longValue()) {
 				value = (T) Long.valueOf(max.longValue());
@@ -149,13 +149,13 @@ public class NumberSetting<T extends Number> extends Setting {
 				value = (T) Double.valueOf(min.doubleValue());
 				return;
 			}
-			value = (T) Double.valueOf(value.doubleValue() - increment.doubleValue());
+			value = (T) Double.valueOf(Math.round((value.doubleValue() - increment.doubleValue()) * 100.0) / 100.0);
 		} else if (value instanceof Float) {
 			if (value.floatValue() - increment.floatValue() < min.floatValue()) {
 				value = (T) Float.valueOf(min.floatValue());
 				return;
 			}
-			value = (T) Float.valueOf(value.floatValue() - increment.floatValue());
+			value = (T) Float.valueOf((float) (Math.round((value.floatValue() - increment.floatValue()) * 100.0) / 100.0));
 		} else if (value instanceof Long) {
 			if (value.longValue() - increment.longValue() < min.longValue()) {
 				value = (T) Long.valueOf(min.longValue());
