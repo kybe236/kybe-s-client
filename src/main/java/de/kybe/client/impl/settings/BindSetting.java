@@ -2,18 +2,16 @@ package de.kybe.client.impl.settings;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
-import de.kybe.Kybe;
 import de.kybe.client.core.module.Module;
-import de.kybe.client.core.module.ToggleableModule;
 import de.kybe.client.core.setting.Setting;
 import org.lwjgl.glfw.GLFW;
 
 public class BindSetting extends Setting {
-	int value;
+	int keybind;
 	boolean inEditMode = false;
 
-	public BindSetting(String name) {
-		super(name);
+	public BindSetting(String name, String description, int keybind) {
+		super(name, description);
 	}
 
 	public boolean isInEditMode() {
@@ -24,12 +22,12 @@ public class BindSetting extends Setting {
 		this.inEditMode = inEditMode;
 	}
 
-	public int getValue() {
-		return value;
+	public int getKeybind() {
+		return keybind;
 	}
 
-	public void setValue(int value) {
-		this.value = value;
+	public void setKeybind(int keybind) {
+		this.keybind = keybind;
 	}
 
 	@Override
@@ -41,21 +39,17 @@ public class BindSetting extends Setting {
 		if (isInEditMode()) {
 			if (key == GLFW.GLFW_KEY_ESCAPE) {
 				setInEditMode(false);
-				setValue(0);
+				setKeybind(0);
 				return true;
 			}
 			if (key == GLFW.GLFW_KEY_BACKSPACE) {
-				setValue(0);
+				setKeybind(0);
 				return true;
 			}
-			this.value = key;
+			this.keybind = key;
 			setInEditMode(false);
 			Module module = getParent();
-			if (module instanceof ToggleableModule) {
-				((ToggleableModule) module).setKeybind(getValue());
-			} else {
-				Kybe.LOGGER.error("Trying to set keybind for non-toggleable module: {}", module.getName());
-			}
+			module.setKeybind(getKeybind());
 			return true;
 		}
 		return false;
@@ -63,11 +57,11 @@ public class BindSetting extends Setting {
 
 	@Override
 	public JsonElement serializeValue() {
-		return new JsonPrimitive(value);
+		return new JsonPrimitive(keybind);
 	}
 
 	@Override
 	public void deserializeValue(JsonElement jsonElement) {
-		value = jsonElement.getAsInt();
+		keybind = jsonElement.getAsInt();
 	}
 }

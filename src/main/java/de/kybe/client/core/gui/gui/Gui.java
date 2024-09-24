@@ -17,15 +17,15 @@ import de.kybe.Kybe;
 
 import de.kybe.client.core.gui.gui.renderers.category.CategoryRenderer;
 import de.kybe.client.core.gui.gui.renderers.modules.ModuleRenderer;
-import de.kybe.client.core.gui.gui.renderers.modules.ToggleableModuleRenderer;
 import de.kybe.client.core.gui.gui.renderers.settings.BindSettingRenderer;
 import de.kybe.client.core.gui.gui.renderers.settings.BooleanSettingRenderer;
 import de.kybe.client.core.gui.gui.renderers.settings.EnumSettingRenderer;
 import de.kybe.client.core.gui.gui.renderers.settings.NumberSettingRenderer;
 import de.kybe.client.core.module.Module;
 import de.kybe.client.core.module.ModuleCategory;
-import de.kybe.client.core.module.ToggleableModule;
+import de.kybe.client.core.module.ModuleManager;
 import de.kybe.client.core.setting.Setting;
+import de.kybe.client.core.setting.SettingManager;
 import de.kybe.client.impl.settings.BindSetting;
 import de.kybe.client.impl.settings.BooleanSetting;
 import de.kybe.client.impl.settings.EnumSetting;
@@ -44,7 +44,7 @@ import java.util.Objects;
 
 import static de.kybe.Kybe.mc;
 
-
+/*
 public class Gui extends Screen {
 	public static final int CATEGORY_START_Y = 0;
 	public static final int CATEGORY_SPACING = 15;
@@ -133,27 +133,22 @@ public class Gui extends Screen {
 
 	private void drawModules(GuiGraphics guiGraphics) {
 		ModuleCategory selectedCategory = ModuleCategory.values()[selectedCategoryIndex];
-		List<Module> categoryModules = getModulesForCategory(selectedCategory);
+		List<Module> categoryModules = ModuleManager.getModulesFromCategory(selectedCategory);
 
 		for (int i = 0; i < categoryModules.size(); i++) {
 			Module module = categoryModules.get(i);
 			int yPosition = MODULE_START_Y + i * MODULE_SPACING;
-
-			if (module instanceof ToggleableModule toggleableModule) {
-				ToggleableModuleRenderer.render(guiGraphics, yPosition, i == selectedModuleIndex && selection == Selection.MODULE, this.font, toggleableModule);
-			} else if (module instanceof Module md) {
-				ModuleRenderer.render(guiGraphics, yPosition, i == selectedModuleIndex && selection == Selection.MODULE, this.font, md);
-			}
+			ModuleRenderer.render(guiGraphics, yPosition, i == selectedModuleIndex && selection == Selection.MODULE, this.font, module);
 		}
 	}
 
 	private void drawSettings(GuiGraphics guiGraphics) {
 		ModuleCategory selectedCategory = ModuleCategory.values()[selectedCategoryIndex];
-		List<Module> categoryModules = getModulesForCategory(selectedCategory);
+		List<Module> categoryModules = ModuleManager.getModulesFromCategory(selectedCategory);
 
 		if (categoryModules.isEmpty()) return;
 		Module selectedModule = categoryModules.get(selectedModuleIndex);
-		List<Setting> settings = selectedModule.getSettings();
+		List<Setting> settings = SettingManager.getSettingsForModule(selectedModule);
 
 		for (int i = 0; i < settings.size(); i++) {
 			Setting setting = settings.get(i);
@@ -173,9 +168,8 @@ public class Gui extends Screen {
 		}
 	}
 
-	/*
-	 * Save the settings
-	 */
+	// Save the settings
+
 	@Override
 	public void onClose() {
 		super.onClose();
@@ -185,11 +179,11 @@ public class Gui extends Screen {
 
 	public void resetEditMode() {
 		ModuleCategory selectedCategory = ModuleCategory.values()[selectedCategoryIndex];
-		List<Module> categoryModules = getModulesForCategory(selectedCategory);
+		List<Module> categoryModules = ModuleManager.getModulesFromCategory(selectedCategory);
 
 		if (categoryModules.isEmpty()) return;
 		Module selectedModule = categoryModules.get(selectedModuleIndex);
-		List<Setting> settings = selectedModule.getSettings();
+		List<Setting> settings = SettingManager.getSettingsForModule(selectedModule);
 
 		for (Setting setting : settings) {
 			if (setting instanceof NumberSetting<?> numberSetting) {
@@ -223,23 +217,21 @@ public class Gui extends Screen {
 		}
 	}
 
-	/*
-	 * Handle key presses
-	 */
+	//Handle Keypress
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		switch (selection) {
 			case Selection.SETTING -> {
-				/*
-				 * Handle keypress inside selected setting
-				 */
-				List<Module> selectedCategoryModules = getModulesForCategory(ModuleCategory.values()[selectedCategoryIndex]);
-				List<Setting> moduleSettings = selectedCategoryModules.get(selectedModuleIndex).getSettings();
+
+				 // Handle keypress inside selected setting
+
+				List<Module> selectedCategoryModules = ModuleManager.getModulesFromCategory(ModuleCategory.values()[selectedCategoryIndex]);
+				List<Setting> moduleSettings = SettingManager.getSettingsForModule(selectedModuleIndex)
 				if (!moduleSettings.isEmpty()) {
-					/*
-					 * If the setting handled the keypress, return true
-					 * So integer settings can increment/decrement without moving the selection
-					 */
+
+					 // If the setting handled the keypress, return true
+					 // So integer settings can increment/decrement without moving the selection
+
 					Setting setting = moduleSettings.get(selectedSettingIndex);
 					if (setting.handleKeyPress(keyCode)) {
 						return true;
@@ -247,18 +239,19 @@ public class Gui extends Screen {
 				}
 			}
 			case Selection.MODULE -> {
-				/*
-				 * Handle keypress inside selected module
-				 */
+
+				 // Handle keypress inside selected module
+
 				List<Module> selectedCategoryModules = getModulesForCategory(ModuleCategory.values()[selectedCategoryIndex]);
 				if (!selectedCategoryModules.isEmpty()) {
-					/*
-					 * Return true if the module handled the keypress
+
+					 // Return true if the module handled the keypress
 					 *
 					 *
-					 * TODO: maybe remove boolean value for handleKeyPress on an Module
-					 */
+					 // TODO: maybe remove boolean value for handleKeyPress on an Module
+
 					Module module = selectedCategoryModules.get(selectedModuleIndex);
+					/*
 					if (module instanceof ToggleableModule toggleableModule) {
 						if (toggleableModule.handleKeyPress(keyCode)) {
 							return true;
@@ -353,7 +346,8 @@ public class Gui extends Screen {
 				}
 			}
 			case SETTING -> {
-				List<Module> selectedCategoryModules = getModulesForCategory(ModuleCategory.values()[selectedCategoryIndex]);
+				List<Module> selectedCategoryModules =
+						getModulesForCategory(ModuleCategory.values()[selectedCategoryIndex]);
 				List<Setting> moduleSettings = selectedCategoryModules.get(selectedModuleIndex).getSettings();
 				if (selectedSettingIndex < moduleSettings.size() - 1) {
 					selectedSettingIndex++;
@@ -388,16 +382,10 @@ public class Gui extends Screen {
 		}
 	}
 
-	private List<Module> getModulesForCategory(ModuleCategory category) {
-		return modules.stream()
-				.filter(module -> module.getCategory() == category)
-				.toList();
-	}
-
 	enum Selection {
 		CATEGORY,
 		MODULE,
 		SETTING
 	}
 
-}
+}*/

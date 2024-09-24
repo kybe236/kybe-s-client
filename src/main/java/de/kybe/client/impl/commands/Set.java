@@ -3,11 +3,13 @@ package de.kybe.client.impl.commands;
 import de.kybe.Kybe;
 import de.kybe.client.core.command.Command;
 import de.kybe.client.core.module.Module;
+import de.kybe.client.core.module.ModuleManager;
+import de.kybe.client.core.setting.SettingManager;
 import de.kybe.client.impl.settings.BooleanSetting;
 import de.kybe.client.impl.settings.EnumSetting;
 import de.kybe.client.impl.settings.NumberSetting;
 import de.kybe.client.core.setting.Setting;
-import de.kybe.client.core.gui.gui.Gui;
+//import de.kybe.client.core.gui.gui.Gui;
 import de.kybe.client.core.util.ChatUtils;
 
 import java.util.Arrays;
@@ -23,7 +25,7 @@ public class Set extends Command {
 	}
 
 	private static void Success(String module, String setting, String value) {
-		Gui.saveSettings();
+		//Gui.saveSettings();
 		ChatUtils.FAT_clientMessage("Set " + module + " - " + setting + " to " + value + ".");
 	}
 
@@ -35,13 +37,13 @@ public class Set extends Command {
 			return;
 		}
 
-		Module module = Gui.getModuleByName(args[0]);
+		Module module = ModuleManager.getModule(args[0]);
 		if (module == null) {
 			ChatUtils.clientWarningMessage("Module with name " + args[0] + " not found.");
 			return;
 		}
 
-		Setting setting = module.getSettingByName(args[1]);
+		Setting setting = SettingManager.getSettingByName(module, args[1]);
 		switch (setting) {
 			case null -> {
 				ChatUtils.clientWarningMessage("Setting with name " + args[1] + " in module " + module.getName() + " not found.");

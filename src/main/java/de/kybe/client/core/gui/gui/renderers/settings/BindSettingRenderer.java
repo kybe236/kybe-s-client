@@ -19,6 +19,6 @@ public class BindSettingRenderer {
 		guiGraphics.fill(SETTING_START_X, yPosition, SETTING_START_X + SETTING_WIDTH, yPosition + SETTING_HEIGHT, color);
 
 		int textYPosition = yPosition + (SETTING_HEIGHT / 2) - (font.lineHeight / 2);
-		guiGraphics.drawCenteredString(font, setting.getName() + ": " + GLFW.glfwGetKeyName(setting.getValue(), 0), SETTING_START_X + SETTING_WIDTH / 2, textYPosition, Color.WHITE.getRGB());
+		guiGraphics.drawCenteredString(font, setting.getName() + ": " + GLFW.glfwGetKeyName(setting.getKeybind(), 0), SETTING_START_X + SETTING_WIDTH / 2, textYPosition, Color.WHITE.getRGB());
 	}
 }

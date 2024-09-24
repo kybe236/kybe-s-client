@@ -4,8 +4,11 @@ import de.kybe.client.core.gui.new_gui.Components.ScreenSelector;
 import de.kybe.client.core.gui.new_gui.colors.Colors;
 import de.kybe.client.core.gui.new_gui.enums.AvailableScreens;
 import de.kybe.client.core.gui.new_gui.screens.MainWindow;
-import de.kybe.client.core.gui.gui.Gui;
+//import de.kybe.client.core.gui.gui.Gui;
 
+import de.kybe.client.core.module.Module;
+import de.kybe.client.core.module.ModuleCategory;
+import de.kybe.client.core.module.ModuleManager;
 import de.kybe.client.core.util.renders.render2d.Rect;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -27,7 +30,7 @@ public class GUI extends Screen {
 
     public GUI() {
         super(Component.literal("GUI"));
-        Gui.loadSettings();
+        //Gui.loadSettings();
 
         screenHeight = mc.getWindow().getGuiScaledHeight();
         screenWidth = mc.getWindow().getGuiScaledWidth();
@@ -39,21 +42,30 @@ public class GUI extends Screen {
     @Override
     public void onClose() {
         super.onClose();
-        Gui.saveSettings();
+        //Gui.saveSettings();
     }
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        // always render selector
-        selector.drawSelector(guiGraphics, this.font, 10, Colors.color_accent, Colors.color_background, Colors.color_accent);
-
         if(selector.getSelectedScreen() == AvailableScreens.CLICKGUI) {
             // clickgui window
             mainWindow.draw(guiGraphics, Colors.color_background, Colors.color_accent);
         } else if (selector.getSelectedScreen() == AvailableScreens.HUD) {
             // example another screen getting rendered
-            Rect.drawSquare(10, 10, 200, 200, Color.BLUE);
+            int verticalOffset = 10;
+            for (ModuleCategory category : ModuleCategory.values()) {
+                guiGraphics.drawString(this.font, category.name(), 10, verticalOffset, Color.YELLOW.getRGB());
+                verticalOffset += 15;
+                for (Module module : ModuleManager.getModulesFromCategory(category)) {
+                    guiGraphics.drawString(this.font, "  " + module.getName(), 20, verticalOffset, Color.WHITE.getRGB());
+                    verticalOffset += 10;
+                }
+            }
+            verticalOffset += 10;
         }
+
+        // always render selector
+        selector.drawSelector(guiGraphics, this.font, 10, Colors.color_accent, Colors.color_background, Colors.color_accent);
     }
 
     @Override
