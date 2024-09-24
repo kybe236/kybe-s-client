@@ -12,9 +12,11 @@ package de.kybe;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import de.kybe.client.core.command.CommandManager;
-import de.kybe.client.core.gui.gui.Gui;
+import de.kybe.client.core.module.ModuleManager;
+import de.kybe.client.core.setting.SettingManager;
 import de.kybe.client.impl.commands.*;
-import de.kybe.client.impl.modules.misc.ClickGUI;
+import de.kybe.client.impl.modules.TestModule;
+import de.kybe.client.impl.modules.client.ClickGUI;
 import de.kybe.client.impl.modules.movement.DoubleJump;
 import de.kybe.client.impl.modules.render.CrystalSpin;
 import de.kybe.mixin.IKeyMapping;
@@ -41,6 +43,10 @@ public class Kybe implements ModInitializer {
 	public static KeyMapping keyMapping;
 	public static KeyMapping ClickGUIKey;
 
+	public ModuleManager moduleManager;
+	public CommandManager commandManager;
+	public SettingManager settingManager;
+
 	public static void afterConfigInit() {
 		keyMapping = new KeyMapping("key.kybe.open", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "category.kybe");
 		ClickGUIKey = new KeyMapping("ClickGUI", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, "category.kybe");
@@ -57,11 +63,14 @@ public class Kybe implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		mc = Minecraft.getInstance();
+		moduleManager = new ModuleManager();
+		commandManager = new CommandManager();
+		settingManager = new SettingManager();
 
-		new DoubleJump();
-		new CrystalSpin();
-		new Gui();
-		new ClickGUI();
+		ModuleManager.addModule(new TestModule());
+		ModuleManager.addModule(new ClickGUI());
+		ModuleManager.addModule(new DoubleJump());
+		ModuleManager.addModule(new CrystalSpin());
 
 		CommandManager.addCommand(new Say());
 		CommandManager.addCommand(new de.kybe.client.impl.commands.Test());

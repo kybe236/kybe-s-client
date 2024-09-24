@@ -8,8 +8,8 @@ import org.lwjgl.glfw.GLFW;
 public class BooleanSetting extends Setting {
 	private boolean toggled = false;
 
-	public BooleanSetting(String name) {
-		super(name);
+	public BooleanSetting(String name, String description, boolean toggled) {
+		super(name, description);
 	}
 
 	public void toggle() {

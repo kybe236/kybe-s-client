@@ -19,14 +19,25 @@ import de.kybe.client.core.module.Module;
  */
 public abstract class Setting {
 	private final String name;
+	private final String description;
 	private Module parent;
 
-	protected Setting(String name) {
+	protected Setting(String name, String description) {
 		this.name = name;
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + this.name + " | " + this.description + "]";
 	}
 
 	public Module getParent() {

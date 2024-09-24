@@ -1,6 +1,10 @@
 package de.kybe.client.impl.commands;
 
 import de.kybe.client.core.command.Command;
+import de.kybe.client.core.module.Module;
+import de.kybe.client.core.module.ModuleManager;
+import de.kybe.client.core.setting.Setting;
+import de.kybe.client.core.setting.SettingManager;
 import de.kybe.client.core.util.ChatUtils;
 
 public class Test extends Command {
@@ -12,15 +16,12 @@ public class Test extends Command {
 	@Override
 	public void execute(String name, String[] args) {
 
-		ChatUtils.clientMessage("Client Message");
-		ChatUtils.clientInfoMessage("Client Info");
-		ChatUtils.clientWarningMessage("Client Warning");
-		ChatUtils.clientErrorMessage("Client Error");
-		ChatUtils.Message("");
-		ChatUtils.Message("Message");
-		ChatUtils.InfoMessage("Info");
-		ChatUtils.WarningMessage("Warning");
-		ChatUtils.ErrorMessage("Error");
+		for(Module module : ModuleManager.getModules()) {
+			ChatUtils.clientMessage(module.getName());
+			for (Setting setting : SettingManager.getSettingsForModule(module)) {
+				ChatUtils.clientMessage(setting.toString());
+			}
+		}
 
 	}
 }

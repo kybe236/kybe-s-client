@@ -9,8 +9,8 @@ public class EnumSetting<T extends Enum<?>> extends Setting {
 	T enumValue;
 	boolean selected = false;
 
-	public EnumSetting(String name, T passedEnum) {
-		super(name);
+	public EnumSetting(String name, String description, T passedEnum) {
+		super(name, description);
 		this.enumValue = passedEnum;
 	}
 

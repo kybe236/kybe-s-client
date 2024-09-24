@@ -1,98 +1,102 @@
-/*
- * Copyright (c) 2024 kybe236
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
 package de.kybe.client.core.module;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import de.kybe.client.core.setting.Setting;
-
-import java.util.ArrayList;
-import java.util.List;
+import de.kybe.client.core.event.EventBus;
+import org.lwjgl.glfw.GLFW;
 
 public class Module {
-	private final String name;
-	private final ArrayList<Setting> settings;
-	private final ModuleCategory category;
 
-	public Module(String name, ModuleCategory category) {
-		this.name = name;
-		this.settings = new ArrayList<>();
-		this.category = category;
-	}
+    private final String name;
+    private final String description;
+    private final ModuleCategory category;
 
-	public String getName() {
-		return name;
-	}
+    private boolean state;
+    private boolean drawn;
+    private int keybind;
 
-	@SuppressWarnings("unused")
-	public void addSetting(Setting setting) {
-		settings.add(setting);
-		setting.setParent(this);
-	}
+    public Module(String name, String description, ModuleCategory category, int keybind) {
+        this.description = description;
+        this.category = category;
+        this.state = state;
+        this.drawn = drawn;
+        this.name = name;
+        this.keybind = keybind;
+    }
 
-	public List<Setting> getSettings() {
-		return settings;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Setting getSettingByName(String settingName) {
-		return settings.stream()
-				.filter(setting -> setting.getName().equalsIgnoreCase(settingName))
-				.findFirst()
-				.orElse(null);
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public ModuleCategory getCategory() {
-		return category;
-	}
+    public ModuleCategory getCategory() {
+        return category;
+    }
 
-	/*
-	 * Returns true if the key was handled
-	 */
-	public boolean handleKeyPress(int key) {
-		return false;
-	}
+    public boolean getState() {
+        return state;
+    }
 
-	public JsonObject serialize() {
-		JsonObject obj = new JsonObject();
-		obj.addProperty("category", this.getCategory().name());
-		obj.addProperty("name", this.getName());
+    public void setState(boolean state) {
+        if (state) {
+            enable();
+        } else {
+            disable();
+        }
+    }
 
-		if (!this.getSettings().isEmpty()) {
-			JsonArray settings = new JsonArray();
-			for (Setting setting : this.getSettings()) {
-				settings.add(setting.serialize());
-			}
-			obj.add("settings", settings);
-		}
-		return obj;
-	}
+    public void enable() {
+        this.state = true;
+        EventBus.register(this);
+        onEnable();
+    }
 
-	public void deserialize(JsonObject obj) {
-		if (!obj.get("category").getAsString().equals(this.category.name())) return;
-		if (!obj.has("name") || !obj.get("name").getAsString().equals(this.getName())) return;
+    public void disable() {
+        this.state = false;
+        EventBus.unregister(this);
+        onDisable();
+    }
 
-		//noinspection DuplicatedCode
-		if (obj.has("settings")) {
-			JsonArray settings = obj.getAsJsonArray("settings");
-			for (JsonElement settingObj : settings.asList()) {
-				if (settingObj.isJsonObject()) {
-					JsonObject settingJson = settingObj.getAsJsonObject();
-					Setting setting = this.getSettingByName(settingJson.get("name").getAsString());
-					if (settingJson.has("name") && settingJson.get("name").getAsString().equals(setting.getName())) {
-						setting.deserialize(settingJson);
-					}
-				}
-			}
-		}
+    public void onEnable() {
 
-	}
+    }
+
+    public void onDisable() {
+
+    }
+
+    public void toggle() {
+        if(state) {
+            disable();
+        } else {
+            enable();
+        }
+    }
+
+    public boolean isDrawn() {
+        return drawn;
+    }
+
+    public void setDrawn(boolean drawn) {
+        this.drawn = drawn;
+    }
+
+    public int getKeybind() {
+        return keybind;
+    }
+
+    public void setKeybind(int keybind) {
+        this.keybind = keybind;
+    }
+
+    public boolean handleKeyPress(int key) {
+        if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_KP_ENTER) {
+            this.toggle();
+            return true;
+        }
+        return false;
+    }
+
+
 }

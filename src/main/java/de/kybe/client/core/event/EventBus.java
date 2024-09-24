@@ -19,6 +19,19 @@ public class EventBus {
 		moduleInstances.computeIfAbsent(clazz, k -> new ArrayList<>()).add(module);
 	}
 
+	public static void unregister(Object module) {
+		Class<?> clazz = module.getClass();
+		List<Object> instances = moduleInstances.get(clazz);
+
+		if (instances != null) {
+			instances.remove(module);
+
+			if (instances.isEmpty()) {
+				moduleInstances.remove(clazz);
+			}
+		}
+	}
+
 	public static <T extends BaseEvent> void broadcast(T event, Execution execution) {
 		try {
 			for (Map.Entry<Class<?>, List<Object>> entry : moduleInstances.entrySet()) {

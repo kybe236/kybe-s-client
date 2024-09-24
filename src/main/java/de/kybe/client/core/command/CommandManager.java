@@ -1,14 +1,17 @@
 package de.kybe.client.core.command;
 
-import de.kybe.client.core.gui.gui.Gui;
 import de.kybe.client.core.module.Module;
-import de.kybe.client.core.module.ToggleableModule;
+import de.kybe.client.core.module.ModuleManager;
 import de.kybe.client.core.util.ChatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandManager {
+
+	public CommandManager() {
+
+	}
 
 	private static final List<Command> commands = new ArrayList<>();
 
@@ -33,15 +36,13 @@ public class CommandManager {
 		String cmdName = split[0];
 
 		// Check for matching module name first -> toggle if found
-		Module module = Gui.getModuleByName(cmdName);
+		Module module = ModuleManager.getModule(cmdName);
 
 		if (module != null && split.length == 1) {
-			if (module instanceof ToggleableModule toggleableModule) {
-				toggleableModule.toggle();
-				Gui.saveSettings();
-				ChatUtils.FAT_clientMessage("Toggled: " + module.getName() + " | " + toggleableModule.isToggled());
-				return;
-			}
+			module.setState(!module.getState());
+			//Gui.saveSettings();
+			ChatUtils.FAT_clientMessage("Toggled: " + module.getName() + " | " + module.getState());
+			return;
 		}
 
 		Command command = commands.stream()

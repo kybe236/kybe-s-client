@@ -3,12 +3,13 @@ package de.kybe.client.impl.commands;
 import de.kybe.Kybe;
 import de.kybe.client.core.command.Command;
 import de.kybe.client.core.module.Module;
+import de.kybe.client.core.module.ModuleManager;
+import de.kybe.client.core.setting.SettingManager;
 import de.kybe.client.core.util.ChatUtils;
 import de.kybe.client.impl.settings.BooleanSetting;
 import de.kybe.client.impl.settings.EnumSetting;
 import de.kybe.client.impl.settings.NumberSetting;
 import de.kybe.client.core.setting.Setting;
-import de.kybe.client.core.gui.gui.Gui;
 
 import java.util.Comparator;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Modules extends Command {
 
 	@Override
 	public void execute(String name, String[] args) {
-		List<Module> modules = Gui.getModules();
+		List<Module> modules = ModuleManager.getModules();
 
 		if (args.length < 1) {
 			ChatUtils.FAT_clientMessage("Modules:");
@@ -35,7 +36,7 @@ public class Modules extends Command {
 					.findFirst()
 					.orElse(null);
 			if (module != null) {
-				List<Setting> settings = module.getSettings();
+				List<Setting> settings = SettingManager.getSettingsForModule(module);
 				ChatUtils.FAT_clientMessage(module.getName() + " has the following settings: ");
 				settings.stream()
 						.sorted(Comparator.comparing(Setting::getName))

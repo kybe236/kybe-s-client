@@ -13,8 +13,8 @@ public class NumberSetting<T extends Number> extends Setting {
 	boolean inEditMode = false;
 	private T value;
 
-	public NumberSetting(String name, T value, T min, T max, T increment) {
-		super(name);
+	public NumberSetting(String name, String description, T value, T min, T max, T increment) {
+		super(name, description);
 		this.value = value;
 		this.min = min;
 		this.max = max;
