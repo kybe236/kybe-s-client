@@ -24,16 +24,16 @@ public class TestModule extends Module {
 
     @Override
     public void onEnable() {
-        ChatUtils.clientMessage("ENABLE");
+        ChatUtils.clientMessage("ENABLED " + this.getName());
     }
 
     @Override
     public void onDisable() {
-        ChatUtils.clientMessage("DISABLE");
+        ChatUtils.clientMessage("DISABLED" + this.getName());
     }
 
     @Subscribe
-    public static void onTick(EventTick ignore) {
-        ChatUtils.clientMessage("TICKING");
+    public void onTick(EventTick ignore) {
+        ChatUtils.clientMessage("TICKING " + this.getName());
     }
 }
