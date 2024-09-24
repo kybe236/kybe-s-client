@@ -3,13 +3,11 @@ package de.kybe.client.core.gui.new_gui;
 import de.kybe.client.core.gui.new_gui.Components.ScreenSelector;
 import de.kybe.client.core.gui.new_gui.colors.Colors;
 import de.kybe.client.core.gui.new_gui.enums.AvailableScreens;
-import de.kybe.client.core.gui.new_gui.screens.MainWindow;
-//import de.kybe.client.core.gui.gui.Gui;
+import de.kybe.client.core.gui.new_gui.Components.MainWindow;
 
 import de.kybe.client.core.module.Module;
 import de.kybe.client.core.module.ModuleCategory;
 import de.kybe.client.core.module.ModuleManager;
-import de.kybe.client.core.util.renders.render2d.Rect;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -19,12 +17,11 @@ import java.util.Arrays;
 
 import static de.kybe.Kybe.mc;
 
-
 public class GUI extends Screen {
 
     int screenWidth;
     int screenHeight;
-    
+
     MainWindow mainWindow;
     ScreenSelector selector;
 
@@ -101,3 +98,4 @@ public class GUI extends Screen {
         return false;
     }
 }
+
