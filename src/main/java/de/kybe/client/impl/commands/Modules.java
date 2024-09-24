@@ -10,6 +10,7 @@ import de.kybe.client.impl.settings.BooleanSetting;
 import de.kybe.client.impl.settings.EnumSetting;
 import de.kybe.client.impl.settings.NumberSetting;
 import de.kybe.client.core.setting.Setting;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.Comparator;
 import java.util.List;
