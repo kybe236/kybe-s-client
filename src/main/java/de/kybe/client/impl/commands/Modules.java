@@ -10,6 +10,7 @@ import de.kybe.client.impl.settings.BooleanSetting;
 import de.kybe.client.impl.settings.EnumSetting;
 import de.kybe.client.impl.settings.NumberSetting;
 import de.kybe.client.core.setting.Setting;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.Comparator;
 import java.util.List;
@@ -26,9 +27,25 @@ public class Modules extends Command {
 
 		if (args.length < 1) {
 			ChatUtils.FAT_clientMessage("Modules:");
+
+			int maxModuleNameLength = modules.stream().mapToInt(module -> module.getName().length()).max().orElse(0);
 			modules.stream()
 					.sorted(Comparator.comparing(Module::getName))
-					.forEach(module -> ChatUtils.clientMessage(module.getName()));
+					.forEach(module -> {
+						String moduleName = String.format("%-" + maxModuleNameLength + "s", module.getName());
+						String state = module.getState() ? "Enabled" : "Disabled";
+						String keybind;
+						if (module.getKeybind() == 0) {
+							keybind = "None";
+						} else {
+							keybind = GLFW.glfwGetKeyName(module.getKeybind(), 0);
+						}
+						if (keybind == null) {
+							keybind = "Unknown";
+						}
+
+						ChatUtils.clientMessage(moduleName + " [" + state + "] (Key: " + keybind + ")");
+					});
 		} else if (args.length == 1) {
 			String moduleName = args[0];
 			Module module = modules.stream()
