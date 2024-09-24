@@ -29,7 +29,7 @@ public class TestModule extends Module {
 
     @Override
     public void onDisable() {
-        ChatUtils.clientMessage("DISABLED " + this.getName());
+        ChatUtils.clientMessage("DISABLED" + this.getName());
     }
 
     @Subscribe

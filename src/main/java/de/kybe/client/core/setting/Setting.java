@@ -35,11 +35,6 @@ public abstract class Setting {
 		return name;
 	}
 
-	@Override
-	public String toString() {
-		return "[" + this.name + " | " + this.description + "]";
-	}
-
 	public Module getParent() {
 		return parent;
 	}
