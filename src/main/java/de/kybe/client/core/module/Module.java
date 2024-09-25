@@ -155,10 +155,9 @@ public class Module {
 		if (!this.getSettings().isEmpty()) {
 			JsonArray settings = new JsonArray();
 			for (Setting setting : this.getSettings()) {
-				Kybe.LOGGER.info("Saving setting: " + setting.getName());
+				Kybe.LOGGER.info("Saving setting: {}", setting.getName());
 				settings.add(setting.serialize());
 			}
-
 			// Adding the array list to the module object as a json array called "settings"
 			obj.add("settings", settings);
 		}

@@ -13,15 +13,16 @@ import static de.kybe.Kybe.mc;
 public class ConfigManager {
 
 	public static void saveSettings() {
+
 		JsonArray modules = new JsonArray();
+
 		for (Module module : ModuleManager.getModules()) {
-			Kybe.LOGGER.info("Saving module: {}", module.getName());
 			modules.add(module.serialize());
 		}
 
 		File settingsFile = new File(mc.gameDirectory, "settings.json");
 
-		String json = modules.getAsString();
+		String json = modules.toString();
 
 		Kybe.LOGGER.info("Saving settings to: {}", settingsFile.getAbsolutePath());
 		Kybe.LOGGER.info(json);

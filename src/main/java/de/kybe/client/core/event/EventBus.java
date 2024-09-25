@@ -48,15 +48,21 @@ public class EventBus {
 						if (method.isAnnotationPresent(Subscribe.class) && method.getParameterCount() == 1 && method.getParameterTypes()[0].isAssignableFrom(event.getClass()) && Modifier.isPublic(method.getModifiers())) {
 							Subscribe sub = method.getAnnotation(Subscribe.class);
 
-							if (sub.execution() == execution) {
+							if (sub.execution() == execution || sub.execution() == Execution.ALL) {
 								method.invoke(instance, event);
+								if(Modifier.isStatic(method.getModifiers())) {
+									method.invoke(null, event);
+								} else {
+									method.invoke(instance, event);
+								}
+
 							}
 						}
 					}
 				}
 			}
 		} catch (InvocationTargetException | IllegalAccessException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 	}
 }
