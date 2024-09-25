@@ -45,16 +45,11 @@ public class Kybe implements ModInitializer {
 
 	public ModuleManager moduleManager;
 	public CommandManager commandManager;
-	public SettingManager settingManager;
 
 	public static void afterConfigInit() {
-		keyMapping = new KeyMapping("key.kybe.open", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "category.kybe");
 		ClickGUIKey = new KeyMapping("ClickGUI", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, "category.kybe");
 
 		Options config = Minecraft.getInstance().options;
-
-		((IOptions) config).setKeyMappings(ArrayUtils.add(config.keyMappings, keyMapping));
-		((IKeyMapping) keyMapping).getCategorySortOrder().put("category.kybe", ((IKeyMapping) keyMapping).getCategorySortOrder().size() + 1);
 
 		((IOptions) config).setKeyMappings(ArrayUtils.add(config.keyMappings, ClickGUIKey));
 		((IKeyMapping) ClickGUIKey).getCategorySortOrder().put("category.kybe", ((IKeyMapping) ClickGUIKey).getCategorySortOrder().size() + 1);
@@ -65,7 +60,6 @@ public class Kybe implements ModInitializer {
 		mc = Minecraft.getInstance();
 		moduleManager = new ModuleManager();
 		commandManager = new CommandManager();
-		settingManager = new SettingManager();
 
 		ModuleManager.addModule(new TestModule());
 		ModuleManager.addModule(new ClickGUI());

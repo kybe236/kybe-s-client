@@ -1,9 +1,9 @@
-package de.kybe.client.core.gui.new_gui;
+package de.kybe.client.core.gui;
 
-import de.kybe.client.core.gui.new_gui.Components.ScreenSelector;
-import de.kybe.client.core.gui.new_gui.colors.Colors;
-import de.kybe.client.core.gui.new_gui.enums.AvailableScreens;
-import de.kybe.client.core.gui.new_gui.Components.MainWindow;
+import de.kybe.client.core.gui.components.ScreenSelector;
+import de.kybe.client.core.gui.colors.Colors;
+import de.kybe.client.core.gui.enums.AvailableScreens;
+import de.kybe.client.core.gui.components.MainWindow;
 
 import de.kybe.client.core.module.Module;
 import de.kybe.client.core.module.ModuleCategory;

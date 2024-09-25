@@ -23,23 +23,6 @@ public class ModuleManager {
 
     public static void addModule(Module module) {
         modules.add(module);
-        registerModuleSettings(module);
-    }
-
-    private static void registerModuleSettings(Module module) {
-        Field[] fields = module.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            if (Setting.class.isAssignableFrom(field.getType())) {
-                try {
-                    field.setAccessible(true);
-                    Setting setting = (Setting) field.get(module);
-                    setting.setParent(module);
-                    SettingManager.registerSetting(setting);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     public static List<Module> getModules() {

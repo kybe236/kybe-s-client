@@ -1,4 +1,4 @@
-package de.kybe.client.core.gui.new_gui.colors;
+package de.kybe.client.core.gui.colors;
 
 import java.awt.*;
 

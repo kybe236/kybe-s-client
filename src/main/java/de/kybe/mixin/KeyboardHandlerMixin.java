@@ -5,7 +5,7 @@ import de.kybe.client.core.event.EventBus;
 import de.kybe.client.core.event.Execution;
 import de.kybe.client.core.event.events.KeyboardEvent.KeyboardEvent;
 import de.kybe.client.core.event.events.KeyboardEvent.RawKeyboardEvent;
-import de.kybe.client.core.event.events.typeCharEvent.TypeCharEvent;
+import de.kybe.client.core.event.events.TypeCharEvent.TypeCharEvent;
 import net.minecraft.client.KeyboardHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

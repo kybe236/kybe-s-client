@@ -53,7 +53,7 @@ public class Modules extends Command {
 					.findFirst()
 					.orElse(null);
 			if (module != null) {
-				List<Setting> settings = SettingManager.getSettingsForModule(module);
+				List<Setting> settings = module.getSettings();
 				ChatUtils.FAT_clientMessage(module.getName() + " has the following settings: ");
 				settings.stream()
 						.sorted(Comparator.comparing(Setting::getName))

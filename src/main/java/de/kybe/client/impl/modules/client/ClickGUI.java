@@ -1,6 +1,6 @@
 package de.kybe.client.impl.modules.client;
 
-import de.kybe.client.core.gui.new_gui.GUI;
+import de.kybe.client.core.gui.GUI;
 import de.kybe.client.core.module.Module;
 import de.kybe.client.core.module.ModuleCategory;
 import org.lwjgl.glfw.GLFW;

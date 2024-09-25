@@ -1,4 +1,4 @@
-package de.kybe.client.core.gui.new_gui.screens;
+package de.kybe.client.core.gui.screens;
 
 import de.kybe.client.core.util.renders.render2d.Rect;
 import net.minecraft.client.gui.GuiGraphics;

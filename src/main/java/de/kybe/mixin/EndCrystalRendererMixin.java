@@ -23,7 +23,7 @@ public abstract class EndCrystalRendererMixin {
 		CrystalSpin crystalSpin = (CrystalSpin) ModuleManager.getModule("CrystalSpin");
 
 		if (crystalSpin != null && crystalSpin.getState()) {
-			NumberSetting sidewaysSpeedSetting = (NumberSetting) SettingManager.getSettingByName(crystalSpin, "SidewaysSpeed");
+			NumberSetting sidewaysSpeedSetting = (NumberSetting) crystalSpin.getSetting("SidewaysSpeed");
 			if (sidewaysSpeedSetting != null) {
 				return f * (Float) sidewaysSpeedSetting.getValue();
 			}
@@ -39,9 +39,9 @@ public abstract class EndCrystalRendererMixin {
 		CrystalSpin crystalSpin = (CrystalSpin) ModuleManager.getModule("CrystalSpin");
 
 		if (crystalSpin != null && crystalSpin.getState()) {
-			NumberSetting scaleXSetting = (NumberSetting) SettingManager.getSettingByName(crystalSpin, "scaleX");
-			NumberSetting scaleYSetting = (NumberSetting) SettingManager.getSettingByName(crystalSpin, "scaleY");
-			NumberSetting scaleZSetting = (NumberSetting) SettingManager.getSettingByName(crystalSpin, "scaleZ");
+			NumberSetting scaleXSetting = (NumberSetting) crystalSpin.getSetting("scaleX");
+			NumberSetting scaleYSetting = (NumberSetting) crystalSpin.getSetting("scaleY");
+			NumberSetting scaleZSetting = (NumberSetting) crystalSpin.getSetting("scaleZ");
 
 			if (scaleXSetting != null && scaleYSetting != null && scaleZSetting != null) {
 				poseStack.scale(

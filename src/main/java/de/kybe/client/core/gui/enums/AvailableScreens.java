@@ -1,4 +1,4 @@
-package de.kybe.client.core.gui.new_gui.enums;
+package de.kybe.client.core.gui.enums;
 
 public enum AvailableScreens {
     CLICKGUI,

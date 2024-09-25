@@ -1,13 +1,24 @@
 package de.kybe.client.core.module;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import de.kybe.client.core.event.EventBus;
+import de.kybe.client.core.setting.Setting;
+import de.kybe.client.core.setting.SettingManager;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.ArrayList;
+
+/*
+ * @Author kybe236
+ * @Author mopplkotze (Refactored)
+ */
 public class Module {
 
     private final String name;
     private final String description;
     private final ModuleCategory category;
+    private ArrayList<Setting> settings = new ArrayList<>();
 
     private boolean state;
     private boolean drawn;
@@ -98,5 +109,56 @@ public class Module {
         return false;
     }
 
+    public void addSetting(Setting setting) {
+        if (!settings.contains(setting)) {
+            settings.add(setting);
+        } else {
+            throw new IllegalArgumentException("Setting already exists");
+        }
+    }
 
+    public void addSettings(Setting... settings) {
+        for (Setting setting : settings) {
+            addSetting(setting);
+        }
+    }
+
+    public ArrayList<Setting> getSettings() {
+        return settings;
+    }
+
+    public Setting getSetting(String name) {
+        for (Setting setting : settings) {
+            if (setting.getName().equalsIgnoreCase(name)) {
+                return setting;
+            }
+        }
+        return null;
+    }
+
+    /*
+     * Creates an JsonObject with the module's data (category, name, settings)
+     */
+    public JsonObject serialize() {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("category", this.getCategory().name());
+        obj.addProperty("name", this.getName());
+        obj.addProperty("state", this.getState());
+        obj.addProperty("drawn", this.isDrawn());
+        obj.addProperty("keybind", this.getKeybind());
+
+        /*
+         * If the module has settings, serialize them using there implementation of the serialize method
+         */
+        if (!this.getSettings().isEmpty()) {
+            JsonArray settings = new JsonArray();
+            for (Setting setting : this.getSettings()) {
+                settings.add(setting.serialize());
+            }
+
+            // Adding the array list to the module object as a json array called "settings"
+            obj.add("settings", settings);
+        }
+        return obj;
+    }
 }

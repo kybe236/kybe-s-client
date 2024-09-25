@@ -43,7 +43,7 @@ public class Set extends Command {
 			return;
 		}
 
-		Setting setting = SettingManager.getSettingByName(module, args[1]);
+		Setting setting = module.getSetting(args[1]);
 		switch (setting) {
 			case null -> {
 				ChatUtils.clientWarningMessage("Setting with name " + args[1] + " in module " + module.getName() + " not found.");

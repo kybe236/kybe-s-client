@@ -18,7 +18,7 @@ public class Test extends Command {
 
 		for(Module module : ModuleManager.getModules()) {
 			ChatUtils.clientMessage(module.getName());
-			for (Setting setting : SettingManager.getSettingsForModule(module)) {
+			for (Setting setting : module.getSettings()) {
 				ChatUtils.clientMessage(setting.toString());
 			}
 		}

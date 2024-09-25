@@ -1,6 +1,6 @@
-package de.kybe.client.core.gui.new_gui.Components;
+package de.kybe.client.core.gui.components;
 
-import de.kybe.client.core.gui.new_gui.enums.AvailableScreens;
+import de.kybe.client.core.gui.enums.AvailableScreens;
 import de.kybe.client.core.util.renders.render2d.Rect;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
