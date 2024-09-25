@@ -1,6 +1,7 @@
 package de.kybe.client.core.module;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.kybe.Kybe;
 import de.kybe.client.core.event.EventBus;
@@ -162,5 +163,33 @@ public class Module {
 			obj.add("settings", settings);
 		}
 		return obj;
+	}
+	
+	/*
+	 * Deserializes the module from a JsonObject
+	 */
+	public void deserialize(JsonObject obj) {
+		if (!obj.get("category").getAsString().equals(this.category.name())) return;
+		if (!obj.has("name") || !obj.get("name").getAsString().equals(this.getName())) return;
+
+		if (obj.has("state")) {
+			this.setState(obj.get("state").getAsBoolean());
+		}
+
+		if (obj.has("drawn")) {
+			this.setDrawn(obj.get("drawn").getAsBoolean());
+		}
+
+		if (obj.has("keybind")) {
+			this.setKeybind(obj.get("keybind").getAsInt());
+		}
+
+		if (!obj.has("settings")) return;
+
+		JsonArray settings = obj.getAsJsonArray("settings");
+		for (JsonElement setting : settings) {
+			JsonObject settingJson = setting.getAsJsonObject();
+			this.getSetting(settingJson.get("name").getAsString()).deserialize(settingJson);
+		}
 	}
 }
