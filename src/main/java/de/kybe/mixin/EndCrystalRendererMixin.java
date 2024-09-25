@@ -2,8 +2,8 @@ package de.kybe.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.kybe.client.core.module.ModuleManager;
-import de.kybe.client.impl.settings.NumberSetting;
 import de.kybe.client.impl.modules.render.CrystalSpin;
+import de.kybe.client.impl.settings.NumberSetting;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EndCrystalRenderer;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;

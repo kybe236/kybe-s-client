@@ -4,11 +4,11 @@ import de.kybe.Kybe;
 import de.kybe.client.core.command.Command;
 import de.kybe.client.core.module.Module;
 import de.kybe.client.core.module.ModuleManager;
+import de.kybe.client.core.setting.Setting;
+import de.kybe.client.core.util.ChatUtils;
 import de.kybe.client.impl.settings.BooleanSetting;
 import de.kybe.client.impl.settings.EnumSetting;
 import de.kybe.client.impl.settings.NumberSetting;
-import de.kybe.client.core.setting.Setting;
-import de.kybe.client.core.util.ChatUtils;
 
 import java.util.Arrays;
 

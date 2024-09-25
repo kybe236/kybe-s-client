@@ -9,11 +9,11 @@ import java.util.List;
 
 public class CommandManager {
 
+	private static final List<Command> commands = new ArrayList<>();
+
 	public CommandManager() {
 
 	}
-
-	private static final List<Command> commands = new ArrayList<>();
 
 	public static void addCommand(Command command) {
 		commands.add(command);

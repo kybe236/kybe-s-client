@@ -42,7 +42,7 @@ public class Kybe implements ModInitializer {
 	public static KeyMapping keyMapping;
 	public static KeyMapping ClickGUIKey;
 
-	public ModuleManager moduleManager;
+	public static ModuleManager moduleManager;
 	public CommandManager commandManager;
 
 	public static void afterConfigInit() {

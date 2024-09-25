@@ -7,9 +7,9 @@ import net.minecraft.network.chat.MessageSignature;
 import org.jetbrains.annotations.Nullable;
 
 public class ChatAddEvent extends Cancelable {
+	private final GuiMessageTag tag;
 	Component component;
 	MessageSignature messageSignature;
-	private final GuiMessageTag tag;
 
 	public ChatAddEvent(Component component, @Nullable MessageSignature messageSignature, @Nullable GuiMessageTag guiMessageTag) {
 		this.component = component;

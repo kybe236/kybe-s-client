@@ -1,5 +1,6 @@
 package de.kybe.client.core.module;
 
+import de.kybe.Kybe;
 import de.kybe.client.core.event.EventBus;
 import de.kybe.client.core.event.Subscribe;
 import de.kybe.client.core.event.events.KeyboardEvent.KeyboardEvent;
@@ -11,44 +12,46 @@ import static de.kybe.Kybe.mc;
 
 public class ModuleManager {
 
-    public ModuleManager() {
-        EventBus.register(this);
-    }
+	private static final List<Module> modules = new ArrayList<>();
 
-    private static final List<Module> modules = new ArrayList<>();
+	public ModuleManager() {
+		EventBus.register(this);
+	}
 
-    public static void addModule(Module module) {
-        modules.add(module);
-    }
+	public static void addModule(Module module) {
+		modules.add(module);
+	}
 
-    public static List<Module> getModules() {
-        return modules;
-    }
+	public static List<Module> getModules() {
+		return modules;
+	}
 
-    public static Module getModule(String name) {
-        return modules.stream().filter(module -> name.equalsIgnoreCase(module.getName())).findFirst().orElse(null);
-    }
+	public static Module getModule(String name) {
+		return modules.stream().filter(module -> name.equalsIgnoreCase(module.getName())).findFirst().orElse(null);
+	}
 
-    public static List<Module> getModulesFromCategory(ModuleCategory category) {
-        List<Module> returnmodules = new ArrayList<>();
+	public static List<Module> getModulesFromCategory(ModuleCategory category) {
+		List<Module> returnmodules = new ArrayList<>();
 
-        for (Module module : modules) {
-            if (module.getCategory() == category) {
-                returnmodules.add(module);
-            }
-        }
+		for (Module module : modules) {
+			if (module.getCategory() == category) {
+				returnmodules.add(module);
+			}
+		}
 
-        return returnmodules;
-    }
+		return returnmodules;
+	}
 
-    @Subscribe
-    public void onKeyPress(KeyboardEvent event) {
-        if(mc.screen != null) return;
-        KeyboardEvent.Type type = event.getType();
-        for (Module module : getModules()) {
-            if(module.getKeybind() == event.getKey() && type == KeyboardEvent.Type.PRESS) {
-                module.toggle();
-            }
-        }
-    }
+	@Subscribe
+	public void onKeyPress(KeyboardEvent event) {
+		if (mc.screen != null) return;
+		KeyboardEvent.Type type = event.getType();
+		for (Module module : getModules()) {
+			Kybe.LOGGER.info("Key: {} NEDDED: {}", event.getKey(), module.getKeybind());
+			if (module.getKeybind() == event.getKey() && type == KeyboardEvent.Type.PRESS) {
+				Kybe.LOGGER.info("Toggling module: {}", module.getName());
+				module.toggle();
+			}
+		}
+	}
 }
