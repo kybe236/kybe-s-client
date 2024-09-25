@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiGraphics;
 
 import java.awt.*;
 
+@SuppressWarnings("unused")
 public class MainWindow {
 
 	private final int min_width;

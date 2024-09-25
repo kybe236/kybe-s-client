@@ -31,18 +31,22 @@ public class MainWindow {
 		this.max_height = max_height;
 	}
 
+    @SuppressWarnings("unused")
 	public int getX() {
 		return x;
 	}
 
+    @SuppressWarnings("unused")
 	public int getY() {
 		return y;
 	}
 
+    @SuppressWarnings("unused")
 	public int getWidth() {
 		return width;
 	}
 
+    @SuppressWarnings("unused")
 	public int getHeight() {
 		return height;
 	}

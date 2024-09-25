@@ -5,6 +5,7 @@ import de.kybe.client.core.module.Module;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class SettingManager {
 
 	private static final List<Setting> settings = new ArrayList<>();

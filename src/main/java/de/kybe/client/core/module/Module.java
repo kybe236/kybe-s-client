@@ -35,6 +35,7 @@ public class Module {
 		return name;
 	}
 
+	@SuppressWarnings("unused")
 	public String getDescription() {
 		return description;
 	}
@@ -87,6 +88,7 @@ public class Module {
 		return drawn;
 	}
 
+	@SuppressWarnings("unused")
 	public void setDrawn(boolean drawn) {
 		this.drawn = drawn;
 	}
@@ -99,6 +101,7 @@ public class Module {
 		this.keybind = keybind;
 	}
 
+	@SuppressWarnings("unused")
 	public boolean handleKeyPress(int key) {
 		if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_KP_ENTER) {
 			this.toggle();
@@ -115,6 +118,7 @@ public class Module {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public void addSettings(Setting... settings) {
 		for (Setting setting : settings) {
 			addSetting(setting);

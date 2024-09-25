@@ -9,6 +9,7 @@ import java.awt.*;
 
 import static de.kybe.Kybe.mc;
 
+@SuppressWarnings("unused")
 public class Image {
 
 	//Image

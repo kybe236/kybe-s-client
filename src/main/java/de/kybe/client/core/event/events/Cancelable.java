@@ -7,6 +7,7 @@ public class Cancelable extends BaseEvent {
 		return cancel;
 	}
 
+	@SuppressWarnings("unused")
 	public void setCancel(boolean cancel) {
 		this.cancel = cancel;
 	}
