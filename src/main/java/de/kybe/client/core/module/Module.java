@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import de.kybe.client.core.event.EventBus;
 import de.kybe.client.core.setting.Setting;
-import de.kybe.client.core.setting.SettingManager;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -27,8 +26,6 @@ public class Module {
     public Module(String name, String description, ModuleCategory category, int keybind) {
         this.description = description;
         this.category = category;
-        this.state = state;
-        this.drawn = drawn;
         this.name = name;
         this.keybind = keybind;
     }

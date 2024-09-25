@@ -3,11 +3,7 @@ package de.kybe.client.core.module;
 import de.kybe.client.core.event.EventBus;
 import de.kybe.client.core.event.Subscribe;
 import de.kybe.client.core.event.events.KeyboardEvent.KeyboardEvent;
-import de.kybe.client.core.setting.Setting;
-import de.kybe.client.core.setting.SettingManager;
-import net.minecraft.client.gui.screens.ChatScreen;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 

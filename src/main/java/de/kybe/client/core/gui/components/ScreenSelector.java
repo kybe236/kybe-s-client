@@ -14,10 +14,10 @@ public class ScreenSelector {
 
     private List<AvailableScreens> options;
     private int selected;
-    private int screenWidth;
-    private int width = 80;
-    private int height = 15;
-    private int gap = 4;
+    private final int screenWidth;
+    private final int width = 80;
+    private final int height = 15;
+    private final int gap = 4;
 
     public ScreenSelector(List<AvailableScreens> options) {
         this.options = options;

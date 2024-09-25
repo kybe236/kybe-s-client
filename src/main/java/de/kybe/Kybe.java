@@ -13,7 +13,6 @@ package de.kybe;
 import com.mojang.blaze3d.platform.InputConstants;
 import de.kybe.client.core.command.CommandManager;
 import de.kybe.client.core.module.ModuleManager;
-import de.kybe.client.core.setting.SettingManager;
 import de.kybe.client.impl.commands.*;
 import de.kybe.client.impl.modules.TestModule;
 import de.kybe.client.impl.modules.client.ClickGUI;

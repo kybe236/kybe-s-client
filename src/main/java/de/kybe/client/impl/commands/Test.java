@@ -4,7 +4,6 @@ import de.kybe.client.core.command.Command;
 import de.kybe.client.core.module.Module;
 import de.kybe.client.core.module.ModuleManager;
 import de.kybe.client.core.setting.Setting;
-import de.kybe.client.core.setting.SettingManager;
 import de.kybe.client.core.util.ChatUtils;
 
 public class Test extends Command {

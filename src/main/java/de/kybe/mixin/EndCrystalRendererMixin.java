@@ -2,7 +2,6 @@ package de.kybe.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.kybe.client.core.module.ModuleManager;
-import de.kybe.client.core.setting.SettingManager;
 import de.kybe.client.impl.settings.NumberSetting;
 import de.kybe.client.impl.modules.render.CrystalSpin;
 import net.minecraft.client.renderer.MultiBufferSource;

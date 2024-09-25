@@ -11,10 +11,10 @@ public class MainWindow {
     private int y;
     private int width;
     private int height;
-    private int min_width;
-    private int min_height;
-    private int max_width;
-    private int max_height;
+    private final int min_width;
+    private final int min_height;
+    private final int max_width;
+    private final int max_height;
 
     private boolean dragging = false;
     private boolean scaling = false;
