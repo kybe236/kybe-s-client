@@ -9,7 +9,6 @@ import de.kybe.client.core.module.ModuleManager;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -35,6 +34,7 @@ public class ConfigManager {
 		try (FileWriter writer = new FileWriter(settingsFile)) {
 			writer.write(json);
 		} catch (Exception e) {
+			//noinspection CallToPrintStackTrace
 			e.printStackTrace();
 		}
 	}
@@ -42,22 +42,23 @@ public class ConfigManager {
 	public static void loadSettings() {
 		try {
 
-		File settingsFile = new File(mc.gameDirectory, "settings.json");
-		if (!settingsFile.exists()) {
-			Kybe.LOGGER.info("No settings file found.");
-			return;
-		}
-
-		JsonArray jsonModules = JsonParser.parseReader(Files.newBufferedReader(settingsFile.toPath())).getAsJsonArray();
-		List<JsonElement> jsonModulesList = jsonModules.asList();
-
-		for (JsonElement jsonModule : jsonModulesList) {
-			Module module = ModuleManager.getModule(jsonModule.getAsJsonObject().get("name").getAsString());
-			if (module != null) {
-				module.deserialize(jsonModule.getAsJsonObject());
+			File settingsFile = new File(mc.gameDirectory, "settings.json");
+			if (!settingsFile.exists()) {
+				Kybe.LOGGER.info("No settings file found.");
+				return;
 			}
-		}
+
+			JsonArray jsonModules = JsonParser.parseReader(Files.newBufferedReader(settingsFile.toPath())).getAsJsonArray();
+			List<JsonElement> jsonModulesList = jsonModules.asList();
+
+			for (JsonElement jsonModule : jsonModulesList) {
+				Module module = ModuleManager.getModule(jsonModule.getAsJsonObject().get("name").getAsString());
+				if (module != null) {
+					module.deserialize(jsonModule.getAsJsonObject());
+				}
+			}
 		} catch (Exception e) {
+			//noinspection CallToPrintStackTrace
 			e.printStackTrace();
 		}
 	}

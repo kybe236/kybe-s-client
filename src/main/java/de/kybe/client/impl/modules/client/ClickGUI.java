@@ -10,13 +10,13 @@ import static de.kybe.Kybe.mc;
 
 public class ClickGUI extends Module {
 
-    public ClickGUI() {
-        super("ClickGUI", "Desc", ModuleCategory.CLIENT, GLFW.GLFW_KEY_RIGHT_SHIFT);
-    }
+	public ClickGUI() {
+		super("ClickGUI", "Desc", ModuleCategory.CLIENT, GLFW.GLFW_KEY_RIGHT_SHIFT);
+	}
 
-    @Override
-    public void onEnable() {
-        mc.setScreen(new GUI());
-        this.toggle();
-    }
+	@Override
+	public void onEnable() {
+		mc.setScreen(new GUI());
+		this.toggle();
+	}
 }

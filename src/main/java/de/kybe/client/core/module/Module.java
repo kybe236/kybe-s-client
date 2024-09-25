@@ -164,7 +164,7 @@ public class Module {
 		}
 		return obj;
 	}
-	
+
 	/*
 	 * Deserializes the module from a JsonObject
 	 */

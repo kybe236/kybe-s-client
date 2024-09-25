@@ -10,14 +10,15 @@ import static de.kybe.Kybe.mc;
 
 public class DoubleJump extends Module {
 
-    public DoubleJump() {
-        super("DoubleJump", "Allows you to double jump when in air", ModuleCategory.MOVEMENT, GLFW.GLFW_KEY_UNKNOWN);
-    }
+	public DoubleJump() {
+		super("DoubleJump", "Allows you to double jump when in air", ModuleCategory.MOVEMENT, GLFW.GLFW_KEY_UNKNOWN);
+	}
 
-    @Subscribe
-    public static void onTick(EventTick ignore) {
-        if (mc.player != null && !mc.player.onGround() && mc.options.keyJump.isDown()) {
-            mc.player.jumpFromGround();
-        }
-    }
+	@SuppressWarnings("unused")
+	@Subscribe
+	public static void onTick(EventTick ignore) {
+		if (mc.player != null && !mc.player.onGround() && mc.options.keyJump.isDown()) {
+			mc.player.jumpFromGround();
+		}
+	}
 }

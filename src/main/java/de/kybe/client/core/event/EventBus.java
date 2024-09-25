@@ -50,7 +50,7 @@ public class EventBus {
 
 							if (sub.execution() == execution || sub.execution() == Execution.ALL) {
 								method.invoke(instance, event);
-								if(Modifier.isStatic(method.getModifiers())) {
+								if (Modifier.isStatic(method.getModifiers())) {
 									method.invoke(null, event);
 								} else {
 									method.invoke(instance, event);
@@ -62,6 +62,7 @@ public class EventBus {
 				}
 			}
 		} catch (InvocationTargetException | IllegalAccessException e) {
+			//noinspection CallToPrintStackTrace
 			e.printStackTrace();
 		}
 	}

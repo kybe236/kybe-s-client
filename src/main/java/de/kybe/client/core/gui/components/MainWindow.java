@@ -31,22 +31,22 @@ public class MainWindow {
 		this.max_height = max_height;
 	}
 
-    @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	public int getX() {
 		return x;
 	}
 
-    @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	public int getY() {
 		return y;
 	}
 
-    @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	public int getWidth() {
 		return width;
 	}
 
-    @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	public int getHeight() {
 		return height;
 	}
@@ -62,7 +62,7 @@ public class MainWindow {
 	}
 
 	// Method to draw the window (to be called in render)
-	public void draw(GuiGraphics guiGraphics, Color backgroundColor, Color accentColor) {
+	public void draw(@SuppressWarnings("unused") GuiGraphics guiGraphics, Color backgroundColor, Color accentColor) {
 		//background
 		Rect.drawOutlinedRoundedSquare(x, y, width, height, 5, 50, 1, backgroundColor, accentColor);
 
@@ -70,6 +70,7 @@ public class MainWindow {
 		Rect.drawOutlinedSquare(x + width - 10, y + height - 10, 10, 10, 1, backgroundColor, accentColor);
 	}
 
+    @SuppressWarnings("unused")
 	public boolean contains(int mouseX, int mouseY) {
 		return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
 	}
@@ -123,7 +124,7 @@ public class MainWindow {
 		}
 	}
 
-	public void handleMouseRelease(int mouseX, int mouseY, int button) {
+	public void handleMouseRelease(@SuppressWarnings("unused") int mouseX, @SuppressWarnings("unused") int mouseY, int button) {
 		if (button == 0) {
 			dragging = false;
 			scaling = false;

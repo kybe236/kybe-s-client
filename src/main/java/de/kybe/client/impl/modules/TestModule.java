@@ -11,29 +11,31 @@ import de.kybe.client.impl.settings.EnumSetting;
 import de.kybe.client.impl.settings.NumberSetting;
 import org.lwjgl.glfw.GLFW;
 
+@SuppressWarnings({"rawtypes", "unchecked", "unused"})
 public class TestModule extends Module {
 
-    NumberSetting numberSetting = new NumberSetting("Name", "hi", 3, 1, 5, 1);
-    BooleanSetting booleanSetting = new BooleanSetting("Name", "hi", true);
-    EnumSetting enumSetting = new EnumSetting("Enum", "hi",ModuleCategory.CLIENT);
-    BindSetting bindSetting = new BindSetting("Bind","hi", GLFW.GLFW_KEY_ENTER);
+	NumberSetting numberSetting = new NumberSetting("Name", "hi", 3, 1, 5, 1);
+	BooleanSetting booleanSetting = new BooleanSetting("Name", "hi", true);
+	EnumSetting enumSetting = new EnumSetting("Enum", "hi", ModuleCategory.CLIENT);
+	BindSetting bindSetting = new BindSetting("Bind", "hi", GLFW.GLFW_KEY_ENTER);
 
-    public TestModule() {
-        super("TestModule", "Desc", ModuleCategory.COMBAT, GLFW.GLFW_KEY_P);
-    }
+	public TestModule() {
+		super("TestModule", "Desc", ModuleCategory.COMBAT, GLFW.GLFW_KEY_P);
+	}
 
-    @Override
-    public void onEnable() {
-        ChatUtils.clientMessage("ENABLED " + this.getName());
-    }
+	@Override
+	public void onEnable() {
+		ChatUtils.clientMessage("ENABLED " + this.getName());
+	}
 
-    @Override
-    public void onDisable() {
-        ChatUtils.clientMessage("DISABLED" + this.getName());
-    }
+	@Override
+	public void onDisable() {
+		ChatUtils.clientMessage("DISABLED" + this.getName());
+	}
 
-    @Subscribe
-    public void onTick(EventTick ignore) {
-        ChatUtils.clientMessage("TICKING " + this.getName());
-    }
+	@SuppressWarnings("unused")
+	@Subscribe
+	public void onTick(EventTick ignore) {
+		ChatUtils.clientMessage("TICKING " + this.getName());
+	}
 }

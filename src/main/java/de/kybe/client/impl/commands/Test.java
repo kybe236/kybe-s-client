@@ -15,7 +15,7 @@ public class Test extends Command {
 	@Override
 	public void execute(String name, String[] args) {
 
-		for(Module module : ModuleManager.getModules()) {
+		for (Module module : ModuleManager.getModules()) {
 			ChatUtils.clientMessage(module.getName());
 			for (Setting setting : module.getSettings()) {
 				ChatUtils.clientMessage(setting.toString());

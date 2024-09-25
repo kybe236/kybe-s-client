@@ -27,7 +27,7 @@ public class GUI extends Screen {
 
 	public GUI() {
 		super(Component.literal("GUI"));
-		ConfigManager.saveSettings();
+		ConfigManager.loadSettings();
 
 		screenHeight = mc.getWindow().getGuiScaledHeight();
 		screenWidth = mc.getWindow().getGuiScaledWidth();
@@ -39,7 +39,7 @@ public class GUI extends Screen {
 	@Override
 	public void onClose() {
 		super.onClose();
-		//Gui.saveSettings();
+		ConfigManager.saveSettings();
 	}
 
 	@Override
