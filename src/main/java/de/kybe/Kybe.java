@@ -18,6 +18,7 @@ import de.kybe.client.impl.modules.TestModule;
 import de.kybe.client.impl.modules.client.ClickGUI;
 import de.kybe.client.impl.modules.movement.DoubleJump;
 import de.kybe.client.impl.modules.render.CrystalSpin;
+import de.kybe.client.impl.modules.render.NoSnowball;
 import de.kybe.mixin.IKeyMapping;
 import de.kybe.mixin.IOptions;
 import net.fabricmc.api.ModInitializer;
@@ -64,6 +65,7 @@ public class Kybe implements ModInitializer {
 		ModuleManager.addModule(new ClickGUI());
 		ModuleManager.addModule(new DoubleJump());
 		ModuleManager.addModule(new CrystalSpin());
+		ModuleManager.addModule(new NoSnowball());
 
 		CommandManager.addCommand(new Say());
 		CommandManager.addCommand(new de.kybe.client.impl.commands.Test());
