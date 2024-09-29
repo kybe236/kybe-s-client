@@ -1,13 +1,11 @@
 package de.kybe.client.core.gui;
 
-import de.kybe.client.core.configManager.ConfigManager;
-import de.kybe.client.core.gui.colors.Colors;
-import de.kybe.client.core.gui.components.MainWindow;
+import de.kybe.client.core.gui.components.MainComponent;
+import de.kybe.client.core.gui.components.ModuleComponent;
 import de.kybe.client.core.gui.components.ScreenSelector;
-import de.kybe.client.core.gui.enums.AvailableScreens;
-import de.kybe.client.core.module.Module;
-import de.kybe.client.core.module.ModuleCategory;
-import de.kybe.client.core.module.ModuleManager;
+import de.kybe.client.core.gui.misc.AvailableScreens;
+import de.kybe.client.core.gui.misc.TempColors;
+import de.kybe.client.core.util.renders.render2d.Rect;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -15,87 +13,106 @@ import net.minecraft.network.chat.Component;
 import java.awt.*;
 import java.util.Arrays;
 
-import static de.kybe.Kybe.mc;
+import static de.kybe.client.core.gui.components.MainComponent.current_category;
 
 public class GUI extends Screen {
 
-	int screenWidth;
-	int screenHeight;
+    //default dimensions
+    public int x, y, width, height;
+    public static MainComponent mainComponent;
+    public static ScreenSelector screenSelector;
 
-	MainWindow mainWindow;
-	ScreenSelector selector;
+    public GUI() {
+        super(Component.literal("ClickGUI"));
+        //TODO grab these sizes from a the clickgui module itself
+        this.x = 100;
+        this.y = 100;
+        this.width = 600;
+        this.height = 400;
+    }
 
-	public GUI() {
-		super(Component.literal("GUI"));
-		ConfigManager.loadSettings();
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
 
-		screenHeight = mc.getWindow().getGuiScaledHeight();
-		screenWidth = mc.getWindow().getGuiScaledWidth();
+    @Override
+    public void init() {
+        screenSelector = new ScreenSelector(Arrays.asList(AvailableScreens.values()));
+        mainComponent = new MainComponent(x,y,width,height);
+        mainComponent.init();
+    }
 
-		mainWindow = new MainWindow(100, 100, 600, 400, 400, 200, 800, 500);
-		selector = new ScreenSelector(Arrays.asList(AvailableScreens.values()));
-	}
+    @Override
+    public void onClose() {
+        super.onClose();
+    }
 
-	@Override
-	public void onClose() {
-		super.onClose();
-		ConfigManager.saveSettings();
-	}
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        screenSelector.drawSelector(guiGraphics, this.font, 10, TempColors.color_accent, TempColors.color_background, TempColors.color_accent);
 
-	@Override
-	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-		if (selector.getSelectedScreen() == AvailableScreens.CLICKGUI) {
-			// clickgui window
-			mainWindow.draw(guiGraphics, Colors.color_background, Colors.color_accent);
-		} else if (selector.getSelectedScreen() == AvailableScreens.HUD) {
-			// example another screen getting rendered
-			int verticalOffset = 10;
-			for (ModuleCategory category : ModuleCategory.values()) {
-				guiGraphics.drawString(this.font, category.name(), 10, verticalOffset, Color.YELLOW.getRGB());
-				verticalOffset += 15;
-				for (Module module : ModuleManager.getModulesFromCategory(category)) {
-					guiGraphics.drawString(this.font, "  " + module.getName(), 20, verticalOffset, Color.WHITE.getRGB());
-					verticalOffset += 10;
-				}
-			}
-			verticalOffset += 10;
-		}
+        if(screenSelector.getSelectedScreen() == AvailableScreens.CLICKGUI) {
+            //debug
+            if(current_category != null) {
+                guiGraphics.drawString(this.font, "Current Category: " + current_category.category.getName(),10, 10, Color.WHITE.getRGB());
+            } else {
+                guiGraphics.drawString(this.font, "Current Category: " + "null",10, 10, Color.WHITE.getRGB());
+            }
 
-		// always render selector
-		selector.drawSelector(guiGraphics, this.font, 10, Colors.color_accent, Colors.color_background, Colors.color_accent);
-	}
+            if(current_category != null && current_category.current_module != null) {
+                guiGraphics.drawString(this.font, "Current Module: " + current_category.current_module.module.getName(), 10, 20, Color.WHITE.getRGB());
+            } else {
+                guiGraphics.drawString(this.font, "Current Module: " + "null", 10, 20, Color.WHITE.getRGB());
+            }
+            //debug end
 
-	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		// always handle selector
-		selector.handleMouseClick((int) mouseX, (int) mouseY, 10);
+            mainComponent.drawScreen(guiGraphics, mouseX, mouseY, partialTick);
+        } else if(screenSelector.getSelectedScreen() == AvailableScreens.HUD) {
+            Rect.drawRoundedSquare(100, 100, 400, 400, 10, 50, new Color(164, 118, 214,255));
+        }
 
-		if (selector.getSelectedScreen() == AvailableScreens.CLICKGUI) {
-			// clickgui
-			mainWindow.handleMouseClick((int) mouseX, (int) mouseY, button);
-		}
+    }
 
-		return false;
-	}
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        screenSelector.handleMouseClick((int) mouseX, (int) mouseY, 10);
 
-	@Override
-	public boolean mouseReleased(double mouseX, double mouseY, int button) {
-		// main
-		if (selector.getSelectedScreen() == AvailableScreens.CLICKGUI) {
-			mainWindow.handleMouseRelease((int) mouseX, (int) mouseY, button);
-		}
+        if(screenSelector.getSelectedScreen() == AvailableScreens.CLICKGUI) {
+            mainComponent.mouseClicked(mouseX,mouseY,button);
+        }
 
-		return super.mouseReleased(mouseX, mouseY, button);
-	}
+        return false;
+    }
 
-	@Override
-	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-		// main
-		if (selector.getSelectedScreen() == AvailableScreens.CLICKGUI) {
-			mainWindow.handleMouseDrag((int) mouseX, (int) mouseY, button, screenWidth, screenHeight);
-		}
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
 
-		return false;
-	}
+        if(screenSelector.getSelectedScreen() == AvailableScreens.CLICKGUI) {
+            mainComponent.mouseReleased(mouseX, mouseY, button);
+        }
+
+        return super.mouseReleased(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+
+        if(screenSelector.getSelectedScreen() == AvailableScreens.CLICKGUI) {
+            mainComponent.mouseDragged(mouseX, mouseY, button,deltaX, deltaY);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double g, double scrollAmount) {
+
+        if(screenSelector.getSelectedScreen() == AvailableScreens.CLICKGUI) {
+            mainComponent.mouseScrolled(mouseX, mouseY, scrollAmount);
+        }
+
+        return super.mouseScrolled(mouseX, mouseY, g, scrollAmount);
+    }
+
 }
-

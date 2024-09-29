@@ -12,6 +12,8 @@ package de.kybe;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import de.kybe.client.core.command.CommandManager;
+import de.kybe.client.core.module.Module;
+import de.kybe.client.core.module.ModuleCategory;
 import de.kybe.client.core.module.ModuleManager;
 import de.kybe.client.impl.commands.*;
 import de.kybe.client.impl.modules.TestModule;
@@ -66,6 +68,18 @@ public class Kybe implements ModInitializer {
 		ModuleManager.addModule(new DoubleJump());
 		ModuleManager.addModule(new CrystalSpin());
 		ModuleManager.addModule(new NoSnowball());
+
+		//to test module scrolling in the gui
+		char letter = 'A';
+		for (int i = 0; i < 24; i++) {
+			String moduleName = letter + "_module";
+			String moduleDescription = "Description for " + moduleName;
+
+			Module random = new Module(moduleName, moduleDescription, ModuleCategory.CHAT, GLFW.GLFW_KEY_UNKNOWN);
+			ModuleManager.addModule(random);
+
+			letter++;
+		}
 
 		CommandManager.addCommand(new Say());
 		CommandManager.addCommand(new de.kybe.client.impl.commands.Test());

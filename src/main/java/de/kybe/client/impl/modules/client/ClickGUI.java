@@ -16,6 +16,10 @@ public class ClickGUI extends Module {
 
 	@Override
 	public void onEnable() {
+		if(mc.screen != null) {
+			this.toggle();
+			return;
+		}
 		mc.setScreen(new GUI());
 		this.toggle();
 	}
