@@ -14,8 +14,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.kybe.client.core.module.Module;
 
-/*
+/**
  * Base Settings class (Used for all settings)
+ * Handles serialization and deserialization
  */
 public abstract class Setting {
 	private final String name;
@@ -27,48 +28,71 @@ public abstract class Setting {
 		this.description = description;
 	}
 
+	/**
+	 * Gets the description of the setting (Displayed once Hovered)
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * Gets the name of the setting
+	 */
 	public String getName() {
 		return name;
 	}
 
-	@Override
-	public String toString() {
-		return "[" + this.name + " | " + this.description + "]";
-	}
-
+	/**
+	 * Gets the parent module of the setting (The module that the setting belongs to)
+	 */
 	public Module getParent() {
 		return parent;
 	}
 
+	/**
+	 * Sets the parent module of the setting
+	 */
 	public void setParent(Module module) {
 		this.parent = module;
 	}
 
-	/*
+	/**
 	 * Returns true if the key was handled
 	 */
 	public boolean handleKeyPress(int key) {
 		return false;
 	}
 
+	/**
+	 * Clients implementation to serialize the setting value to an JsonElement
+	 */
 	public abstract JsonElement serializeValue();
 
+	/**
+	 * Serialize the setting to an JsonElement
+	 */
 	public JsonElement serialize() {
 		JsonObject obj = new JsonObject();
+
+		// save the name to identify the setting (not load it)
 		obj.addProperty("name", name);
 		obj.add("value", this.serializeValue());
+
 		return obj;
 	}
 
+	/**
+	 * Deserialize the setting from an JsonObject
+	 */
 	public void deserialize(JsonObject obj) {
+		// only deserialize the value so name changes don't affect the setting
 		if (obj.has("value")) {
 			this.deserializeValue(obj.get("value"));
 		}
 	}
 
+	/**
+	 * Clients implementation to make sense of the JsonElement (NumberSettings handle numbers, StringSettings handle strings, etc.)
+	 */
 	public abstract void deserializeValue(JsonElement jsonElement);
 }

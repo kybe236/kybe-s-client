@@ -2,9 +2,8 @@ package de.kybe.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.kybe.client.core.module.ModuleManager;
-import de.kybe.client.core.setting.SettingManager;
-import de.kybe.client.impl.settings.NumberSetting;
 import de.kybe.client.impl.modules.render.CrystalSpin;
+import de.kybe.client.impl.settings.NumberSetting;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EndCrystalRenderer;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
@@ -14,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@SuppressWarnings("rawtypes")
 @Mixin(EndCrystalRenderer.class)
 public abstract class EndCrystalRendererMixin {
 
@@ -23,7 +23,7 @@ public abstract class EndCrystalRendererMixin {
 		CrystalSpin crystalSpin = (CrystalSpin) ModuleManager.getModule("CrystalSpin");
 
 		if (crystalSpin != null && crystalSpin.getState()) {
-			NumberSetting sidewaysSpeedSetting = (NumberSetting) SettingManager.getSettingByName(crystalSpin, "SidewaysSpeed");
+			NumberSetting sidewaysSpeedSetting = (NumberSetting) crystalSpin.getSetting("SidewaysSpeed");
 			if (sidewaysSpeedSetting != null) {
 				return f * (Float) sidewaysSpeedSetting.getValue();
 			}
@@ -39,9 +39,9 @@ public abstract class EndCrystalRendererMixin {
 		CrystalSpin crystalSpin = (CrystalSpin) ModuleManager.getModule("CrystalSpin");
 
 		if (crystalSpin != null && crystalSpin.getState()) {
-			NumberSetting scaleXSetting = (NumberSetting) SettingManager.getSettingByName(crystalSpin, "scaleX");
-			NumberSetting scaleYSetting = (NumberSetting) SettingManager.getSettingByName(crystalSpin, "scaleY");
-			NumberSetting scaleZSetting = (NumberSetting) SettingManager.getSettingByName(crystalSpin, "scaleZ");
+			NumberSetting scaleXSetting = (NumberSetting) crystalSpin.getSetting("scaleX");
+			NumberSetting scaleYSetting = (NumberSetting) crystalSpin.getSetting("scaleY");
+			NumberSetting scaleZSetting = (NumberSetting) crystalSpin.getSetting("scaleZ");
 
 			if (scaleXSetting != null && scaleYSetting != null && scaleZSetting != null) {
 				poseStack.scale(

@@ -1,7 +1,6 @@
 package de.kybe.mixin;
 
 import de.kybe.Kybe;
-
 import de.kybe.client.core.command.CommandManager;
 import net.minecraft.client.gui.screens.ChatScreen;
 import org.spongepowered.asm.mixin.Mixin;

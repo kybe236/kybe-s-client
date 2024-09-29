@@ -9,54 +9,55 @@ import java.awt.*;
 
 import static de.kybe.Kybe.mc;
 
+@SuppressWarnings("unused")
 public class Image {
 
-    //Image
-    public static void drawNormalImage(int x, int y, int width, int height, ResourceLocation texture) {
-        mc.getTextureManager().bindForSetup(texture);
+	//Image
+	public static void drawNormalImage(int x, int y, int width, int height, ResourceLocation texture) {
+		mc.getTextureManager().bindForSetup(texture);
 
-        RenderSystem.setShaderTexture(0, texture);
-        RenderSystem.bindTexture(0);
+		RenderSystem.setShaderTexture(0, texture);
+		RenderSystem.bindTexture(0);
 
-        Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+		Tesselator tesselator = Tesselator.getInstance();
+		BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
-        RenderSystem.disableBlend();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.disableBlend();
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
-        builder.addVertex(x, y + height, 0).setUv(0.0F, 1.0F);
-        builder.addVertex(x + width, y + height, 0).setUv(1.0F, 1.0F);
-        builder.addVertex(x + width, y, 0).setUv(1.0F, 0.0F);
-        builder.addVertex(x, y, 0).setUv(0.0F, 0.0F);
+		builder.addVertex(x, y + height, 0).setUv(0.0F, 1.0F);
+		builder.addVertex(x + width, y + height, 0).setUv(1.0F, 1.0F);
+		builder.addVertex(x + width, y, 0).setUv(1.0F, 0.0F);
+		builder.addVertex(x, y, 0).setUv(0.0F, 0.0F);
 
-        BufferUploader.drawWithShader(builder.buildOrThrow());
-    }
+		BufferUploader.drawWithShader(builder.buildOrThrow());
+	}
 
-    //Tinted Image
-    public static void drawTintedImage(int x, int y, int width, int height, ResourceLocation texture, Color color) {
-        mc.getTextureManager().bindForSetup(texture);
+	//Tinted Image
+	public static void drawTintedImage(int x, int y, int width, int height, ResourceLocation texture, Color color) {
+		mc.getTextureManager().bindForSetup(texture);
 
-        RenderSystem.setShaderTexture(0, texture);
-        RenderSystem.bindTexture(0);
+		RenderSystem.setShaderTexture(0, texture);
+		RenderSystem.bindTexture(0);
 
-        Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+		Tesselator tesselator = Tesselator.getInstance();
+		BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 
-        RenderSystem.disableBlend();
-        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+		RenderSystem.disableBlend();
+		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 
-        int red = color.getRed();
-        int green = color.getGreen();
-        int blue = color.getBlue();
-        int alpha = color.getAlpha();
+		int red = color.getRed();
+		int green = color.getGreen();
+		int blue = color.getBlue();
+		int alpha = color.getAlpha();
 
-        builder.addVertex(x, y + height, 0).setUv(0.0F, 1.0F).setColor(red, green, blue, alpha);
-        builder.addVertex(x + width, y + height, 0).setUv(1.0F, 1.0F).setColor(red, green, blue, alpha);
-        builder.addVertex(x + width, y, 0).setUv(1.0F, 0.0F).setColor(red, green, blue, alpha);
-        builder.addVertex(x, y, 0).setUv(0.0F, 0.0F).setColor(red, green, blue, alpha);
+		builder.addVertex(x, y + height, 0).setUv(0.0F, 1.0F).setColor(red, green, blue, alpha);
+		builder.addVertex(x + width, y + height, 0).setUv(1.0F, 1.0F).setColor(red, green, blue, alpha);
+		builder.addVertex(x + width, y, 0).setUv(1.0F, 0.0F).setColor(red, green, blue, alpha);
+		builder.addVertex(x, y, 0).setUv(0.0F, 0.0F).setColor(red, green, blue, alpha);
 
-        BufferUploader.drawWithShader(builder.buildOrThrow());
-        RenderSystem.disableBlend();
-    }
+		BufferUploader.drawWithShader(builder.buildOrThrow());
+		RenderSystem.disableBlend();
+	}
 
 }

@@ -2,7 +2,7 @@ package de.kybe.mixin;
 
 import de.kybe.client.core.event.EventBus;
 import de.kybe.client.core.event.Execution;
-import de.kybe.client.core.event.events.chatevents.ChatAddEvent;
+import de.kybe.client.core.event.events.ChatEvent.ChatAddEvent;
 import net.minecraft.client.GuiMessageTag;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.network.chat.Component;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ChatComponent.class)
-public class ChatComponentMixin {
+public abstract class ChatComponentMixin {
 
 	@Inject(
 			method = "addMessage(Lnet/minecraft/network/chat/Component;Lnet/minecraft/network/chat/MessageSignature;Lnet/minecraft/client/GuiMessageTag;)V",

@@ -4,12 +4,11 @@ import de.kybe.Kybe;
 import de.kybe.client.core.command.Command;
 import de.kybe.client.core.module.Module;
 import de.kybe.client.core.module.ModuleManager;
-import de.kybe.client.core.setting.SettingManager;
+import de.kybe.client.core.setting.Setting;
 import de.kybe.client.core.util.ChatUtils;
 import de.kybe.client.impl.settings.BooleanSetting;
 import de.kybe.client.impl.settings.EnumSetting;
 import de.kybe.client.impl.settings.NumberSetting;
-import de.kybe.client.core.setting.Setting;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Comparator;
@@ -53,7 +52,7 @@ public class Modules extends Command {
 					.findFirst()
 					.orElse(null);
 			if (module != null) {
-				List<Setting> settings = SettingManager.getSettingsForModule(module);
+				List<Setting> settings = module.getSettings();
 				ChatUtils.FAT_clientMessage(module.getName() + " has the following settings: ");
 				settings.stream()
 						.sorted(Comparator.comparing(Setting::getName))

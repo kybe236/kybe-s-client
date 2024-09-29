@@ -71,7 +71,7 @@ public final class ChatUtils {
 	}
 
 	private static void sendMessage(Component message) {
-        if (mc.player == null) return;
+		if (mc.player == null) return;
 		mc.player.sendSystemMessage(message);
 	}
 }

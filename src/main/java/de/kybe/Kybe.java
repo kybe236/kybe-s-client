@@ -12,13 +12,15 @@ package de.kybe;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import de.kybe.client.core.command.CommandManager;
+import de.kybe.client.core.module.Module;
+import de.kybe.client.core.module.ModuleCategory;
 import de.kybe.client.core.module.ModuleManager;
-import de.kybe.client.core.setting.SettingManager;
 import de.kybe.client.impl.commands.*;
 import de.kybe.client.impl.modules.TestModule;
 import de.kybe.client.impl.modules.client.ClickGUI;
 import de.kybe.client.impl.modules.movement.DoubleJump;
 import de.kybe.client.impl.modules.render.CrystalSpin;
+import de.kybe.client.impl.modules.render.NoSnowball;
 import de.kybe.mixin.IKeyMapping;
 import de.kybe.mixin.IOptions;
 import net.fabricmc.api.ModInitializer;
@@ -43,18 +45,13 @@ public class Kybe implements ModInitializer {
 	public static KeyMapping keyMapping;
 	public static KeyMapping ClickGUIKey;
 
-	public ModuleManager moduleManager;
+	public static ModuleManager moduleManager;
 	public CommandManager commandManager;
-	public SettingManager settingManager;
 
 	public static void afterConfigInit() {
-		keyMapping = new KeyMapping("key.kybe.open", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "category.kybe");
 		ClickGUIKey = new KeyMapping("ClickGUI", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, "category.kybe");
 
 		Options config = Minecraft.getInstance().options;
-
-		((IOptions) config).setKeyMappings(ArrayUtils.add(config.keyMappings, keyMapping));
-		((IKeyMapping) keyMapping).getCategorySortOrder().put("category.kybe", ((IKeyMapping) keyMapping).getCategorySortOrder().size() + 1);
 
 		((IOptions) config).setKeyMappings(ArrayUtils.add(config.keyMappings, ClickGUIKey));
 		((IKeyMapping) ClickGUIKey).getCategorySortOrder().put("category.kybe", ((IKeyMapping) ClickGUIKey).getCategorySortOrder().size() + 1);
@@ -65,12 +62,24 @@ public class Kybe implements ModInitializer {
 		mc = Minecraft.getInstance();
 		moduleManager = new ModuleManager();
 		commandManager = new CommandManager();
-		settingManager = new SettingManager();
 
 		ModuleManager.addModule(new TestModule());
 		ModuleManager.addModule(new ClickGUI());
 		ModuleManager.addModule(new DoubleJump());
 		ModuleManager.addModule(new CrystalSpin());
+		ModuleManager.addModule(new NoSnowball());
+
+		//to test module scrolling in the gui
+		char letter = 'A';
+		for (int i = 0; i < 24; i++) {
+			String moduleName = letter + "_module";
+			String moduleDescription = "Description for " + moduleName;
+
+			Module random = new Module(moduleName, moduleDescription, ModuleCategory.CHAT, GLFW.GLFW_KEY_UNKNOWN);
+			ModuleManager.addModule(random);
+
+			letter++;
+		}
 
 		CommandManager.addCommand(new Say());
 		CommandManager.addCommand(new de.kybe.client.impl.commands.Test());

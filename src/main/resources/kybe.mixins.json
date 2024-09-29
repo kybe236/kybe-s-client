@@ -5,6 +5,7 @@
   "client": [
     "ChatComponentMixin",
     "ChatScreenMixin",
+    "ClientPacketListenerMixin",
     "EndCrystalRendererMixin",
     "IKeyMapping",
     "IOptions",
@@ -13,5 +14,5 @@
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  }
 }

@@ -1,4 +1,4 @@
-package de.kybe.client.core.event.events.typeCharEvent;
+package de.kybe.client.core.event.events.TypeCharEvent;
 
 
 import de.kybe.client.core.event.events.Cancelable;

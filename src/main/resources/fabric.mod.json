@@ -1,34 +1,34 @@
 {
-	"schemaVersion": 1,
-	"id": "kybe",
-	"version": "${version}",
-	"name": "kybe",
-	"description": "An client made by kybe236 also mopplkotze for command system and later gui",
-	"authors": [
-		"kybe236",
-		"mopplkotze"
-	],
-	"contact": {
-		"homepage": "https://discord.gg/WMKMT75R3U",
-		"sources": "https://github.com/kybe236/kybe-s-client"
-	},
-	"license": "MIT",
-	"icon": "assets/kybe/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"de.kybe.Kybe"
-		]
-	},
-	"mixins": [
-		"kybe.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.15",
-		"minecraft": "~1.21",
-		"java": ">=21"
-	},
-	"suggests": {
-		"another-mod": "*"
-	}
+  "schemaVersion": 1,
+  "id": "kybe",
+  "version": "${version}",
+  "name": "kybe",
+  "description": "An client made by kybe236 also mopplkotze for command system and later gui",
+  "authors": [
+    "kybe236",
+    "mopplkotze"
+  ],
+  "contact": {
+    "homepage": "https://discord.gg/WMKMT75R3U",
+    "sources": "https://github.com/kybe236/kybe-s-client"
+  },
+  "license": "MIT",
+  "icon": "assets/kybe/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "de.kybe.Kybe"
+    ]
+  },
+  "mixins": [
+    "kybe.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15",
+    "minecraft": "~1.21",
+    "java": ">=21"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
 }

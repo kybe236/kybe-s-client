@@ -1,6 +1,6 @@
-package de.kybe.client.core.gui.new_gui.Components;
+package de.kybe.client.core.gui.components;
 
-import de.kybe.client.core.gui.new_gui.enums.AvailableScreens;
+import de.kybe.client.core.gui.misc.AvailableScreens;
 import de.kybe.client.core.util.renders.render2d.Rect;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -15,6 +15,7 @@ public class ScreenSelector {
     private List<AvailableScreens> options;
     private int selected;
     private int screenWidth;
+    //TODO make this configurable
     private int width = 80;
     private int height = 15;
     private int gap = 4;
@@ -30,7 +31,7 @@ public class ScreenSelector {
         int xStart = (screenWidth / 2) - (totalWidth / 2);
 
         //render background
-        Rect.drawOutlinedRoundedSquare(xStart-2, yPos-2, totalWidth, height+4, 5, 50, 1, unselectedColor, borderColor);
+        Rect.drawOutlinedRoundedSquare(xStart - 2, yPos - 2, totalWidth, height + 4, 5, 50, 1, unselectedColor, borderColor);
 
         //render each element
         for (int i = 0; i < options.size(); i++) {
@@ -41,7 +42,7 @@ public class ScreenSelector {
             Rect.drawOutlinedRoundedSquare(xPos, yPos, width, height, 5, 50, 1, color, borderColor);
 
             String text = options.get(i).name();
-            guiGraphics.drawCenteredString(font, text, xPos + width / 2, yPos + height / 2 - 4, Color.WHITE.getRGB());
+            guiGraphics.drawCenteredString(font, text, xPos + width / 2, yPos + (height - font.lineHeight) / 2, Color.WHITE.getRGB());
         }
     }
 
