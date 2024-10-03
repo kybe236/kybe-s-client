@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static de.kybe.Kybe.mc;
 
@@ -18,11 +19,11 @@ public abstract class ChatScreenMixin {
 			at = @At("HEAD"),
 			cancellable = true
 	)
-	private void onSendChatMessage(String s, boolean b, CallbackInfo ci) {
+	private void onSendChatMessage(String s, boolean bl, CallbackInfoReturnable<Boolean> cir) {
 		if (s.startsWith(Kybe.PREFIX) && s.length() > 1) {
 			mc.gui.getChat().addRecentChat(s);
 			CommandManager.executeCommand(s);
-			ci.cancel();
+			cir.setReturnValue(true);
 		}
 	}
 }

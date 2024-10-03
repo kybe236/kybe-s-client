@@ -14,10 +14,10 @@ public class Line {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder builder = tesselator.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR);
 
-        builder.addVertex(x1, y1, 0).setColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-        builder.addVertex(x2, y2, 0).setColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+        builder.vertex(x1, y1, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+        builder.vertex(x2, y2, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 
-        BufferUploader.drawWithShader(builder.buildOrThrow());
+        BufferUploader.drawWithShader(builder.end());
 
         RenderSystem.disableBlend();
         RenderSystem.enableDepthTest();

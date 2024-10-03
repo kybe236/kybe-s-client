@@ -10,18 +10,19 @@ public class Circle {
 	//part
 	public static void drawSector(int x, int y, int r, double startAngle, double endAngle, int precision, Color color) {
 		Tesselator tesselator = Tesselator.getInstance();
-		BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
+		BufferBuilder bufferbuilder = tesselator.getBuilder();
+		bufferbuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
 
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		bufferbuilder.addVertex(x, y, 0).setColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		bufferbuilder.vertex(x, y, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 
 		double precisionAngle = 2 * Math.PI / precision;
 		for (int i = (int) (endAngle / precisionAngle) + 1; i >= (int) (startAngle / precisionAngle); i--) {
-			bufferbuilder.addVertex((float) (x + r * Math.cos(i * precisionAngle)), (float) (y + r * Math.sin(i * precisionAngle)), 0).setColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+			bufferbuilder.vertex((float) (x + r * Math.cos(i * precisionAngle)), (float) (y + r * Math.sin(i * precisionAngle)), 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 		}
 
-		BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
+		BufferUploader.drawWithShader(bufferbuilder.end());
 		RenderSystem.disableBlend();
 	}
 
@@ -42,7 +43,8 @@ public class Circle {
 	//Ring
 	private static void drawRing(int x, int y, int innerRadius, int outerRadius, int precision, Color color) {
 		Tesselator tesselator = Tesselator.getInstance();
-		BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_COLOR);
+		BufferBuilder bufferbuilder = tesselator.getBuilder();
+		bufferbuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
 
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
@@ -52,21 +54,21 @@ public class Circle {
 			double angle = i * precisionAngle;
 
 			//Outer
-			bufferbuilder.addVertex(
+			bufferbuilder.vertex(
 					(float) (x + outerRadius * Math.cos(angle)),
 					(float) (y + outerRadius * Math.sin(angle)),
 					0
-			).setColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+			).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 
 			//Inner
-			bufferbuilder.addVertex(
+			bufferbuilder.vertex(
 					(float) (x + innerRadius * Math.cos(angle)),
 					(float) (y + innerRadius * Math.sin(angle)),
 					0
-			).setColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+			).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 		}
 
-		BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
+		BufferUploader.drawWithShader(bufferbuilder.end());
 		RenderSystem.disableBlend();
 	}
 }

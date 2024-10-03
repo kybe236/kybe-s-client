@@ -69,9 +69,9 @@ public class CategoryComponent extends Component {
 		}
 	}
 
-	@Override
-	public void drawScreen(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(Kybe.MOD_ID, category.getIcon());
+    @Override
+    public void drawScreen(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        ResourceLocation resourceLocation = new ResourceLocation(Kybe.MOD_ID, "textures/gui/chevron_right.png");
 
 		Rect.drawOutlinedSquare(x, y, width, height, 1, TempColors.color_background_darker, TempColors.color_accent);
 		if (MainComponent.current_category == this) {

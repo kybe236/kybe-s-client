@@ -20,17 +20,18 @@ public class Image {
 		RenderSystem.bindTexture(0);
 
 		Tesselator tesselator = Tesselator.getInstance();
-		BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+		BufferBuilder builder = tesselator.getBuilder();
+		builder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
 
 		RenderSystem.disableBlend();
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
-		builder.addVertex(x, y + height, 0).setUv(0.0F, 1.0F);
-		builder.addVertex(x + width, y + height, 0).setUv(1.0F, 1.0F);
-		builder.addVertex(x + width, y, 0).setUv(1.0F, 0.0F);
-		builder.addVertex(x, y, 0).setUv(0.0F, 0.0F);
+		builder.vertex(x, y + height, 0).uv(0.0F, 1.0F);
+		builder.vertex(x + width, y + height, 0).uv(1.0F, 1.0F);
+		builder.vertex(x + width, y, 0).uv(1.0F, 0.0F);
+		builder.vertex(x, y, 0).uv(0.0F, 0.0F);
 
-		BufferUploader.drawWithShader(builder.buildOrThrow());
+		BufferUploader.drawWithShader(builder.end());
 	}
 
 	//Tinted Image
@@ -41,7 +42,8 @@ public class Image {
 		RenderSystem.bindTexture(0);
 
 		Tesselator tesselator = Tesselator.getInstance();
-		BufferBuilder builder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+		BufferBuilder builder = tesselator.getBuilder();
+		builder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
 
 		RenderSystem.disableBlend();
 		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
@@ -51,12 +53,12 @@ public class Image {
 		int blue = color.getBlue();
 		int alpha = color.getAlpha();
 
-		builder.addVertex(x, y + height, 0).setUv(0.0F, 1.0F).setColor(red, green, blue, alpha);
-		builder.addVertex(x + width, y + height, 0).setUv(1.0F, 1.0F).setColor(red, green, blue, alpha);
-		builder.addVertex(x + width, y, 0).setUv(1.0F, 0.0F).setColor(red, green, blue, alpha);
-		builder.addVertex(x, y, 0).setUv(0.0F, 0.0F).setColor(red, green, blue, alpha);
+		builder.vertex(x, y + height, 0).uv(0.0F, 1.0F).color(red, green, blue, alpha);
+		builder.vertex(x + width, y + height, 0).uv(1.0F, 1.0F).color(red, green, blue, alpha);
+		builder.vertex(x + width, y, 0).uv(1.0F, 0.0F).color(red, green, blue, alpha);
+		builder.vertex(x, y, 0).uv(0.0F, 0.0F).color(red, green, blue, alpha);
 
-		BufferUploader.drawWithShader(builder.buildOrThrow());
+		BufferUploader.drawWithShader(builder.end());
 		RenderSystem.disableBlend();
 	}
 
