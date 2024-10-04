@@ -47,7 +47,6 @@ public class ModuleManager {
 		if (mc.screen != null) return;
 		KeyboardEvent.Type type = event.getType();
 		for (Module module : getModules()) {
-			Kybe.LOGGER.info("Key: {} NEDDED: {}", event.getKey(), module.getKeybind());
 			if (module.getKeybind() == event.getKey() && type == KeyboardEvent.Type.PRESS) {
 				Kybe.LOGGER.info("Toggling module: {}", module.getName());
 				module.toggle();
