@@ -20,6 +20,7 @@ import de.kybe.client.impl.modules.TestModule;
 import de.kybe.client.impl.modules.client.ClickGUI;
 import de.kybe.client.impl.modules.movement.DoubleJump;
 import de.kybe.client.impl.modules.render.CrystalSpin;
+import de.kybe.client.impl.modules.render.NoItems;
 import de.kybe.client.impl.modules.render.NoSnowball;
 import de.kybe.mixin.IKeyMapping;
 import de.kybe.mixin.IOptions;
@@ -68,6 +69,7 @@ public class Kybe implements ModInitializer {
 		ModuleManager.addModule(new DoubleJump());
 		ModuleManager.addModule(new CrystalSpin());
 		ModuleManager.addModule(new NoSnowball());
+		ModuleManager.addModule(new NoItems());
 
 		//to test module scrolling in the gui
 		char letter = 'A';

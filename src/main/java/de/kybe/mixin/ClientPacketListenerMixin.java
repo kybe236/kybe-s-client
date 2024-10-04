@@ -2,6 +2,7 @@ package de.kybe.mixin;
 
 import de.kybe.client.core.module.ModuleManager;
 import de.kybe.client.impl.modules.render.CrystalSpin;
+import de.kybe.client.impl.modules.render.NoItems;
 import de.kybe.client.impl.modules.render.NoSnowball;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -23,6 +24,11 @@ public abstract class ClientPacketListenerMixin {
 	)
 	private void handleAddEntity(ClientboundAddEntityPacket clientboundAddEntityPacket, CallbackInfo ci) {
 		NoSnowball noSnowball = (NoSnowball) ModuleManager.getModule("NoSnowball");
+		NoItems noItems = (NoItems) ModuleManager.getModule("NoItem");
+
+		if (clientboundAddEntityPacket.getType() == EntityType.ITEM && noItems.getState()) {
+			ci.cancel();
+		}
 
 		if (clientboundAddEntityPacket.getType() == EntityType.SNOWBALL && noSnowball.getState()) {
 			ci.cancel();
