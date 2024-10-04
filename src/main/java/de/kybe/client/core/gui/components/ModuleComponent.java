@@ -110,10 +110,8 @@ public class ModuleComponent extends Component {
 			int x_pos = GUI.mainComponent.getX() + MainComponent.categorySize + MainComponent.workingSize / 3 * 2;
 			int y_pos = GUI.mainComponent.getY() + 15 + 2;
 			guiGraphics.drawCenteredString(mc.font, MainComponent.current_category.current_module.module.getName(), x_pos, y_pos, Color.WHITE.getRGB());
-		}
 
-		for (int i = 0; i < maxVisibleSettings; i++) {
-			if (isCurrentMod()) {
+			for (int i = 0; i < maxVisibleSettings; i++) {
 				int settingIndex = firstVisibleSettingIndex + i;
 
 				if (settingIndex < 0 || settingIndex >= settings.size()) {
