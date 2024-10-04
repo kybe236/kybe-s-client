@@ -21,6 +21,12 @@ public class TestModule extends Module {
 
 	public TestModule() {
 		super("TestModule", "Desc", ModuleCategory.COMBAT, GLFW.GLFW_KEY_P);
+		this.addSettings(
+				numberSetting,
+				booleanSetting,
+				enumSetting,
+				bindSetting
+		);
 	}
 
 	@Override
