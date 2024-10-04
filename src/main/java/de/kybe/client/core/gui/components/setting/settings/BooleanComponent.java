@@ -14,24 +14,24 @@ import static de.kybe.Kybe.mc;
 
 public class BooleanComponent extends SettingComponent {
 
-    public BooleanComponent(int x, int y, int width, int height, Setting setting) {
-        super(x, y, width, height, setting);
-    }
+	public BooleanComponent(int x, int y, int width, int height, Setting setting) {
+		super(x, y, width, height, setting);
+	}
 
-    @Override
-    public void drawScreen(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        BooleanSetting set = (BooleanSetting) setting;
-        String settingname = set.getName() + ": " + set.isToggled();
+	@Override
+	public void drawScreen(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		BooleanSetting set = (BooleanSetting) setting;
+		String settingname = set.getName() + ": " + set.isToggled();
 
-        Rect.drawSquare(x, y, FontUtils.getStringWidth(settingname)+4, height, TempColors.color_background_darker);
-        guiGraphics.drawString(mc.font, settingname, x+2, y + (height - FontUtils.getStringHeight()) / 2 , Color.WHITE.getRGB());
-    }
+		Rect.drawSquare(x, y, FontUtils.getStringWidth(settingname) + 4, height, TempColors.color_background_darker);
+		guiGraphics.drawString(mc.font, settingname, x + 2, y + (height - FontUtils.getStringHeight()) / 2, Color.WHITE.getRGB());
+	}
 
-    @Override
-    public void mouseClicked(double mouseX, double mouseY, int button) {
-        if (isHovered((int) mouseX, (int) mouseY) && button == 0) {
-            BooleanSetting set = (BooleanSetting) setting;
-            set.setToggled(!set.isToggled());
-        }
-    }
+	@Override
+	public void mouseClicked(double mouseX, double mouseY, int button) {
+		if (isHovered((int) mouseX, (int) mouseY) && button == 0) {
+			BooleanSetting set = (BooleanSetting) setting;
+			set.setToggled(!set.isToggled());
+		}
+	}
 }

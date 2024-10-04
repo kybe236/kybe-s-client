@@ -14,11 +14,11 @@ public class CrystalSpin extends Module {
 
 	public CrystalSpin() {
 		super("CrystalSpin", "Rotates crystals in the render", ModuleCategory.RENDER, GLFW.GLFW_KEY_UNKNOWN);
-	    this.addSettings(
-                sidewaysSpeed,
-                scaleX,
-                scaleY,
-                scaleZ
-        );
-    }
+		this.addSettings(
+				sidewaysSpeed,
+				scaleX,
+				scaleY,
+				scaleZ
+		);
+	}
 }

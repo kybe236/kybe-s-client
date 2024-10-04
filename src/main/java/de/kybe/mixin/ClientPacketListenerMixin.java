@@ -1,7 +1,6 @@
 package de.kybe.mixin;
 
 import de.kybe.client.core.module.ModuleManager;
-import de.kybe.client.impl.modules.render.CrystalSpin;
 import de.kybe.client.impl.modules.render.NoItems;
 import de.kybe.client.impl.modules.render.NoSnowball;
 import net.minecraft.client.multiplayer.ClientPacketListener;

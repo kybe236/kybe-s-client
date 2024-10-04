@@ -21,136 +21,134 @@ import static de.kybe.client.core.gui.components.MainComponent.categorySize;
 
 public class CategoryComponent extends Component {
 
-    public ModuleCategory category;
-    public ModuleComponent current_module;
+	private static final int module_height = 15; //TODO make this load from config
+	public static int firstVisibleModuleIndex = 0;
+	public static int maxVisibleModules;
+	public static ArrayList<ModuleComponent> category_modules = new ArrayList<>();
+	public ModuleCategory category;
+	public ModuleComponent current_module;
 
-    public static int firstVisibleModuleIndex = 0;
-    public static int maxVisibleModules;
+	public CategoryComponent(int x, int y, int width, int height, ModuleCategory category) {
+		super(x, y, width, height);
+		this.category = category;
+	}
 
-    private static final int module_height = 15; //TODO make this load from config
-    public static ArrayList<ModuleComponent> category_modules = new ArrayList<>();
+	@Override
+	public void mouseScrolled(double mouseX, double mouseY, double scrollAmount) {
+		if (GUI.mainComponent.contains_module_area(mouseX, mouseY)) {
+			int totalModules = category_modules.size();
 
-    public CategoryComponent(int x, int y, int width, int height, ModuleCategory category) {
-        super(x, y, width, height);
-        this.category = category;
-    }
+			if (totalModules > maxVisibleModules) {
+				if (scrollAmount > 0 && firstVisibleModuleIndex > 0) {
+					firstVisibleModuleIndex = Math.max(0, firstVisibleModuleIndex - 1);
+				} else if (scrollAmount < 0 && firstVisibleModuleIndex < totalModules - maxVisibleModules) {
+					firstVisibleModuleIndex = Math.min(totalModules - maxVisibleModules, firstVisibleModuleIndex + 1);
+				}
 
-    @Override
-    public void mouseScrolled(double mouseX, double mouseY, double scrollAmount) {
-        if(GUI.mainComponent.contains_module_area(mouseX,mouseY)) {
-            int totalModules = category_modules.size();
+				adjustModuleComponents();
+			}
+		}
+		for (ModuleComponent moduleComponent : category_modules) {
+			moduleComponent.mouseScrolled(mouseX, mouseY, scrollAmount);
+		}
+	}
 
-            if (totalModules > maxVisibleModules) {
-                if (scrollAmount > 0 && firstVisibleModuleIndex > 0) {
-                    firstVisibleModuleIndex = Math.max(0, firstVisibleModuleIndex - 1);
-                } else if (scrollAmount < 0 && firstVisibleModuleIndex < totalModules - maxVisibleModules) {
-                    firstVisibleModuleIndex = Math.min(totalModules - maxVisibleModules, firstVisibleModuleIndex + 1);
-                }
+	@Override
+	public void mouseReleased(double mouseX, double mouseY, int button) {
+		adjustModuleComponents();
+		for (ModuleComponent moduleComponent : category_modules) {
+			moduleComponent.mouseReleased(mouseX, mouseY, button);
+		}
+	}
 
-                adjustModuleComponents();
-            }
-        }
-        for(ModuleComponent moduleComponent : category_modules) {
-            moduleComponent.mouseScrolled(mouseX, mouseY, scrollAmount);
-        }
-    }
+	@Override
+	public void mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+		adjustModuleComponents();
+		for (ModuleComponent moduleComponent : category_modules) {
+			moduleComponent.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+		}
+	}
 
-    @Override
-    public void mouseReleased(double mouseX, double mouseY, int button) {
-        adjustModuleComponents();
-        for (ModuleComponent moduleComponent : category_modules) {
-            moduleComponent.mouseReleased(mouseX, mouseY, button);
-        }
-    }
+	@Override
+	public void drawScreen(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(Kybe.MOD_ID, category.getIcon());
 
-    @Override
-    public void mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        adjustModuleComponents();
-        for (ModuleComponent moduleComponent : category_modules) {
-            moduleComponent.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
-        }
-    }
+		Rect.drawOutlinedSquare(x, y, width, height, 1, TempColors.color_background_darker, TempColors.color_accent);
+		if (MainComponent.current_category == this) {
+			guiGraphics.drawString(mc.font, category.getName(), x + 3, y + 3, TempColors.color_accent.getRGB());
+		} else {
+			guiGraphics.drawString(mc.font, category.getName(), x + 3, y + 3, Color.white.getRGB());
+		}
 
-    @Override
-    public void drawScreen(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(Kybe.MOD_ID, category.getIcon());
+		if (MainComponent.current_category == this) {
+			for (int i = 0; i < maxVisibleModules; i++) {
+				int moduleIndex = firstVisibleModuleIndex + i;
 
-        Rect.drawOutlinedSquare(x, y, width, height, 1, TempColors.color_background_darker, TempColors.color_accent);
-        if (MainComponent.current_category == this) {
-            guiGraphics.drawString(mc.font, category.getName(), x + 3, y + 3, TempColors.color_accent.getRGB());
-        } else {
-            guiGraphics.drawString(mc.font, category.getName(), x + 3, y + 3, Color.white.getRGB());
-        }
+				if (moduleIndex < 0 || moduleIndex >= category_modules.size()) {
+					break;
+				}
 
-        if (MainComponent.current_category == this) {
-            for (int i = 0; i < maxVisibleModules; i++) {
-                int moduleIndex = firstVisibleModuleIndex + i;
+				ModuleComponent module = category_modules.get(moduleIndex);
+				module.drawScreen(guiGraphics, mouseX, mouseY, partialTicks);
+			}
+		}
+	}
 
-                if (moduleIndex < 0 || moduleIndex >= category_modules.size()) {
-                    break;
-                }
+	@Override
+	public void mouseClicked(double mouseX, double mouseY, int button) {
+		adjustModuleComponents();
+		for (ModuleComponent module : category_modules) {
+			module.mouseClicked(mouseX, mouseY, button);
 
-                ModuleComponent module = category_modules.get(moduleIndex);
-                module.drawScreen(guiGraphics, mouseX, mouseY, partialTicks);
-            }
-        }
-    }
+			if (isHovered((int) mouseX, (int) mouseY) && button == 1) {
+				this.current_module = module;
+				firstVisibleModuleIndex = 0;
+			}
+		}
+		super.mouseClicked(mouseX, mouseY, button);
+	}
 
-    @Override
-    public void mouseClicked(double mouseX, double mouseY, int button) {
-        adjustModuleComponents();
-        for (ModuleComponent module : category_modules) {
-            module.mouseClicked(mouseX, mouseY, button);
+	public void addModuleComponents() {
+		category_modules.clear();
 
-            if (isHovered((int) mouseX, (int) mouseY) && button == 1) {
-                this.current_module = module;
-                firstVisibleModuleIndex = 0;
-            }
-        }
-        super.mouseClicked(mouseX, mouseY, button);
-    }
+		List<Module> moduleList = ModuleManager.getModulesFromCategory(this.category);
+		Collections.sort(moduleList, Comparator.comparing(Module::getName));
 
-    public void addModuleComponents() {
-        this.category_modules.clear();
+		for (Module m : moduleList) {
+			ModuleComponent moduleComponent = new ModuleComponent(0, 0, 100, module_height, Color.BLUE, m);
+			category_modules.add(moduleComponent);
+		}
 
-        List<Module> moduleList = ModuleManager.getModulesFromCategory(this.category);
-        Collections.sort(moduleList, Comparator.comparing(Module::getName));
+		if (current_module == null && !category_modules.isEmpty()) {
+			current_module = category_modules.get(0);
+			ModuleComponent.firstVisibleSettingIndex = 0;
+		}
 
-        for (Module m : moduleList) {
-            ModuleComponent moduleComponent = new ModuleComponent(0, 0, 100, module_height, Color.BLUE, m);
-            this.category_modules.add(moduleComponent);
-        }
+		adjustModuleComponents();
+	}
 
-        if (current_module == null && !category_modules.isEmpty()) {
-            current_module = category_modules.get(0);
-            ModuleComponent.firstVisibleSettingIndex = 0;
-        }
+	public void adjustModuleComponents() {
+		int padding_h = 2;
+		int padding_v = 2;
 
-        adjustModuleComponents();
-    }
+		if (GUI.mainComponent != null) {
+			int x_pos = GUI.mainComponent.getX() + categorySize + padding_h;
+			int y_pos = GUI.mainComponent.getY() + 15 + padding_v;
 
-    public void adjustModuleComponents() {
-        int padding_h = 2;
-        int padding_v = 2;
+			maxVisibleModules = Math.max(1, (GUI.mainComponent.height - 15) / (module_height + padding_v));
 
-        if (GUI.mainComponent != null) {
-            int x_pos = GUI.mainComponent.getX() + categorySize + padding_h;
-            int y_pos = GUI.mainComponent.getY() + 15 + padding_v;
+			for (int i = 0; i < maxVisibleModules; i++) {
+				int moduleIndex = firstVisibleModuleIndex + i;
 
-            maxVisibleModules = Math.max(1, (GUI.mainComponent.height - 15) / (module_height + padding_v));
+				if (moduleIndex < 0 || moduleIndex >= category_modules.size()) {
+					break;
+				}
 
-            for (int i = 0; i < maxVisibleModules; i++) {
-                int moduleIndex = firstVisibleModuleIndex + i;
-
-                if (moduleIndex < 0 || moduleIndex >= category_modules.size()) {
-                    break;
-                }
-
-                ModuleComponent module = category_modules.get(moduleIndex);
-                module.setSize(MainComponent.workingSize / 3 - padding_h, module_height);
-                module.setPosition(x_pos, y_pos);
-                y_pos += module.height + padding_v;
-            }
-        }
-    }
+				ModuleComponent module = category_modules.get(moduleIndex);
+				module.setSize(MainComponent.workingSize / 3 - padding_h, module_height);
+				module.setPosition(x_pos, y_pos);
+				y_pos += module.height + padding_v;
+			}
+		}
+	}
 }
