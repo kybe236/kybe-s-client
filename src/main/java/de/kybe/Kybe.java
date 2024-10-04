@@ -12,6 +12,7 @@ package de.kybe;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import de.kybe.client.core.command.CommandManager;
+import de.kybe.client.core.configManager.ConfigManager;
 import de.kybe.client.core.module.Module;
 import de.kybe.client.core.module.ModuleCategory;
 import de.kybe.client.core.module.ModuleManager;
@@ -33,6 +34,9 @@ import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Kybe implements ModInitializer {
 	public static final String MOD_ID = "kybe";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -41,6 +45,8 @@ public class Kybe implements ModInitializer {
 	public static final String CLIENT_NAME = "Kybe";
 	public static final String CLIENT_VERSION = "0.0.1";
 
+	public static final int SAVE_DELAY = 1000;
+
 	public static Minecraft mc;
 
 	public static KeyMapping keyMapping;
@@ -48,6 +54,7 @@ public class Kybe implements ModInitializer {
 
 	public static ModuleManager moduleManager;
 	public CommandManager commandManager;
+	public Timer timer;
 
 	public static void afterConfigInit() {
 		ClickGUIKey = new KeyMapping("ClickGUI", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_SHIFT, "category.kybe");
@@ -89,5 +96,19 @@ public class Kybe implements ModInitializer {
 		CommandManager.addCommand(new Set());
 		CommandManager.addCommand(new Modules());
 		CommandManager.addCommand(new Toggle());
+
+		// initialize config
+		ConfigManager.loadSettings();
+
+		// save settings periodically
+		timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				ConfigManager.saveSettings();
+			}
+		}, 0, SAVE_DELAY);
 	}
+
+
 }

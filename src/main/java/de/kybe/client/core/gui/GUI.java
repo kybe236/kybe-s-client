@@ -1,5 +1,6 @@
 package de.kybe.client.core.gui;
 
+import de.kybe.client.core.configManager.ConfigManager;
 import de.kybe.client.core.gui.components.MainComponent;
 import de.kybe.client.core.gui.components.ScreenSelector;
 import de.kybe.client.core.gui.misc.AvailableScreens;
