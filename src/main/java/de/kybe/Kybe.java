@@ -45,7 +45,7 @@ public class Kybe implements ModInitializer {
 	public static final String CLIENT_NAME = "Kybe";
 	public static final String CLIENT_VERSION = "0.0.1";
 
-	public static final int SAVE_DELAY = 1000;
+	public static final int SAVE_DELAY = 100000;
 
 	public static Minecraft mc;
 
