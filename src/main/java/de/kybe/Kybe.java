@@ -84,7 +84,7 @@ public class Kybe implements ModInitializer {
 		}
 
 		CommandManager.addCommand(new Say());
-		CommandManager.addCommand(new de.kybe.client.impl.commands.Test());
+		CommandManager.addCommand(new Test());
 		CommandManager.addCommand(new Help());
 		CommandManager.addCommand(new Set());
 		CommandManager.addCommand(new Modules());
