@@ -20,9 +20,7 @@ import de.kybe.client.impl.commands.*;
 import de.kybe.client.impl.modules.TestModule;
 import de.kybe.client.impl.modules.client.ClickGUI;
 import de.kybe.client.impl.modules.movement.DoubleJump;
-import de.kybe.client.impl.modules.render.CrystalSpin;
-import de.kybe.client.impl.modules.render.NoItems;
-import de.kybe.client.impl.modules.render.NoSnowball;
+import de.kybe.client.impl.modules.render.*;
 import de.kybe.mixin.IKeyMapping;
 import de.kybe.mixin.IOptions;
 import net.fabricmc.api.ModInitializer;
@@ -75,8 +73,11 @@ public class Kybe implements ModInitializer {
 		ModuleManager.addModule(new ClickGUI());
 		ModuleManager.addModule(new DoubleJump());
 		ModuleManager.addModule(new CrystalSpin());
-		ModuleManager.addModule(new NoSnowball());
-		ModuleManager.addModule(new NoItems());
+		ModuleManager.addModule(new NoPassiveEntityAdd());
+		ModuleManager.addModule(new NoHostileEntityAdd());
+		ModuleManager.addModule(new NoNeutralEntityAdd());
+		ModuleManager.addModule(new NoProjectilesEntityAdd());
+		ModuleManager.addModule(new NoMiscEntityAdd());
 
 		//to test module scrolling in the gui
 		char letter = 'A';
