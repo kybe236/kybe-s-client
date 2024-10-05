@@ -12,7 +12,6 @@ import java.util.Map;
 public class NoProjectilesEntityAdd extends Module {
 	public static java.util.Set<EntityType<?>> ProjectilesEntityTypes = java.util.Set.of(
 			EntityType.ARROW,
-			EntityType.BREEZE_WIND_CHARGE,
 			EntityType.DRAGON_FIREBALL,
 			EntityType.EGG,
 			EntityType.ENDER_PEARL,

@@ -12,7 +12,6 @@ import java.util.Map;
 public class NoPassiveEntityAdd extends Module {
 	public static java.util.Set<EntityType<?>> PassiveEntityTypes = java.util.Set.of(
 			EntityType.ALLAY,
-			EntityType.ARMADILLO,
 			EntityType.AXOLOTL,
 			EntityType.BAT,
 			EntityType.CAMEL,

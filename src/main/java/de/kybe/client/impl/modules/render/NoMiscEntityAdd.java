@@ -27,7 +27,6 @@ public class NoMiscEntityAdd extends Module {
 			EntityType.ITEM,
 			EntityType.ITEM_DISPLAY,
 			EntityType.ITEM_FRAME,
-			EntityType.OMINOUS_ITEM_SPAWNER,
 			EntityType.LEASH_KNOT,
 			EntityType.LIGHTNING_BOLT,
 			EntityType.MARKER,

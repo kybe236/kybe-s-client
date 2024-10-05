@@ -12,7 +12,6 @@ import java.util.Map;
 public class NoHostileEntityAdd extends Module {
 	public static java.util.Set<EntityType<?>> HostileEntityTypes = java.util.Set.of(
 			EntityType.BLAZE,
-			EntityType.BOGGED,
 			EntityType.BREEZE,
 			EntityType.CREEPER,
 			EntityType.ELDER_GUARDIAN,
