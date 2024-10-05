@@ -43,7 +43,7 @@ public abstract class ClientPacketListenerMixin {
 			}
 		}
 
-		NoNeutralEntityAddw noNeutralEntityAdd = (NoNeutralEntityAdd) ModuleManager.getModule("NoNeutralEntityAdd");
+		NoNeutralEntityAdd noNeutralEntityAdd = (NoNeutralEntityAdd) ModuleManager.getModule("NoNeutralEntityAdd");
 		if (noNeutralEntityAdd != null && noNeutralEntityAdd.getState()) {
 			EntityType<?> entityType = clientboundAddEntityPacket.getType();
 			BooleanSetting setting = noNeutralEntityAdd.getSettingForEntity(entityType);
