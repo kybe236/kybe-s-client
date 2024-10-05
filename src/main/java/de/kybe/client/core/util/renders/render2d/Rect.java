@@ -21,10 +21,21 @@ public class Rect {
 		builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 
 		// Define the four corners of the rectangle (clockwise order)
-		builder.vertex(x, y + height, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
-		builder.vertex(x + width, y + height, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
-		builder.vertex(x + width, y, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
-		builder.vertex(x, y, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+		builder.vertex(x, y + height, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		builder.vertex(x + width, y + height, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		builder.vertex(x + width, y, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		builder.vertex(x, y, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
 
 		tesselator.end();
 
@@ -70,14 +81,28 @@ public class Rect {
 
 		Tesselator tesselator = Tesselator.getInstance();
 		BufferBuilder builder = tesselator.getBuilder();
+
 		builder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
 
-		builder.vertex(x, y + height - cornerRadius, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		builder.vertex(x + width, y + height - cornerRadius, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		builder.vertex(x + width, y + cornerRadius, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		builder.vertex(x, y + cornerRadius, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		builder.vertex(x, y + height - cornerRadius, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
 
-		BufferUploader.drawWithShader(builder.end());
+		builder.vertex(x + width, y + height - cornerRadius, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		builder.vertex(x + width, y + cornerRadius, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		builder.vertex(x, y + cornerRadius, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		tesselator.end();
+
+		RenderSystem.disableBlend();
 	}
 
 	//helper for rounded
@@ -90,12 +115,25 @@ public class Rect {
 		BufferBuilder builder = tesselator.getBuilder();
 		builder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
 
-		builder.vertex(x + cornerRadius, y, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		builder.vertex(x + cornerRadius, y + cornerRadius, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		builder.vertex(x + width - cornerRadius, y + cornerRadius, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		builder.vertex(x + width - cornerRadius, y, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		builder.vertex(x + cornerRadius, y, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
 
-		BufferUploader.drawWithShader(builder.end());
+		builder.vertex(x + cornerRadius, y + cornerRadius, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		builder.vertex(x + width - cornerRadius, y + cornerRadius, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		builder.vertex(x + width - cornerRadius, y, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		tesselator.end();
+
+		RenderSystem.disableBlend();
 	}
 
 	//helper for rounded
@@ -108,11 +146,24 @@ public class Rect {
 		BufferBuilder builder = tesselator.getBuilder();
 		builder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
 
-		builder.vertex(x + cornerRadius, y + height - cornerRadius, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		builder.vertex(x + cornerRadius, y + height, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		builder.vertex(x + width - cornerRadius, y + height, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		builder.vertex(x + width - cornerRadius, y + height - cornerRadius, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		builder.vertex(x + cornerRadius, y + height - cornerRadius, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
 
-		BufferUploader.drawWithShader(builder.end());
+		builder.vertex(x + cornerRadius, y + height, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		builder.vertex(x + width - cornerRadius, y + height, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		builder.vertex(x + width - cornerRadius, y + height - cornerRadius, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
+
+		tesselator.end();
+
+		RenderSystem.disableBlend();
 	}
 }

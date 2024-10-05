@@ -2,6 +2,7 @@ package de.kybe.client.core.util.renders.render2d;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.renderer.GameRenderer;
 
 import java.awt.*;
 
@@ -9,20 +10,28 @@ public class Circle {
 
 	//part
 	public static void drawSector(int x, int y, int r, double startAngle, double endAngle, int precision, Color color) {
-		Tesselator tesselator = Tesselator.getInstance();
-		BufferBuilder bufferbuilder = tesselator.getBuilder();
-		bufferbuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
-
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		bufferbuilder.vertex(x, y, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+
+		Tesselator tesselator = Tesselator.getInstance();
+		BufferBuilder builder = tesselator.getBuilder();
+
+		builder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
+
+		builder.vertex(x, y, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+				.endVertex();
 
 		double precisionAngle = 2 * Math.PI / precision;
 		for (int i = (int) (endAngle / precisionAngle) + 1; i >= (int) (startAngle / precisionAngle); i--) {
-			bufferbuilder.vertex((float) (x + r * Math.cos(i * precisionAngle)), (float) (y + r * Math.sin(i * precisionAngle)), 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+			builder.vertex((float) (x + r * Math.cos(i * precisionAngle)), (float) (y + r * Math.sin(i * precisionAngle)), 0)
+					.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+					.endVertex();
 		}
 
-		BufferUploader.drawWithShader(bufferbuilder.end());
+		tesselator.end();
+
 		RenderSystem.disableBlend();
 	}
 
@@ -42,33 +51,39 @@ public class Circle {
 
 	//Ring
 	private static void drawRing(int x, int y, int innerRadius, int outerRadius, int precision, Color color) {
-		Tesselator tesselator = Tesselator.getInstance();
-		BufferBuilder bufferbuilder = tesselator.getBuilder();
-		bufferbuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
-
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
+		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+
+		Tesselator tesselator = Tesselator.getInstance();
+		BufferBuilder builder = tesselator.getBuilder();
+
+		builder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
 
 		double precisionAngle = 2 * Math.PI / precision;
 		for (int i = 0; i <= precision; i++) {
 			double angle = i * precisionAngle;
 
 			//Outer
-			bufferbuilder.vertex(
+			builder.vertex(
 					(float) (x + outerRadius * Math.cos(angle)),
 					(float) (y + outerRadius * Math.sin(angle)),
 					0
-			).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+					)
+					.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+					.endVertex();
 
 			//Inner
-			bufferbuilder.vertex(
+			builder.vertex(
 					(float) (x + innerRadius * Math.cos(angle)),
 					(float) (y + innerRadius * Math.sin(angle)),
 					0
-			).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+				)
+					.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())
+					.endVertex();
 		}
 
-		BufferUploader.drawWithShader(bufferbuilder.end());
+		BufferUploader.drawWithShader(builder.end());
 		RenderSystem.disableBlend();
 	}
 }
